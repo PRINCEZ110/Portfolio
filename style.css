@@ -1,3 +1,188 @@
-.body {
-    background-color: #f0f0f0;
+/* Remove default spacing */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    overflow-y:auto;
+    overflow-x:hidden;
+    font-family:Arial, sans-serif;
+}
+
+.topnav{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+
+    opacity: 0;
+    animation: navFade 1s ease forwards;
+    animation-delay: 2s;
+}
+
+@keyframes navFade{
+    to{
+        opacity:1;
+    }
+}
+
+
+
+/* Remove bullets + layout */
+.topnav ul{
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+/* ✅ Text color red */
+.topnav a{
+    color: red;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+}
+
+
+.topnav a::after{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: red;
+    left: 0;
+    bottom: -5px;
+    transition: 0.3s;
+}
+
+
+/* Hover effect */
+.topnav a:hover{
+    color: darkred;
+    width: 100%;
+}
+
+
+/* Red intro overlay */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:red;
+    z-index:9999;
+
+    /* small centered rectangle (cut-out start) */
+    clip-path: inset(45% 35% 45% 35%);
+
+    animation:maskReveal 2.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+/* Hero Section */
+.hero{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+}
+
+/* Image animation */
+
+.hero img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+}
+
+
+/* Text */
+.text{
+    position:absolute;
+    bottom:80px;
+    left:80px;
+    color:white;
+    z-index:10;
+    max-width:500px;
+
+    opacity:0;
+    animation:showText 1s ease forwards;
+    animation-delay:2s;
+}
+
+.text h1{
+    font-size:4rem;
+    margin-bottom:10px;
+}
+
+.text p{
+    font-size:1.1rem;
+    line-height:1.6;
+}
+
+.section{
+    min-height:100vh;
+    padding:80px;
+    background: #f5f5f5;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+/* Red screen disappears */
+@keyframes hideRed{
+    0%{
+        opacity:1;
+    }
+    100%{
+        opacity:0;
+        visibility:hidden;
+    }
+}
+
+/* Rectangle grows to fullscreen */
+
+@keyframes revealImage{
+    0%{
+        clip-path: inset(40% 30% 40% 30%);
+    }
+    100%{
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+
+/* Text fade in */
+@keyframes showText{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+@keyframes maskReveal{
+    0%{
+        clip-path: inset(45% 35% 45% 35%);
+    }
+
+    60%{
+        clip-path: inset(0 0 0 0); /* still full red */
+    }
+
+    100%{
+        opacity:0;
+        visibility:hidden;
+    }
 }

@@ -4,14 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prince Shrestha</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-   <div class="topnav">
-        <li><a href="#Home">Home</a></li>
-        <li><a href="#About">About</a></li>
-        <li><a href="#Contact">Contact</a></li>
-   </div>
-    <h1>Web Developer</h1>
-    <p>Hi, “I am Prince Shrestha, a Junior Web Developer with a solid foundation in HTML, CSS, and JavaScript. I am focused on building responsive and user-friendly web applications while continuously improving my development skills.</p>
+
+    <!-- Navigation -->
+    <nav class="topnav">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Section -->
+    <div class="hero" id="home">
+        <img src="./Image/image1.jpeg" alt="Prince Shrestha">
+
+        <div class="text">
+            <h1>Web Developer</h1>
+
+        <p>
+            Hi, I am Prince Shrestha, a Junior Web Developer with a solid
+            foundation in HTML, CSS, and JavaScript. I focus on building
+            responsive and user-friendly web applications while continuously
+            improving my development skills.
+        </p>
+        </div>
+    </div>
+
+    <section class="section">
+        <h2 id="about">About Me</h2>
+        <p>
+            I am a passionate web developer with a strong foundation in HTML, CSS, and JavaScript. I have experience in building responsive and user-friendly web applications. I am committed to continuous learning and improvement in my development skills.
+        </p>
+    </section>
+
+    <section class="section">
+        <h2 id="contact">Contact Me</h2>
+        <p>contact info here</p>
+    </section>
+
+    <script>
+let lastScroll = 0;
+const navbar = document.querySelector(".topnav");
+
+window.addEventListener("scroll", () => {
+    let currentScroll = window.pageYOffset;
+
+    if (currentScroll > lastScroll) {
+        navbar.style.top = "-80px"; // hide
+    } else {
+        navbar.style.top = "0"; // show
+    }
+
+    lastScroll = currentScroll;
+});
+</script>
+
 </body>
 </html>
