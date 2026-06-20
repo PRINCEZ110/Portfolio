@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom';
 import Cursor from './components/Cursor';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -7,6 +8,7 @@ import About from './components/About';
 import CV from './components/CV';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ProjectDetail from './components/ProjectDetail';
 
 const techStack = [
   'React.js', 'Node.js', 'Tailwind CSS', 'PostgreSQL', 'Java', 'Figma',
@@ -19,12 +21,19 @@ export default function App() {
       <Cursor />
       <Navbar />
       <main>
-        <Hero />
-        <Marquee items={techStack} />
-        <Work />
-        <About />
-        <CV />
-        <Contact />
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Hero />
+              <Marquee items={techStack} />
+              <Work />
+              <About />
+              <CV />
+              <Contact />
+            </>
+          } />
+          <Route path="/work/:projectId" element={<ProjectDetail />} />
+        </Routes>
       </main>
       <Footer />
     </>
