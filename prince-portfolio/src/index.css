@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
@@ -77,3 +78,293 @@ body::before {
   letter-spacing: 0.05em;
   color: #888880;
 }
+
+/* Mockup skeleton styles */
+.mockup {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.mockup-dash {
+  position: relative;
+  width: 100%;
+  padding-top: 62.5%;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  border-radius: 12px;
+  border: 1px solid #222;
+  overflow: hidden;
+}
+
+.mockup-dash::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 32px;
+  background: #1a1a1a;
+  border-bottom: 1px solid #222;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+}
+
+.mockup-dash::after {
+  content: '● ● ●';
+  position: absolute;
+  top: 6px;
+  left: 12px;
+  font-size: 8px;
+  letter-spacing: 4px;
+  color: #444;
+}
+
+.mockup-sidebar {
+  position: absolute;
+  top: 32px; left: 0;
+  width: 48px;
+  bottom: 0;
+  background: #111;
+  border-right: 1px solid #1a1a1a;
+}
+
+.mockup-content {
+  position: absolute;
+  top: 44px;
+  left: 60px;
+  right: 12px;
+  bottom: 12px;
+}
+
+.mockup-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: #222;
+  margin-bottom: 10px;
+}
+
+.mockup-bar:nth-child(1) { width: 45%; }
+.mockup-bar:nth-child(2) { width: 70%; }
+.mockup-bar:nth-child(3) { width: 30%; }
+
+.mockup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.mockup-card {
+  background: #1a1a1a;
+  border-radius: 6px;
+  padding: 12px;
+  border: 1px solid #222;
+}
+
+.mockup-card-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: #252525;
+  margin-bottom: 6px;
+}
+
+.mockup-card-bar:last-child { width: 60%; }
+
+.mockup-accent {
+  position: absolute;
+  bottom: 12px;
+  left: 60px;
+  right: 12px;
+  height: 32px;
+  background: linear-gradient(90deg, rgba(200,255,0,0.15) 0%, rgba(200,255,0,0.05) 100%);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mockup-accent::after {
+  content: '● live status — 3 active reports';
+  font-size: 9px;
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(200,255,0,0.6);
+  letter-spacing: 0.5px;
+}
+
+/* E-commerce mockup */
+.mockup-shop {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+  border-radius: 12px;
+  border: 1px solid #222;
+  overflow: hidden;
+}
+
+.mockup-shop-header {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 40px;
+  background: #0d0d0d;
+  border-bottom: 1px solid #222;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+}
+
+.mockup-shop-header::before {
+  content: '⌂';
+  font-size: 14px;
+  color: #444;
+}
+
+.mockup-shop-header::after {
+  content: 'timestar';
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  color: #555;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.mockup-shop-product {
+  position: absolute;
+  top: 56px;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+}
+
+.mockup-watch {
+  width: 60%;
+  padding-top: 60%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #2a2a2a, #111);
+  border: 2px solid #2a2a2a;
+  margin: 0 auto 12px;
+  position: relative;
+}
+
+.mockup-watch::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20%;
+  height: 20%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #333, #1a1a1a);
+  border: 1px solid #2a2a2a;
+}
+
+.mockup-price {
+  text-align: center;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: #888;
+  letter-spacing: 1px;
+}
+
+.mockup-price strong {
+  color: #F5F5F0;
+  font-size: 14px;
+  display: block;
+  margin-top: 2px;
+}
+
+.mockup-buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.mockup-btn {
+  flex: 1;
+  height: 24px;
+  background: #1a1a1a;
+  border-radius: 4px;
+  border: 1px solid #222;
+}
+
+.mockup-btn:first-child {
+  background: rgba(200,255,0,0.1);
+  border-color: rgba(200,255,0,0.2);
+}
+
+/* Enterprise dashboard mockup */
+.mockup-enterprise {
+  position: relative;
+  width: 100%;
+  padding-top: 68%;
+  background: linear-gradient(135deg, #0d0d0d 0%, #111 100%);
+  border-radius: 12px;
+  border: 1px solid #222;
+  overflow: hidden;
+}
+
+.mockup-enterprise-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 36px;
+  background: #0a0a0a;
+  border-bottom: 1px solid #1a1a1a;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.mockup-enterprise-top::after {
+  content: 'sahakarinet • admin panel';
+  font-size: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  color: #555;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.mockup-table {
+  position: absolute;
+  top: 48px;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+}
+
+.mockup-table-header {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.mockup-table-header span {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: #252525;
+}
+
+.mockup-table-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.mockup-table-row span {
+  flex: 1;
+  height: 5px;
+  border-radius: 2px;
+  background: #1a1a1a;
+}
+
+.mockup-table-row span:first-child {
+  background: #222;
+}
+
+.mockup-table-row span:nth-child(3) {
+  background: rgba(200,255,0,0.08);
+}
+
+

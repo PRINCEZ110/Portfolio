@@ -1,75 +1,54 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 
 const projects = [
   {
-    num: '01',
+    id: 'nagarsewa',
     title: 'NagarSewa',
-    subtitle: 'E-Governance Web App',
-    tags: ['React.js', 'Tailwind CSS', 'JavaScript', 'Civic Tech'],
-    desc: 'Citizen-focused platform for reporting local issues and tracking resolution progress. Built responsive frontend interfaces and enhanced communication between citizens and government offices.',
+    subtitle: 'E-Governance Web Application',
+    year: '2025 – 2026',
+    tags: ['Web App', 'React', 'Civic Tech'],
+    description: 'A citizen-focused digital platform designed to improve communication between citizens and local government bodies by enabling issue reporting and tracking resolution progress.',
+    highlights: [
+      'React.js + Tailwind CSS frontend',
+      'Responsive civic engagement platform',
+      'Transparent issue tracking workflow',
+    ],
     color: '#C8FF00',
-    gradient: 'from-[#C8FF00]/20 via-transparent to-transparent',
-    pattern: 'M0 0L50 50M50 0L0 50',
+    layout: 'full',
   },
   {
-    num: '02',
+    id: 'timestar',
     title: 'TimeStar',
-    subtitle: 'E-Commerce Watch Store',
-    tags: ['HTML', 'CSS', 'Java', 'UI/UX'],
-    desc: 'Online watch store with product browsing and search features. Designed a user-friendly interface focused on intuitive navigation and product discovery.',
+    subtitle: 'E-Commerce Online Watch Store',
+    year: '2024 – 2025',
+    tags: ['E-Commerce', 'Frontend', 'UI Design'],
+    description: 'A modern online watch store designed with a focus on clean navigation, product discovery, and smooth user experience for e-commerce browsing.',
+    highlights: [
+      'Product browsing and search system',
+      'Clean UI/UX design focused on conversions',
+      'Built with HTML, CSS, and Java',
+    ],
     color: '#A0CFFF',
-    gradient: 'from-[#A0CFFF]/20 via-transparent to-transparent',
-    pattern: 'M10 10L40 40M40 10L10 40',
+    layout: 'split',
   },
   {
-    num: '03',
+    id: 'sahakarinet',
     title: 'SahakariNet',
     subtitle: 'Cooperative Management System',
-    tags: ['Java', 'JSP', 'Servlets', 'MySQL', 'MVC'],
-    desc: 'Full-stack cooperative management web app with member search, deposits, withdrawals, loan disbursement, and role-based access control with BCrypt password hashing.',
+    year: '2026',
+    tags: ['Enterprise', 'Java', 'Database'],
+    description: 'A full-stack cooperative management system built using Java MVC architecture, designed for managing members, financial transactions, and cooperative operations efficiently.',
+    highlights: [
+      'Java, JSP, Servlets, JDBC, MySQL',
+      'Role-based access control system',
+      'Secure authentication with session management and BCrypt encryption',
+      'Features: deposits, withdrawals, loans, member management',
+    ],
     color: '#FFB86C',
-    gradient: 'from-[#FFB86C]/20 via-transparent to-transparent',
-    pattern: 'M0 20L30 50L60 20L90 50',
+    layout: 'full',
   },
 ];
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 60 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
-  },
-};
-
-function LetterPullUp({ text, className }) {
-  return (
-    <span className={className}>
-      {text.split('').map((char, i) => (
-        <motion.span
-          key={i}
-          initial={{ y: 80, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.5, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-block"
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </motion.span>
-      ))}
-    </span>
-  );
-}
 
 export default function Work() {
   const sectionRef = useRef(null);
@@ -78,190 +57,272 @@ export default function Work() {
     offset: ['start end', 'end start'],
   });
 
-  const headerOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
-  const headerY = useTransform(scrollYProgress, [0, 0.15], [40, 0]);
-
   return (
-    <section id="work" className="relative px-6 md:px-12 py-24 md:py-32 overflow-hidden" ref={sectionRef}>
-      <div className="max-w-8xl mx-auto">
+    <section id="work" className="relative px-6 md:px-12 lg:px-20 py-32 md:py-48 overflow-hidden" ref={sectionRef}>
+      <div className="max-w-[1440px] mx-auto">
+        {/* ─── SECTION HEADER ─── */}
         <motion.div
-          style={{ opacity: headerOpacity, y: headerY }}
-          className="flex items-end justify-between mb-16 md:mb-24"
-        >
-          <div>
-            <span className="font-mono text-xs text-accent tracking-[0.2em] uppercase block mb-4">
-              selected cases
-            </span>
-            <h2 className="font-display font-bold text-snow leading-tight" style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)' }}>
-              <LetterPullUp text="Work that" />
-              <br />
-              <span className="text-accent">
-                <LetterPullUp text="matters." />
-              </span>
-            </h2>
-          </div>
-          <motion.a
-            href="https://github.com/PRINCEZ110?tab=repositories"
-            target="_blank"
-            rel="noreferrer"
-            whileHover={{ gap: '12px' }}
-            className="hidden md:inline-flex items-center gap-2 font-mono text-xs text-muted hover:text-accent transition-colors border border-border px-5 py-3 group"
-          >
-            <span>github</span>
-            <motion.span
-              initial={{ x: 0 }}
-              whileHover={{ x: 3 }}
-              className="inline-block"
-            >→</motion.span>
-          </motion.a>
-        </motion.div>
-
-        {/* Divider bar — Behance inspired */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-          className="h-px bg-border origin-left mb-16 md:mb-20"
-        />
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          className="space-y-12 md:space-y-16"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-32 md:mb-48"
         >
-          {projects.map((p, i) => (
-            <ProjectCard key={i} project={p} index={i} />
-          ))}
+          <motion.span
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="font-['JetBrains_Mono'] text-[11px] tracking-[0.25em] text-muted uppercase block mb-5"
+          >
+            Selected Projects
+          </motion.span>
+
+          <h2 className="font-['Inter'] font-extrabold text-snow leading-[0.95] mb-6" style={{ fontSize: 'clamp(2.8rem, 8vw, 7rem)' }}>
+            {['Work', 'that', 'matters'].map((word, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.2 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                className="inline-block mr-[0.15em]"
+              >
+                {word}
+              </motion.span>
+            ))}
+          </h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 0.7, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="font-['Inter'] text-muted text-sm md:text-base max-w-lg leading-relaxed tracking-wide"
+          >
+            A collection of systems, platforms, and digital experiences I've built.
+          </motion.p>
+
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="h-[1px] bg-snow/10 origin-left mt-10"
+          />
         </motion.div>
+
+        {/* ─── PROJECTS ─── */}
+        {projects.map((project, i) => (
+          <ProjectBlock
+            key={project.id}
+            project={project}
+            scrollYProgress={scrollYProgress}
+            blockIndex={i}
+          />
+        ))}
       </div>
     </section>
   );
 }
 
-function ProjectCard({ project, index }) {
-  const cardRef = useRef(null);
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.15 },
+  },
+};
+
+function ProjectBlock({ project, scrollYProgress, blockIndex }) {
+  const blockRef = useRef(null);
+  const isInView = useInView(blockRef, { once: true, margin: '-80px' });
+
+  const blockProgress = useTransform(
+    scrollYProgress,
+    [blockIndex * 0.18, blockIndex * 0.18 + 0.25],
+    [0, 1],
+  );
+  const imageY = useTransform(blockProgress, [0, 1], [25, -25]);
+
+  const mockup = project.id === 'nagarsewa' ? <NagarSewaMockup /> :
+    project.id === 'timestar' ? <TimeStarMockup /> :
+    <SahakariNetMockup />;
+
+  const meta = (
+    <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-4 md:gap-8 mb-6 md:mb-8">
+      <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase">{project.year}</span>
+      {project.tags.map((tag) => (
+        <span key={tag} className="flex items-center gap-4">
+          <span className="w-px h-3 bg-white/10" />
+          <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.15em] text-muted uppercase">{tag}</span>
+        </span>
+      ))}
+    </motion.div>
+  );
+
+  const title = (
+    <motion.h3
+      variants={fadeUp}
+      className="font-['Inter'] font-bold text-snow leading-[1.05] mb-8"
+      style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}
+    >
+      {project.title}
+      <span className="text-muted font-light"> — {project.subtitle}</span>
+    </motion.h3>
+  );
+
+  const description = (
+    <motion.p
+      variants={fadeUp}
+      className="font-['Inter'] text-muted text-sm md:text-base leading-[1.8] tracking-wide"
+    >
+      {project.description}
+    </motion.p>
+  );
+
+  const highlights = (
+    <motion.div variants={fadeUp}>
+      <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase block mb-4">
+        Key Highlights
+      </span>
+      <ul className="space-y-2.5">
+        {project.highlights.map((h, j) => (
+          <motion.li
+            key={j}
+            initial={{ opacity: 0, x: -12 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: j * 0.08 }}
+            className="flex items-start gap-3 font-['Inter'] text-sm text-snow/80"
+          >
+            <span
+              className="inline-block w-[3px] h-[3px] rounded-full mt-[7px] flex-shrink-0"
+              style={{ backgroundColor: project.color }}
+            />
+            {h}
+          </motion.li>
+        ))}
+      </ul>
+    </motion.div>
+  );
+
+  if (project.layout === 'split') {
+    return (
+      <motion.div
+        ref={blockRef}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+        variants={staggerContainer}
+        className="mb-40 md:mb-64 last:mb-0"
+      >
+        <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+          <motion.div variants={fadeUp} style={{ y: imageY }}>
+            {mockup}
+          </motion.div>
+          <div>
+            {meta}
+            {title}
+            {description}
+            {highlights}
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
-      ref={cardRef}
-      variants={itemVariants}
-      whileHover={{ scale: 1.01 }}
-      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative bg-card border border-border hover:border-accent/30 transition-all duration-500"
+      ref={blockRef}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-80px' }}
+      variants={staggerContainer}
+      className="mb-40 md:mb-64 last:mb-0"
     >
-      {/* Background gradient glow */}
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}
-      />
+      {meta}
+      {title}
+      <motion.div variants={fadeUp} style={{ y: imageY }}>
+        {mockup}
+      </motion.div>
+      <div className="grid md:grid-cols-2 gap-10 md:gap-16 mt-10 md:mt-14">
+        {description}
+        {highlights}
+      </div>
+    </motion.div>
+  );
+}
 
-      {/* Decorative pattern lines */}
-      <svg
-        className="absolute top-6 right-6 w-24 h-24 text-border opacity-30 group-hover:text-accent/20 transition-all duration-500 pointer-events-none"
-        viewBox="0 0 50 50"
-      >
-        <pattern id={`pattern-${index}`} x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-          <path d={project.pattern} stroke="currentColor" strokeWidth="0.5" fill="none" />
-        </pattern>
-        <rect width="50" height="50" fill={`url(#pattern-${index})`} />
-      </svg>
+/* ─── MOCKUPS ─── */
 
-      <div className="relative z-10 p-6 md:p-10">
-        {/* Top row: number + subtitle */}
-        <div className="flex items-start justify-between mb-6">
-          <motion.span
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.15 + 0.2, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-bold text-5xl md:text-7xl leading-none"
-            style={{ color: project.color + '40' }}
-          >
-            {project.num}
-          </motion.span>
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.15 + 0.4, duration: 0.5 }}
-            className="font-mono text-xs text-muted tracking-wider uppercase mt-2"
-          >
-            {project.subtitle}
-          </motion.span>
-        </div>
-
-        {/* Title */}
-        <motion.h3
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: index * 0.15 + 0.3, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display font-bold text-snow text-3xl md:text-4xl lg:text-5xl mb-4 group-hover:text-accent transition-colors duration-500"
-        >
-          {project.title}
-        </motion.h3>
-
-        {/* Description */}
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: index * 0.15 + 0.4, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="font-body text-muted text-sm md:text-base leading-relaxed max-w-2xl mb-6"
-        >
-          {project.desc}
-        </motion.p>
-
-        {/* Bottom: tags + arrow */}
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.15 + 0.5, duration: 0.5 }}
-            className="flex flex-wrap gap-2"
-          >
-            {project.tags.map((t) => (
-              <motion.span
-                key={t}
-                whileHover={{ scale: 1.05, y: -1 }}
-                className="tag"
-                style={{ borderColor: project.color + '40', color: project.color }}
-              >
-                {t}
-              </motion.span>
-            ))}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.15 + 0.6, duration: 0.5 }}
-            className="flex items-center gap-2 text-muted group-hover:text-accent transition-colors duration-500"
-          >
-            <span className="font-mono text-xs tracking-wider hidden sm:inline">View Project</span>
-            <motion.span
-              initial={{ x: 0 }}
-              whileHover={{ x: 5 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              className="text-xl inline-block"
-            >→</motion.span>
-          </motion.div>
+function NagarSewaMockup() {
+  return (
+    <div className="mockup-dash group cursor-pointer">
+      <div className="mockup-sidebar" />
+      <div className="mockup-content">
+        <div className="mockup-bar" />
+        <div className="mockup-bar" />
+        <div className="mockup-bar" />
+        <div className="mockup-grid">
+          <div className="mockup-card">
+            <div className="mockup-card-bar" />
+            <div className="mockup-card-bar" />
+            <div className="mockup-card-bar" />
+          </div>
+          <div className="mockup-card">
+            <div className="mockup-card-bar" />
+            <div className="mockup-card-bar" />
+            <div className="mockup-card-bar" />
+          </div>
         </div>
       </div>
+      <div className="mockup-accent" />
+      <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.02] transition-colors duration-700 rounded-xl" />
+    </div>
+  );
+}
 
-      {/* Bottom accent line */}
-      <motion.div
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: index * 0.15 + 0.7, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="h-[2px] origin-left"
-        style={{ backgroundColor: project.color }}
-      />
-    </motion.div>
+function TimeStarMockup() {
+  return (
+    <div className="mockup-shop group cursor-pointer">
+      <div className="mockup-shop-header" />
+      <div className="mockup-shop-product">
+        <div className="mockup-watch" />
+        <div className="mockup-price">
+          <span>Chronograph Edition</span>
+          <strong>$349</strong>
+        </div>
+        <div className="mockup-buttons">
+          <div className="mockup-btn" />
+          <div className="mockup-btn" />
+        </div>
+      </div>
+      <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.02] transition-colors duration-700 rounded-xl" />
+    </div>
+  );
+}
+
+function SahakariNetMockup() {
+  return (
+    <div className="mockup-enterprise group cursor-pointer">
+      <div className="mockup-enterprise-top" />
+      <div className="mockup-table">
+        <div className="mockup-table-header">
+          <span /><span /><span /><span />
+        </div>
+        {[...Array(5)].map((_, i) => (
+          <div className="mockup-table-row" key={i}>
+            <span /><span /><span /><span />
+          </div>
+        ))}
+      </div>
+      <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.02] transition-colors duration-700 rounded-xl" />
+    </div>
   );
 }
