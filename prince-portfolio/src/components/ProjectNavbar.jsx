@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const links = [
+  { label: 'home', href: '/' },
   { label: 'work', href: '/#work' },
   { label: 'about', href: '/#about' },
   { label: 'cv', href: '/#cv' },
@@ -63,12 +64,6 @@ export default function ProjectNavbar() {
             {l.label}
           </button>
         ))}
-        <button
-          onClick={() => handleNav('/#contact')}
-          className="ml-2 bg-accent text-ink text-sm font-display font-semibold px-5 py-2 hover:bg-snow transition-colors duration-200"
-        >
-          hire me
-        </button>
       </nav>
 
       {/* Mobile hamburger */}
@@ -93,12 +88,6 @@ export default function ProjectNavbar() {
                 {l.label}
               </button>
             ))}
-            <button
-              onClick={() => handleNav('/#contact')}
-              className="bg-accent text-ink font-display font-bold px-8 py-3"
-            >
-              hire me
-            </button>
           </motion.div>
         )}
       </AnimatePresence>
