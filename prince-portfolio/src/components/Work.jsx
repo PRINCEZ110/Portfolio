@@ -15,7 +15,6 @@ const projects = [
       'Transparent issue tracking workflow',
     ],
     color: '#C8FF00',
-    layout: 'full',
   },
   {
     id: 'timestar',
@@ -30,7 +29,6 @@ const projects = [
       'Built with HTML, CSS, and Java',
     ],
     color: '#A0CFFF',
-    layout: 'split',
   },
   {
     id: 'sahakarinet',
@@ -46,7 +44,6 @@ const projects = [
       'Features: deposits, withdrawals, loans, member management',
     ],
     color: '#FFB86C',
-    layout: 'full',
   },
 ];
 
@@ -95,7 +92,7 @@ export default function Work() {
 
           <motion.p
             initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 0.7, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.5 }}
             className="font-['Inter'] text-muted text-sm md:text-base max-w-lg leading-relaxed tracking-wide"
@@ -108,221 +105,274 @@ export default function Work() {
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="h-[1px] bg-snow/10 origin-left mt-10"
+            className="h-[1px] bg-white/10 origin-left mt-10"
           />
         </motion.div>
 
-        {/* ─── PROJECTS ─── */}
-        {projects.map((project, i) => (
-          <ProjectBlock
-            key={project.id}
-            project={project}
-            scrollYProgress={scrollYProgress}
-            blockIndex={i}
-          />
-        ))}
+        {/* ─── PROJECT 1: FULL-SCREEN FEATURE ─── */}
+        <FullFeatureBlock
+          project={projects[0]}
+          scrollYProgress={scrollYProgress}
+          index={0}
+          mockup={<NagarSewaMockup />}
+        />
+
+        {/* ─── PROJECT 2: SPLIT LAYOUT ─── */}
+        <SplitBlock
+          project={projects[1]}
+          scrollYProgress={scrollYProgress}
+          index={1}
+          mockup={<TimeStarMockup />}
+        />
+
+        {/* ─── PROJECT 3: FULL-WIDTH ENTERPRISE ─── */}
+        <FullFeatureBlock
+          project={projects[2]}
+          scrollYProgress={scrollYProgress}
+          index={2}
+          mockup={<SahakariNetMockup />}
+        />
       </div>
     </section>
   );
 }
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.15 },
-  },
-};
-
-function ProjectBlock({ project, scrollYProgress, blockIndex }) {
-  const blockRef = useRef(null);
-  const isInView = useInView(blockRef, { once: true, margin: '-80px' });
-
-  const blockProgress = useTransform(
-    scrollYProgress,
-    [blockIndex * 0.18, blockIndex * 0.18 + 0.25],
-    [0, 1],
-  );
-  const imageY = useTransform(blockProgress, [0, 1], [25, -25]);
-
-  const mockup = project.id === 'nagarsewa' ? <NagarSewaMockup /> :
-    project.id === 'timestar' ? <TimeStarMockup /> :
-    <SahakariNetMockup />;
-
-  const meta = (
-    <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-4 md:gap-8 mb-6 md:mb-8">
-      <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase">{project.year}</span>
-      {project.tags.map((tag) => (
-        <span key={tag} className="flex items-center gap-4">
-          <span className="w-px h-3 bg-white/10" />
-          <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.15em] text-muted uppercase">{tag}</span>
-        </span>
-      ))}
-    </motion.div>
-  );
-
-  const title = (
-    <motion.h3
-      variants={fadeUp}
-      className="font-['Inter'] font-bold text-snow leading-[1.05] mb-8"
-      style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}
-    >
-      {project.title}
-      <span className="text-muted font-light"> — {project.subtitle}</span>
-    </motion.h3>
-  );
-
-  const description = (
-    <motion.p
-      variants={fadeUp}
-      className="font-['Inter'] text-muted text-sm md:text-base leading-[1.8] tracking-wide"
-    >
-      {project.description}
-    </motion.p>
-  );
-
-  const highlights = (
-    <motion.div variants={fadeUp}>
-      <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase block mb-4">
-        Key Highlights
-      </span>
-      <ul className="space-y-2.5">
-        {project.highlights.map((h, j) => (
-          <motion.li
-            key={j}
-            initial={{ opacity: 0, x: -12 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: j * 0.08 }}
-            className="flex items-start gap-3 font-['Inter'] text-sm text-snow/80"
-          >
-            <span
-              className="inline-block w-[3px] h-[3px] rounded-full mt-[7px] flex-shrink-0"
-              style={{ backgroundColor: project.color }}
-            />
-            {h}
-          </motion.li>
-        ))}
-      </ul>
-    </motion.div>
-  );
-
-  if (project.layout === 'split') {
-    return (
-      <motion.div
-        ref={blockRef}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-80px' }}
-        variants={staggerContainer}
-        className="mb-40 md:mb-64 last:mb-0"
-      >
-        <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-          <motion.div variants={fadeUp} style={{ y: imageY }}>
-            {mockup}
-          </motion.div>
-          <div>
-            {meta}
-            {title}
-            {description}
-            {highlights}
-          </div>
-        </div>
-      </motion.div>
-    );
-  }
+/* ─── FULL-WIDTH CINEMATIC FEATURE BLOCK ─── */
+function FullFeatureBlock({ project, scrollYProgress, index, mockup }) {
+  const ref = useRef(null);
+  const blockProgress = useTransform(scrollYProgress, [index * 0.18, index * 0.18 + 0.25], [0, 1]);
+  const imgScale = useTransform(blockProgress, [0, 1], [1, 1.08]);
+  const imgOpacity = useTransform(blockProgress, [0, 1], [0.4, 1]);
+  const contentY = useTransform(blockProgress, [0, 1], [30, 0]);
 
   return (
     <motion.div
-      ref={blockRef}
+      ref={ref}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-80px' }}
-      variants={staggerContainer}
-      className="mb-40 md:mb-64 last:mb-0"
+      className="mb-40 md:mb-56 last:mb-0"
     >
-      {meta}
-      {title}
-      <motion.div variants={fadeUp} style={{ y: imageY }}>
-        {mockup}
+      {/* Left title + Right mockup — cinematic spread */}
+      <div className="grid md:grid-cols-2 gap-12 md:gap-16 mb-12 md:mb-16">
+        {/* Left: text */}
+        <div>
+          <motion.div
+            variants={textFadeUp}
+            className="flex flex-wrap items-center gap-4 md:gap-6 mb-6"
+          >
+            <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase">{project.year}</span>
+            {project.tags.map((tag) => (
+              <span key={tag} className="flex items-center gap-4">
+                <span className="w-px h-3 bg-white/10" />
+                <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase">{tag}</span>
+              </span>
+            ))}
+          </motion.div>
+
+          <motion.h3
+            variants={textFadeUp}
+            className="font-['Inter'] font-bold text-snow leading-[1.05] mb-6"
+            style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
+          >
+            {project.title}
+            <span className="text-muted font-light block md:inline md:ml-3">{project.subtitle}</span>
+          </motion.h3>
+
+          <motion.p
+            variants={textFadeUp}
+            className="font-['Inter'] text-muted text-sm md:text-base leading-[1.8] tracking-wide"
+          >
+            {project.description}
+          </motion.p>
+        </div>
+
+        {/* Right: cinematic mockup with parallax zoom */}
+        <motion.div
+          style={{ scale: imgScale, opacity: imgOpacity }}
+          className="relative overflow-hidden"
+        >
+          {mockup}
+        </motion.div>
+      </div>
+
+      {/* Highlights */}
+      <motion.div variants={textFadeUp} className="max-w-2xl">
+        <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase block mb-4">
+          Key Highlights
+        </span>
+        <div className="flex flex-wrap gap-x-10 gap-y-2.5">
+          {project.highlights.map((h, j) => (
+            <motion.span
+              key={j}
+              initial={{ opacity: 0, x: -8 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: j * 0.06 }}
+              className="flex items-center gap-2.5 font-['Inter'] text-sm text-snow/70"
+            >
+              <span className="inline-block w-[3px] h-[3px] rounded-full flex-shrink-0" style={{ backgroundColor: project.color }} />
+              {h}
+            </motion.span>
+          ))}
+        </div>
       </motion.div>
-      <div className="grid md:grid-cols-2 gap-10 md:gap-16 mt-10 md:mt-14">
-        {description}
-        {highlights}
+    </motion.div>
+  );
+}
+
+/* ─── SPLIT 50/50 LAYOUT ─── */
+function SplitBlock({ project, scrollYProgress, index, mockup }) {
+  const ref = useRef(null);
+  const blockProgress = useTransform(scrollYProgress, [index * 0.18, index * 0.18 + 0.25], [0, 1]);
+  const imgY = useTransform(blockProgress, [0, 1], [20, -20]);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-80px' }}
+      className="mb-40 md:mb-56 last:mb-0"
+    >
+      <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+        {/* Left: mockup */}
+        <motion.div style={{ y: imgY }}>
+          {mockup}
+        </motion.div>
+
+        {/* Right: text */}
+        <div>
+          <motion.div
+            variants={textFadeUp}
+            className="flex flex-wrap items-center gap-4 md:gap-6 mb-6"
+          >
+            <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase">{project.year}</span>
+            {project.tags.map((tag) => (
+              <span key={tag} className="flex items-center gap-4">
+                <span className="w-px h-3 bg-white/10" />
+                <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase">{tag}</span>
+              </span>
+            ))}
+          </motion.div>
+
+          <motion.h3
+            variants={textFadeUp}
+            className="font-['Inter'] font-bold text-snow leading-[1.05] mb-6"
+            style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
+          >
+            {project.title}
+            <span className="text-muted font-light block md:inline md:ml-3">{project.subtitle}</span>
+          </motion.h3>
+
+          <motion.p
+            variants={textFadeUp}
+            className="font-['Inter'] text-muted text-sm md:text-base leading-[1.8] tracking-wide mb-8"
+          >
+            {project.description}
+          </motion.p>
+
+          <motion.div variants={textFadeUp}>
+            <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase block mb-4">
+              Key Highlights
+            </span>
+            <div className="flex flex-col gap-2.5">
+              {project.highlights.map((h, j) => (
+                <motion.span
+                  key={j}
+                  initial={{ opacity: 0, x: -8 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: j * 0.06 }}
+                  className="flex items-center gap-2.5 font-['Inter'] text-sm text-snow/70"
+                >
+                  <span className="inline-block w-[3px] h-[3px] rounded-full flex-shrink-0" style={{ backgroundColor: project.color }} />
+                  {h}
+                </motion.span>
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   );
 }
 
-/* ─── MOCKUPS ─── */
+const textFadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+};
+
+/* ─── MOCKUP COMPONENTS ─── */
 
 function NagarSewaMockup() {
   return (
-    <div className="mockup-dash group cursor-pointer">
-      <div className="mockup-sidebar" />
-      <div className="mockup-content">
-        <div className="mockup-bar" />
-        <div className="mockup-bar" />
-        <div className="mockup-bar" />
-        <div className="mockup-grid">
-          <div className="mockup-card">
-            <div className="mockup-card-bar" />
-            <div className="mockup-card-bar" />
-            <div className="mockup-card-bar" />
-          </div>
-          <div className="mockup-card">
-            <div className="mockup-card-bar" />
-            <div className="mockup-card-bar" />
-            <div className="mockup-card-bar" />
+    <div className="mockup-frame">
+      <div className="mockup-dashboard">
+        <div className="mockup-dash-top" />
+        <div className="mockup-dash-body">
+          <div className="mockup-dash-side" />
+          <div className="mockup-dash-main">
+            <div className="mockup-stat">
+              <div className="mockup-stat-item">
+                <div className="mockup-stat-label" />
+                <div className="mockup-stat-value" />
+              </div>
+              <div className="mockup-stat-item">
+                <div className="mockup-stat-label" />
+                <div className="mockup-stat-value" />
+              </div>
+              <div className="mockup-stat-item">
+                <div className="mockup-stat-label" />
+                <div className="mockup-stat-value" />
+              </div>
+            </div>
+            <div className="mockup-list">
+              {[...Array(4)].map((_, i) => (
+                <div className="mockup-list-item" key={i}>
+                  <span /><span /><span />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-      <div className="mockup-accent" />
-      <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.02] transition-colors duration-700 rounded-xl" />
     </div>
   );
 }
 
 function TimeStarMockup() {
   return (
-    <div className="mockup-shop group cursor-pointer">
-      <div className="mockup-shop-header" />
-      <div className="mockup-shop-product">
-        <div className="mockup-watch" />
-        <div className="mockup-price">
-          <span>Chronograph Edition</span>
-          <strong>$349</strong>
-        </div>
-        <div className="mockup-buttons">
-          <div className="mockup-btn" />
-          <div className="mockup-btn" />
+    <div className="mockup-frame">
+      <div className="mockup-product">
+        <div className="mockup-product-inner">
+          <div className="mockup-watch-ring" />
+          <div className="mockup-product-label">Chronograph Edition</div>
+          <div className="mockup-product-price">$349</div>
+          <div className="mockup-product-btns">
+            <span /><span />
+          </div>
         </div>
       </div>
-      <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.02] transition-colors duration-700 rounded-xl" />
     </div>
   );
 }
 
 function SahakariNetMockup() {
   return (
-    <div className="mockup-enterprise group cursor-pointer">
-      <div className="mockup-enterprise-top" />
-      <div className="mockup-table">
-        <div className="mockup-table-header">
-          <span /><span /><span /><span />
-        </div>
-        {[...Array(5)].map((_, i) => (
-          <div className="mockup-table-row" key={i}>
+    <div className="mockup-frame">
+      <div className="mockup-enterprise">
+        <div className="mockup-enterprise-inner">
+          <div className="mockup-ent-header">
             <span /><span /><span /><span />
           </div>
-        ))}
+          {[...Array(6)].map((_, i) => (
+            <div className="mockup-ent-row" key={i}>
+              <span /><span /><span /><span />
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.02] transition-colors duration-700 rounded-xl" />
     </div>
   );
 }
