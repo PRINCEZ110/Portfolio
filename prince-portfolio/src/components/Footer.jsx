@@ -85,7 +85,7 @@ export default function Footer() {
         <div className="absolute left-1/2 top-0 h-[300px] w-[600px] -translate-x-1/2 bg-accent/10 blur-[120px]" />
       </motion.div>
 
-      <div className="max-w-8xl mx-auto px-6 md:px-12 py-24 relative z-10">
+      <div className="max-w-8xl mx-auto px-6 md:px-12 lg:px-20 py-24 md:py-32 relative z-10">
 
         {/* NAME */}
         <motion.h2

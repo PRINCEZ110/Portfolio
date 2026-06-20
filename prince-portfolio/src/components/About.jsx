@@ -9,8 +9,8 @@ const skills = [
 
 export default function About() {
   return (
-    <section id="about" className="px-6 md:px-12 py-24 bg-card border-y border-border">
-      <div className="max-w-8xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+    <section id="about" className="px-6 md:px-12 lg:px-20 py-24 md:py-32 bg-card border-y border-border">
+      <div className="max-w-8xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-start">
         {/* Left */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}

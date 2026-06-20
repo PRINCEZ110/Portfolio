@@ -1,44 +1,39 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
 import { projects } from '../data/projects';
-
-const slideUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i = 0) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.65, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] },
-  }),
-};
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 15 },
-  visible: (i = 0) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] },
-  }),
-};
+import BrowserFrame from './BrowserFrame';
 
 export default function Work() {
   const sectionRef = useRef(null);
+  const [browserPref, setBrowserPref] = useState('mac');
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
   });
 
+  const bgOpacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0.3, 0.8, 0.8, 0.3]);
+
   return (
-    <section id="work" className="relative px-6 md:px-12 lg:px-20 py-32 md:py-48 overflow-hidden" ref={sectionRef}>
-      <div className="max-w-[1440px] mx-auto">
+    <section id="work" className="relative px-6 md:px-12 lg:px-20 py-24 md:py-32 overflow-hidden" ref={sectionRef}>
+      {/* Scroll-driven background glow */}
+      <motion.div
+        className="fixed top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+        style={{ opacity: bgOpacity, background: 'radial-gradient(circle, rgba(200,255,0,0.03), transparent 70%)' }}
+      />
+
+      <div className="max-w-8xl mx-auto relative z-10">
+        {/* ─── SECTION HEADER ─── */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-32 md:mb-48"
+          className="mb-16 md:mb-24"
         >
           <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.15 }}
             className="font-mono text-[11px] tracking-[0.25em] text-muted uppercase block mb-5"
@@ -50,12 +45,11 @@ export default function Work() {
             {'Work that matters.'.split(' ').map((word, i) => (
               <motion.span
                 key={i}
-                custom={i}
-                variants={slideUp}
-                initial="hidden"
-                whileInView="visible"
+                initial={{ opacity: 0, y: 60, rotateX: -15 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                 viewport={{ once: true }}
-                className="inline-block mr-[0.2em]"
+                transition={{ duration: 0.7, delay: 0.2 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                className="inline-block mr-[0.2em] perspective-1000"
               >
                 {word}
               </motion.span>
@@ -63,29 +57,60 @@ export default function Work() {
           </h2>
 
           <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 15, filter: 'blur(4px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
             className="font-['Inter'] text-muted text-sm md:text-base max-w-lg leading-relaxed tracking-wide"
           >
             A collection of systems, platforms, and digital experiences I've built.
           </motion.p>
 
+          {/* Browser toggle */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.55 }}
+            className="flex items-center gap-3 mt-8"
+          >
+            <span className="font-mono text-[9px] tracking-[0.15em] text-white/20 uppercase">View as</span>
+            <div className="flex rounded-md overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+              <button
+                onClick={() => setBrowserPref('mac')}
+                className={`px-3 py-1.5 font-mono text-[9px] tracking-wider uppercase transition-all duration-300 ${
+                  browserPref === 'mac' ? 'text-ink' : 'text-white/30 hover:text-white/60'
+                }`}
+                style={{ background: browserPref === 'mac' ? 'rgba(200,255,0,0.9)' : 'rgba(255,255,255,0.03)' }}
+              >
+                Mac
+              </button>
+              <button
+                onClick={() => setBrowserPref('windows')}
+                className={`px-3 py-1.5 font-mono text-[9px] tracking-wider uppercase transition-all duration-300 ${
+                  browserPref === 'windows' ? 'text-ink' : 'text-white/30 hover:text-white/60'
+                }`}
+                style={{ background: browserPref === 'windows' ? 'rgba(200,255,0,0.9)' : 'rgba(255,255,255,0.03)' }}
+              >
+                Windows
+              </button>
+            </div>
+          </motion.div>
+
           <motion.div
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="h-px bg-white/10 origin-left mt-10"
+            transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="h-px bg-gradient-to-r from-white/20 via-white/10 to-transparent origin-left mt-10"
           />
         </motion.div>
 
         {projects.map((p, i) =>
           p.layout === 'split' ? (
-            <SplitBlock key={p.id} project={p} index={i} scrollYProgress={scrollYProgress} />
+            <SplitBlock key={p.id} project={p} index={i} browserPref={browserPref} />
           ) : (
-            <FeatureBlock key={p.id} project={p} index={i} scrollYProgress={scrollYProgress} />
+            <FeatureBlock key={p.id} project={p} index={i} browserPref={browserPref} />
           )
         )}
       </div>
@@ -93,82 +118,195 @@ export default function Work() {
   );
 }
 
-function FeatureBlock({ project, index, scrollYProgress }) {
+/* ─── FULL FEATURE ─── */
+function FeatureBlock({ project, index, browserPref }) {
   const ref = useRef(null);
-  const blockProgress = useTransform(scrollYProgress, [index * 0.18, index * 0.18 + 0.25], [0, 1]);
-  const imgScale = useTransform(blockProgress, [0, 1], [0.92, 1]);
-  const imgOpacity = useTransform(blockProgress, [0, 1], [0.6, 1]);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 60, damping: 25, mass: 0.5 });
+  const progress = useTransform(smoothProgress, [0, 0.3], [0, 1]);
+
+  const imgScale = useTransform(progress, [0, 1], [0.88, 1]);
+  const imgY = useTransform(progress, [0, 1], [40, 0]);
+  const imgRotate = useTransform(progress, [0, 1], [-2, 0]);
+
+  const textX = useTransform(progress, [0, 1], [-20, 0]);
+  const textBlur = useTransform(progress, [0, 0.5], [4, 0]);
 
   const MockupComponent = project.id === 'nagarsewa' ? NagarSewaMockup : SahakariNetMockup;
+  const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
     <motion.div
       ref={ref}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-80px' }}
-      className="mb-32 md:mb-44 last:mb-0 group"
+      className="mb-24 md:mb-32 last:mb-0 group"
     >
       <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-start mb-10 md:mb-14">
-        <div>
-          <motion.div custom={0} variants={fadeIn} className="flex items-center gap-4 md:gap-6 mb-4">
-            <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">{project.year}</span>
-            {project.tags.map((tag) => (
-              <span key={tag} className="flex items-center gap-3">
-                <span className="w-px h-3 bg-white/10" />
-                <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">{tag}</span>
-              </span>
+        {/* Left: text */}
+        <motion.div
+          style={{ x: textX, filter: useTransform(textBlur, (v) => `blur(${v}px)`) }}
+          className="relative"
+        >
+          {/* Animated accent line behind title */}
+          <motion.div
+            className="absolute -left-4 top-0 w-px h-0"
+            style={{ backgroundColor: project.color, height: useTransform(progress, [0, 0.6], ['0%', '100%']) }}
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.05 }}
+            className="flex items-center gap-4 md:gap-6 mb-4"
+          >
+            {[project.year, ...project.tags].map((item, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.1 + i * 0.06 }}
+                className="flex items-center gap-3"
+              >
+                {i > 0 && <span className="w-px h-3 bg-white/10" />}
+                <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">{item}</span>
+              </motion.span>
             ))}
           </motion.div>
 
-          <motion.h3 custom={1} variants={slideUp} className="font-['Inter'] font-bold text-snow leading-[1.05] mb-6" style={{ fontSize: 'clamp(2rem, 4.5vw, 3.5rem)' }}>
-            {project.title}
-            <span className="block text-muted font-light text-base md:text-xl mt-2">{project.subtitle}</span>
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="font-['Inter'] font-bold text-snow leading-[1.05] mb-6"
+            style={{ fontSize: 'clamp(2rem, 4.5vw, 3.5rem)' }}
+          >
+            {project.title.split('').map((char, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.25 + i * 0.025, ease: [0.16, 1, 0.3, 1] }}
+                className="inline-block"
+              >
+                {char}
+              </motion.span>
+            ))}
+            <span className="block text-muted font-light text-base md:text-xl mt-2">
+              {project.subtitle}
+            </span>
           </motion.h3>
 
-          <motion.p custom={2} variants={fadeIn} className="font-['Inter'] text-muted text-sm md:text-base leading-relaxed tracking-wide mb-6">
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.35 }}
+            className="font-['Inter'] text-muted text-sm md:text-base leading-relaxed tracking-wide mb-6"
+          >
             {project.description}
           </motion.p>
 
-          <motion.div custom={3} variants={fadeIn}>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.45 }}
+          >
             <Link
               to={`/work/${project.id}`}
-              className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-sm transition-all duration-300"
+              className="relative inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-sm overflow-hidden group/btn transition-all duration-300"
               style={{
-                background: `${project.color}12`,
                 color: project.color,
                 border: `1px solid ${project.color}20`,
               }}
             >
-              View Project
               <motion.span
-                animate={{ x: [0, 4, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="inline-block"
+                className="absolute inset-0"
+                style={{ background: `${project.color}08` }}
+                whileHover={{ background: `${project.color}15` }}
+                transition={{ duration: 0.3 }}
+              />
+              <span className="relative z-10">View Project</span>
+              <motion.span
+                className="relative z-10 inline-block"
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
               >→</motion.span>
             </Link>
           </motion.div>
-        </div>
 
-        <Link to={`/work/${project.id}`} className="block w-full origin-center group/card">
-          <motion.div style={{ scale: imgScale, opacity: imgOpacity }} className="w-full origin-center relative">
-            <MockupComponent />
-            <div className="absolute inset-0 bg-accent/0 group-hover/card:bg-accent/[0.02] transition-colors duration-500 rounded-lg" />
-            <div className="absolute bottom-3 right-3 opacity-0 group-hover/card:opacity-100 transition-all duration-300 translate-y-1 group-hover/card:translate-y-0">
-              <span className="font-mono text-[9px] tracking-wider text-white/40 bg-black/60 px-3 py-1.5 rounded-sm backdrop-blur-sm">
+          {/* Scroll progress indicator */}
+          <motion.div
+            className="h-px w-0 mt-8"
+            style={{
+              width: useTransform(progress, [0, 1], ['0%', '40%']),
+              backgroundColor: project.color,
+            }}
+          />
+        </motion.div>
+
+        {/* Right: mockup */}
+        <Link to={`/work/${project.id}`} className="block w-full perspective-1000 group/card">
+          <motion.div
+            style={{ scale: imgScale, y: imgY, rotateY: imgRotate }}
+            className="w-full origin-center relative"
+            whileHover={{ rotateY: 1.5, rotateX: -1.5 }}
+            transition={{ type: 'spring', stiffness: 120, damping: 30, mass: 0.8 }}
+          >
+            {/* Glow behind mockup */}
+            <motion.div
+              className="absolute -inset-4 rounded-2xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"
+              style={{
+                background: `radial-gradient(ellipse at center, ${project.color}08, transparent 70%)`,
+                filter: 'blur(20px)',
+              }}
+            />
+            <MockupComponent variant={browserPref} />
+            <motion.div
+              className="absolute inset-0 rounded-xl transition-colors duration-500"
+              initial={{ background: 'rgba(0,0,0,0)' }}
+              whileHover={{ background: 'rgba(255,255,255,0.01)' }}
+            />
+            <motion.div
+              className="absolute bottom-4 right-4 opacity-0 group-hover/card:opacity-100 transition-all duration-400 translate-y-2 group-hover/card:translate-y-0"
+            >
+              <span className="font-mono text-[9px] tracking-wider text-white/50 bg-black/70 px-3 py-1.5 rounded-sm backdrop-blur-md border border-white/5">
                 Click to explore →
               </span>
-            </div>
+            </motion.div>
           </motion.div>
         </Link>
       </div>
 
-      <motion.div custom={4} variants={fadeIn}>
-        <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase block mb-4">Key Highlights</span>
+      {/* Highlights */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, delay: 0.5 }}
+      >
+        <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase block mb-4">
+          Key Highlights
+        </span>
         <div className="flex flex-wrap gap-x-10 gap-y-2">
           {project.highlights.map((h, j) => (
-            <motion.span key={j} custom={j} variants={fadeIn} className="flex items-center gap-2.5 font-['Inter'] text-sm text-snow/70">
-              <span className="inline-block w-[3px] h-[3px] rounded-full flex-shrink-0" style={{ backgroundColor: project.color }} />
+            <motion.span
+              key={j}
+              initial={{ opacity: 0, x: -12 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.5 + j * 0.06 }}
+              className="flex items-center gap-2.5 font-['Inter'] text-sm text-snow/70"
+            >
+              <motion.span
+                className="inline-block w-[3px] h-[3px] rounded-full flex-shrink-0"
+                style={{ backgroundColor: project.color }}
+                animate={{ scale: [1, 1.5, 1], opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity, delay: j * 0.3 }}
+              />
               {h}
             </motion.span>
           ))}
@@ -178,131 +316,194 @@ function FeatureBlock({ project, index, scrollYProgress }) {
   );
 }
 
-function SplitBlock({ project, index, scrollYProgress }) {
+/* ─── SPLIT 50/50 ─── */
+function SplitBlock({ project, index, browserPref }) {
   const ref = useRef(null);
-  const blockProgress = useTransform(scrollYProgress, [index * 0.18, index * 0.18 + 0.25], [0, 1]);
-  const imgY = useTransform(blockProgress, [0, 1], [25, -25]);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 60, damping: 25, mass: 0.5 });
+  const progress = useTransform(smoothProgress, [0, 0.3], [0, 1]);
+
+  const imgX = useTransform(progress, [0, 1], [-30, 0]);
+  const imgOpacity = useTransform(progress, [0, 0.3], [0.5, 1]);
+  const textY = useTransform(progress, [0, 1], [30, 0]);
 
   return (
     <motion.div
       ref={ref}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-80px' }}
-      className="mb-32 md:mb-44 last:mb-0 group"
+      className="mb-24 md:mb-32 last:mb-0 group"
     >
       <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-        <Link to={`/work/${project.id}`} className="block w-full origin-center group/card">
-          <motion.div style={{ y: imgY }} className="relative">
-            <TimeStarMockup />
-            <div className="absolute inset-0 bg-accent/0 group-hover/card:bg-accent/[0.02] transition-colors duration-500 rounded-lg" />
-            <div className="absolute bottom-3 right-3 opacity-0 group-hover/card:opacity-100 transition-all duration-300 translate-y-1 group-hover/card:translate-y-0">
-              <span className="font-mono text-[9px] tracking-wider text-white/40 bg-black/60 px-3 py-1.5 rounded-sm backdrop-blur-sm">
+        {/* Left: mockup */}
+        <Link to={`/work/${project.id}`} className="block w-full perspective-1000 group/card">
+          <motion.div
+            style={{ x: imgX, opacity: imgOpacity }}
+            className="relative"
+            whileHover={{ rotateY: -1.5, rotateX: 1.5, scale: 1.008 }}
+            transition={{ type: 'spring', stiffness: 120, damping: 30, mass: 0.8 }}
+          >
+            <motion.div
+              className="absolute -inset-4 rounded-2xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"
+              style={{
+                background: `radial-gradient(ellipse at center, ${project.color}08, transparent 70%)`,
+                filter: 'blur(20px)',
+              }}
+            />
+            <TimeStarMockup variant={browserPref} />
+            <motion.div
+              className="absolute bottom-4 right-4 opacity-0 group-hover/card:opacity-100 transition-all duration-400 translate-y-2 group-hover/card:translate-y-0"
+            >
+              <span className="font-mono text-[9px] tracking-wider text-white/50 bg-black/70 px-3 py-1.5 rounded-sm backdrop-blur-md border border-white/5">
                 Click to explore →
               </span>
-            </div>
+            </motion.div>
           </motion.div>
         </Link>
 
-        <div>
-          <motion.div custom={0} variants={fadeIn} className="flex items-center gap-4 md:gap-6 mb-4">
-            <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">{project.year}</span>
-            {project.tags.map((tag) => (
-              <span key={tag} className="flex items-center gap-3">
-                <span className="w-px h-3 bg-white/10" />
-                <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">{tag}</span>
-              </span>
+        {/* Right: text */}
+        <motion.div style={{ y: textY }}>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.05 }}
+            className="flex items-center gap-4 md:gap-6 mb-4"
+          >
+            {[project.year, ...project.tags].map((item, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.1 + i * 0.06 }}
+                className="flex items-center gap-3"
+              >
+                {i > 0 && <span className="w-px h-3 bg-white/10" />}
+                <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">{item}</span>
+              </motion.span>
             ))}
           </motion.div>
-          <motion.h3 custom={1} variants={slideUp} className="font-['Inter'] font-bold text-snow leading-[1.05] mb-6" style={{ fontSize: 'clamp(2rem, 4.5vw, 3.5rem)' }}>
-            {project.title}
+
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="font-['Inter'] font-bold text-snow leading-[1.05] mb-6"
+            style={{ fontSize: 'clamp(2rem, 4.5vw, 3.5rem)' }}
+          >
+            {project.title.split('').map((char, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.25 + i * 0.025, ease: [0.16, 1, 0.3, 1] }}
+                className="inline-block"
+              >
+                {char}
+              </motion.span>
+            ))}
             <span className="block text-muted font-light text-base md:text-xl mt-2">{project.subtitle}</span>
           </motion.h3>
-          <motion.p custom={2} variants={fadeIn} className="font-['Inter'] text-muted text-sm md:text-base leading-relaxed tracking-wide mb-6">
+
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.35 }}
+            className="font-['Inter'] text-muted text-sm md:text-base leading-relaxed tracking-wide mb-6"
+          >
             {project.description}
           </motion.p>
-          <motion.div custom={3} variants={fadeIn}>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.45 }}
+          >
             <Link
               to={`/work/${project.id}`}
-              className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-sm transition-all duration-300"
-              style={{
-                background: `${project.color}12`,
-                color: project.color,
-                border: `1px solid ${project.color}20`,
-              }}
+              className="relative inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-sm overflow-hidden group/btn transition-all duration-300"
+              style={{ color: project.color, border: `1px solid ${project.color}20` }}
             >
-              View Project
               <motion.span
-                animate={{ x: [0, 4, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="inline-block"
+                className="absolute inset-0"
+                style={{ background: `${project.color}08` }}
+                whileHover={{ background: `${project.color}15` }}
+                transition={{ duration: 0.3 }}
+              />
+              <span className="relative z-10">View Project</span>
+              <motion.span
+                className="relative z-10 inline-block"
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
               >→</motion.span>
             </Link>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );
 }
 
 /* ═══════════════════════════════════════════
-   HEAVY UI BROWSER-WINDOW MOCKUPS
+   BROWSER MOCKUPS
    ═══════════════════════════════════════════ */
 
-function BrowserFrame({ children, url }) {
-  return (
-    <div className="w-full rounded-xl overflow-hidden shadow-2xl shadow-black/40" style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)' }}>
-      <div className="flex items-center gap-2 px-4 h-9" style={{ background: '#141414', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-        <motion.span className="w-3 h-3 rounded-full bg-red-500/70" whileHover={{ scale: 1.2 }} />
-        <motion.span className="w-3 h-3 rounded-full bg-yellow-500/70" whileHover={{ scale: 1.2 }} />
-        <motion.span className="w-3 h-3 rounded-full bg-green-500/70" whileHover={{ scale: 1.2 }} />
-        {url && (
-          <div className="ml-3 flex-1 max-w-[60%] h-5 rounded-md flex items-center px-3" style={{ background: 'rgba(255,255,255,0.06)' }}>
-            <span className="w-2.5 h-2.5 mr-1.5 opacity-30">🔒</span>
-            <span className="text-[8px] font-mono text-white/35 truncate tracking-tight">{url}</span>
-          </div>
-        )}
-      </div>
-      {children}
-    </div>
-  );
-}
 
-function NagarSewaMockup() {
+
+function NagarSewaMockup({ variant = 'mac' }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95, y: 20 }}
+      initial={{ opacity: 0, scale: 0.95, y: 30 }}
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ scale: 1.015 }}
+      whileHover={{ scale: 1.008 }}
       className="origin-center cursor-pointer"
     >
-      <BrowserFrame url="nagar-sewa.gov/dashboard">
+      <BrowserFrame url="nagar-sewa.gov/dashboard" variant={variant}>
         <div className="flex" style={{ minHeight: '320px' }}>
-          <div className="w-12 md:w-14 py-4 flex flex-col items-center gap-3" style={{ background: '#121212', borderRight: '1px solid rgba(255,255,255,0.03)' }}>
-            {['📊', '📋', '👥', '⚙️', '📁'].map((icon, i) => (
+          <motion.div
+            className="w-14 md:w-16 py-4 flex flex-col items-center gap-3"
+            style={{ background: '#121212', borderRight: '1px solid rgba(255,255,255,0.03)' }}
+          >
+            {[
+              <svg key="dash" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>,
+              <svg key="rep" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>,
+              <svg key="peop" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
+              <svg key="set" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>,
+              <svg key="fol" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" /></svg>,
+            ].map((icon, i) => (
               <motion.div
                 key={i}
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-xs"
-                style={{ background: i === 0 ? 'rgba(200,255,0,0.1)' : 'rgba(255,255,255,0.03)' }}
-                whileHover={{ scale: 1.1, background: 'rgba(200,255,0,0.08)' }}
+                className="w-8 h-8 rounded-lg flex items-center justify-center"
+                style={{ color: i === 0 ? 'rgba(200,255,0,0.6)' : 'rgba(255,255,255,0.25)' }}
+                whileHover={{ color: 'rgba(200,255,0,0.8)', background: 'rgba(200,255,0,0.08)' }}
+                whileTap={{ scale: 0.9 }}
               >
                 {icon}
               </motion.div>
             ))}
-          </div>
+          </motion.div>
           <div className="flex-1 p-4 md:p-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="flex-1 h-9 rounded-lg flex items-center px-3 text-[8px] font-mono" style={{ background: 'rgba(255,255,255,0.04)' }}>
-                <span className="text-white/20">🔍 Search reports, citizens, wards...</span>
-              </div>
               <motion.div
-                className="h-9 w-24 rounded-lg flex items-center justify-center text-[8px] font-mono font-medium"
-                style={{ background: 'rgba(200,255,0,0.08)', color: 'rgba(200,255,0,0.6)' }}
-                whileHover={{ background: 'rgba(200,255,0,0.12)' }}
+                className="flex-1 h-9 rounded-lg flex items-center px-3 text-[8px] font-mono cursor-text"
+                style={{ background: 'rgba(255,255,255,0.04)' }}
+                whileHover={{ background: 'rgba(255,255,255,0.06)' }}
               >
-                + New Report
+                <svg className="w-3 h-3 mr-2 text-white/15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                <span className="text-white/20">Search reports, citizens, wards...</span>
+              </motion.div>
+              <motion.div
+                className="h-9 px-3 rounded-lg flex items-center justify-center text-[8px] font-mono font-medium cursor-pointer"
+                style={{ background: 'rgba(200,255,0,0.08)', color: 'rgba(200,255,0,0.6)' }}
+                whileHover={{ background: 'rgba(200,255,0,0.14)', scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                + New
               </motion.div>
             </div>
 
@@ -315,10 +516,10 @@ function NagarSewaMockup() {
               ].map((stat, i) => (
                 <motion.div
                   key={i}
-                  className="p-3 rounded-xl"
+                  className="p-3 rounded-xl cursor-default"
                   style={{ background: 'rgba(255,255,255,0.02)' }}
-                  whileHover={{ background: 'rgba(255,255,255,0.04)', y: -2 }}
-                  transition={{ duration: 0.2 }}
+                  whileHover={{ background: 'rgba(255,255,255,0.04)', y: -2, scale: 1.005 }}
+                  transition={{ type: 'spring', stiffness: 200, damping: 25, mass: 0.5 }}
                 >
                   <div className="text-[7px] font-mono text-white/30 uppercase tracking-wider">{stat.label}</div>
                   <div className="text-sm font-semibold text-white/80 mt-1">{stat.value}</div>
@@ -333,33 +534,47 @@ function NagarSewaMockup() {
               {[35, 55, 40, 70, 45, 60, 50, 80, 65, 75, 55, 85].map((h, i) => (
                 <motion.div
                   key={i}
-                  className="flex-1 rounded-t-md relative group/chart"
+                  className="flex-1 rounded-t-md cursor-pointer origin-bottom relative group"
                   style={{
                     height: `${h}%`,
                     background: i >= 7 ? 'rgba(200,255,0,0.2)' : 'rgba(255,255,255,0.06)',
                   }}
-                  whileHover={{ opacity: 0.8 }}
-                />
+                  whileHover={{ scaleY: 1.06, background: 'rgba(200,255,0,0.3)' }}
+                  layout
+                  transition={{ type: 'spring', stiffness: 200, damping: 25, mass: 0.5 }}
+                >
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 text-[5px] font-mono text-white/15 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                    {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i]}
+                  </div>
+                </motion.div>
               ))}
             </div>
 
-            <div className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.03)' }}>
+            <motion.div
+              className="rounded-xl overflow-hidden"
+              style={{ border: '1px solid rgba(255,255,255,0.03)' }}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.6 }}
+            >
               <div className="grid grid-cols-5 gap-2 px-3 py-2.5" style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                 {['Issue', 'Ward', 'Priority', 'Status', 'Date'].map((h) => (
                   <div key={h} className="text-[7px] font-mono text-white/25 uppercase tracking-wider">{h}</div>
                 ))}
               </div>
               {[
-                ['Road pothole', 'Ward 3', 'High', 'In Progress', 'Jun 14'],
-                ['Water leakage', 'Ward 7', 'Medium', 'Assigned', 'Jun 13'],
-                ['Street light out', 'Ward 2', 'Low', 'Resolved', 'Jun 12'],
-                ['Garbage dump', 'Ward 5', 'High', 'In Progress', 'Jun 11'],
+                ['Pothole on Main Rd', 'Ward 3', 'High', 'In Progress', 'Jun 14'],
+                ['Water pipe burst', 'Ward 7', 'Medium', 'Assigned', 'Jun 13'],
+                ['Street light outage', 'Ward 2', 'Low', 'Resolved', 'Jun 12'],
+                ['Illegal dumping site', 'Ward 5', 'High', 'In Progress', 'Jun 11'],
               ].map((row, i) => (
                 <motion.div
                   key={i}
-                  className="grid grid-cols-5 gap-2 px-3 py-2.5"
+                  className="grid grid-cols-5 gap-2 px-3 py-2.5 cursor-pointer"
                   style={{ borderBottom: i < 3 ? '1px solid rgba(255,255,255,0.015)' : 'none' }}
-                  whileHover={{ background: 'rgba(255,255,255,0.02)' }}
+                  whileHover={{ background: 'rgba(255,255,255,0.03)', x: 4 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <div className="text-[8px] font-mono text-white/55 truncate">{row[0]}</div>
                   <div className="text-[8px] font-mono text-white/30">{row[1]}</div>
@@ -382,7 +597,7 @@ function NagarSewaMockup() {
                   <div className="text-[8px] font-mono text-white/20">{row[4]}</div>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </BrowserFrame>
@@ -390,17 +605,17 @@ function NagarSewaMockup() {
   );
 }
 
-function TimeStarMockup() {
+function TimeStarMockup({ variant = 'mac' }) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20, rotateY: -3 }}
+      initial={{ opacity: 0, x: -30, rotateY: -4 }}
       whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ scale: 1.02 }}
+      whileHover={{ scale: 1.008 }}
       className="origin-center cursor-pointer"
     >
-      <BrowserFrame url="timestar.com/products/chronograph-edition">
+      <BrowserFrame url="timestar.com/products/chronograph-edition" variant={variant}>
         <div className="flex" style={{ minHeight: '320px' }}>
           <div className="w-1/2 flex flex-col items-center justify-center p-5 relative" style={{ background: '#111' }}>
             <motion.div
@@ -410,30 +625,40 @@ function TimeStarMockup() {
                 border: '2px solid rgba(255,255,255,0.06)',
                 boxShadow: '0 12px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)',
               }}
-              whileHover={{ scale: 1.03 }}
+              whileHover={{ scale: 1.04, rotate: 3 }}
+              transition={{ type: 'spring', stiffness: 200 }}
             >
               <div className="absolute inset-[20%] rounded-full" style={{
                 background: 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.02), transparent)',
                 border: '1px solid rgba(255,255,255,0.04)',
               }} />
-              <div className="absolute top-1/2 left-1/2 w-[35%] h-[1.5px] origin-left" style={{ background: 'rgba(255,255,255,0.1)', transform: 'translate(0, -50%) rotate(-25deg)' }} />
-              <div className="absolute top-1/2 left-1/2 w-[25%] h-[1.5px] origin-left" style={{ background: 'rgba(255,255,255,0.07)', transform: 'translate(0, -50%) rotate(55deg)' }} />
+              <motion.div
+                className="absolute top-1/2 left-1/2 w-[35%] h-[1.5px] origin-left rounded-full"
+                style={{ background: 'rgba(255,255,255,0.1)', transform: 'translate(0, -50%) rotate(-25deg)' }}
+                animate={{ rotate: [-25, 30, -25] }}
+                transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+              />
+              <motion.div
+                className="absolute top-1/2 left-1/2 w-[25%] h-[1px] origin-left rounded-full"
+                style={{ background: 'rgba(255,255,255,0.07)', transform: 'translate(0, -50%) rotate(55deg)' }}
+                animate={{ rotate: [55, 85, 55] }}
+                transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+              />
               <div className="absolute top-[18%] left-[50%] w-[6%] h-[4%] -translate-x-1/2 rounded-sm" style={{ background: 'rgba(255,255,255,0.04)' }} />
             </motion.div>
             <div className="flex items-center gap-1 mt-4">
               {[...Array(5)].map((_, i) => (
-                <motion.span
-                  key={i}
-                  className="text-[8px]"
-                  style={{ color: i < 4 ? 'rgba(160,207,255,0.5)' : 'rgba(255,255,255,0.1)' }}
-                  whileHover={{ scale: 1.3 }}
-                >★</motion.span>
+                <svg key={i} className={`w-3 h-3 ${i < 4 ? 'text-blue-300/50' : 'text-white/10'}`} viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
               ))}
               <span className="text-[7px] font-mono text-white/20 ml-1.5">(24 reviews)</span>
             </div>
           </div>
           <div className="w-1/2 p-4 md:p-5 flex flex-col justify-center space-y-2.5">
-            <div className="text-[7px] font-mono text-white/20 uppercase tracking-[0.2em]">TimeStar Collection</div>
+            <div className="text-[7px] font-mono text-white/20 uppercase tracking-[0.2em]">
+              TimeStar Collection
+            </div>
             <div className="text-sm md:text-base font-semibold text-white/85 leading-tight">Chronograph<br/>Edition 2100</div>
             <div className="flex items-center gap-1.5">
               <span className="text-xs font-bold text-white/80">$349</span>
@@ -442,23 +667,26 @@ function TimeStarMockup() {
             </div>
             <div className="flex gap-2 pt-1">
               <motion.div
-                className="flex-1 h-8 rounded-lg text-[8px] font-mono flex items-center justify-center font-medium tracking-wider"
+                className="flex-1 h-8 rounded-lg text-[8px] font-mono flex items-center justify-center font-medium tracking-wider cursor-pointer"
                 style={{ background: 'rgba(160,207,255,0.08)', color: 'rgba(160,207,255,0.6)' }}
-                whileHover={{ background: 'rgba(160,207,255,0.14)' }}
+                whileHover={{ background: 'rgba(160,207,255,0.18)', scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
                 Add to Cart
               </motion.div>
               <motion.div
-                className="w-8 h-8 rounded-lg flex items-center justify-center"
+                className="w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer"
                 style={{ background: 'rgba(255,255,255,0.03)' }}
-                whileHover={{ background: 'rgba(255,255,255,0.06)' }}
+                whileHover={{ background: 'rgba(255,255,255,0.08)', scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
-                <span className="text-xs text-white/20">♡</span>
+                <svg className="w-3.5 h-3.5 text-white/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
               </motion.div>
             </div>
             <div className="flex items-center gap-2 pt-1 text-[7px] font-mono text-white/15">
-              <span>✓ In stock</span>
+              <span style={{ color: 'rgba(160,207,255,0.5)' }}>In stock</span>
               <span>•</span>
               <span>Free returns</span>
               <span>•</span>
@@ -471,41 +699,52 @@ function TimeStarMockup() {
   );
 }
 
-function SahakariNetMockup() {
+function SahakariNetMockup({ variant = 'mac' }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95, y: 20 }}
+      initial={{ opacity: 0, scale: 0.95, y: 30 }}
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ scale: 1.015 }}
+      whileHover={{ scale: 1.008 }}
       className="origin-center cursor-pointer"
     >
-      <BrowserFrame url="sahakarinet.org/admin/members">
+      <BrowserFrame url="sahakarinet.org/admin/members" variant={variant}>
         <div className="flex" style={{ minHeight: '320px' }}>
-          <div className="w-12 md:w-14 py-4 flex flex-col items-center gap-2.5" style={{ background: '#121212', borderRight: '1px solid rgba(255,255,255,0.03)' }}>
-            {['📊', '👥', '💰', '📄', '⚙️'].map((icon, i) => (
+          <motion.div
+            className="w-14 md:w-16 py-4 flex flex-col items-center gap-2.5"
+            style={{ background: '#121212', borderRight: '1px solid rgba(255,255,255,0.03)' }}
+          >
+            {[
+              <svg key="ov" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>,
+              <svg key="mb" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
+              <svg key="fn" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>,
+              <svg key="doc" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>,
+              <svg key="st" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>,
+            ].map((icon, i) => (
               <motion.div
                 key={i}
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-xs"
-                style={{ background: i === 1 ? 'rgba(255,184,108,0.1)' : 'rgba(255,255,255,0.03)' }}
-                whileHover={{ scale: 1.1 }}
+                className="w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer"
+                style={{ color: i === 1 ? 'rgba(255,184,108,0.6)' : 'rgba(255,255,255,0.25)' }}
+                whileHover={{ color: 'rgba(255,184,108,0.8)', background: 'rgba(255,184,108,0.08)' }}
+                whileTap={{ scale: 0.9 }}
               >
                 {icon}
               </motion.div>
             ))}
-          </div>
+          </motion.div>
           <div className="flex-1 p-4 md:p-5">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className="text-[10px] font-mono text-white/70 font-semibold">Members</div>
                 <div className="text-[7px] font-mono text-white/20 bg-white/5 px-2 py-0.5 rounded-md">248 total</div>
-                <div className="text-[7px] font-mono" style={{ color: 'rgba(255,184,108,0.5)' }}>● 12 new this month</div>
+                <div className="text-[7px] font-mono text-white/30">12 new this month</div>
               </div>
               <motion.div
-                className="px-3 h-7 rounded-lg flex items-center justify-center text-[7px] font-mono font-medium"
+                className="px-3 h-7 rounded-lg flex items-center justify-center text-[7px] font-mono font-medium cursor-pointer"
                 style={{ background: 'rgba(255,184,108,0.08)', color: 'rgba(255,184,108,0.5)' }}
-                whileHover={{ background: 'rgba(255,184,108,0.12)' }}
+                whileHover={{ background: 'rgba(255,184,108,0.14)', scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
               >
                 + Add Member
               </motion.div>
@@ -517,14 +756,27 @@ function SahakariNetMockup() {
                 { label: 'Total Loans', value: '$17,500' },
                 { label: 'Active Accounts', value: '236' },
               ].map((s, i) => (
-                <div key={i} className="p-2.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.015)' }}>
+                <motion.div
+                  key={i}
+                  className="p-2.5 rounded-xl cursor-default"
+                  style={{ background: 'rgba(255,255,255,0.015)' }}
+                  whileHover={{ background: 'rgba(255,255,255,0.03)', y: -1.5 }}
+                  transition={{ type: 'spring', stiffness: 200, damping: 25, mass: 0.5 }}
+                >
                   <div className="text-[6px] font-mono text-white/25 uppercase">{s.label}</div>
                   <div className="text-xs font-semibold text-white/70 mt-0.5">{s.value}</div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
-            <div className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.03)' }}>
+            <motion.div
+              className="rounded-xl overflow-hidden"
+              style={{ border: '1px solid rgba(255,255,255,0.03)' }}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.6 }}
+            >
               <div className="grid grid-cols-6 gap-1 px-3 py-2.5" style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                 {['Name', 'ID', 'Deposit', 'Loan', 'Status', ''].map((h) => (
                   <div key={h} className="text-[7px] font-mono text-white/25 uppercase tracking-wider">{h}</div>
@@ -539,9 +791,10 @@ function SahakariNetMockup() {
               ].map((row, i) => (
                 <motion.div
                   key={i}
-                  className="grid grid-cols-6 gap-1 px-3 py-2"
+                  className="grid grid-cols-6 gap-1 px-3 py-2 cursor-pointer"
                   style={{ borderBottom: '1px solid rgba(255,255,255,0.015)' }}
-                  whileHover={{ background: 'rgba(255,255,255,0.02)' }}
+                  whileHover={{ background: 'rgba(255,255,255,0.03)', x: 3 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <div className="text-[8px] font-mono text-white/55 truncate">{row[0]}</div>
                   <div className="text-[8px] font-mono text-white/25">{row[1]}</div>
@@ -555,24 +808,36 @@ function SahakariNetMockup() {
                       {row[4]}
                     </span>
                   </div>
-                  <div className="text-[8px] text-white/15 text-right">⋮</div>
+                  <div className="text-[8px] text-white/15 text-right">...</div>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            <div className="flex items-center justify-between mt-3">
+            <motion.div
+              className="flex items-center justify-between mt-3"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.8 }}
+            >
               <div className="text-[7px] font-mono text-white/15">Showing 5 of 248 members</div>
               <div className="flex items-center gap-1">
                 {[1, 2, 3, '...', 7].map((n, i) => (
-                  <div key={i} className="w-6 h-6 rounded-md flex items-center justify-center text-[7px] font-mono" style={{
-                    background: n === 1 ? 'rgba(255,184,108,0.08)' : 'rgba(255,255,255,0.02)',
-                    color: n === 1 ? 'rgba(255,184,108,0.5)' : 'rgba(255,255,255,0.25)',
-                  }}>
+                  <motion.div
+                    key={i}
+                    className="w-6 h-6 rounded-md flex items-center justify-center text-[7px] font-mono cursor-pointer"
+                    style={{
+                      background: n === 1 ? 'rgba(255,184,108,0.08)' : 'rgba(255,255,255,0.02)',
+                      color: n === 1 ? 'rgba(255,184,108,0.5)' : 'rgba(255,255,255,0.25)',
+                    }}
+                    whileHover={{ background: 'rgba(255,184,108,0.12)', scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
                     {n}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </BrowserFrame>

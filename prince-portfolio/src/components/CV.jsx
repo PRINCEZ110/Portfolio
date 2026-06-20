@@ -1,11 +1,81 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+function BgCanvas() {
+  const ref = useRef(null);
+  const mouse = useRef({ x: -1000, y: -1000 });
+
+  useEffect(() => {
+    const c = ref.current;
+    if (!c) return;
+    const ctx = c.getContext('2d');
+    let id, w, h;
+
+    const resize = () => {
+      const p = c.parentElement;
+      w = p.offsetWidth; h = p.offsetHeight;
+      c.width = w * devicePixelRatio; c.height = h * devicePixelRatio;
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+    };
+
+    const onMove = (e) => {
+      const r = c.getBoundingClientRect();
+      mouse.current.x = e.clientX - r.left; mouse.current.y = e.clientY - r.top;
+    };
+    const off = () => { mouse.current.x = -1000; mouse.current.y = -1000; };
+    window.addEventListener('mousemove', onMove); window.addEventListener('mouseleave', off);
+
+    const pts = Array.from({ length: 40 }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
+      s: Math.random() * 1.5 + 0.5, a: Math.random() * 0.04 + 0.02,
+    }));
+
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      const mx = mouse.current.x, my = mouse.current.y;
+
+      pts.forEach(p => {
+        const dx = mx - p.x, dy = my - p.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 200) { const f = (200 - d) / 200 * 0.02; p.vx += dx * f; p.vy += dy * f; }
+        p.vx += (Math.random() - 0.5) * 0.02; p.vy += (Math.random() - 0.5) * 0.02;
+        p.vx *= 0.97; p.vy *= 0.97; p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = w; if (p.x > w) p.x = 0; if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(200,255,0,${d < 150 ? 0.12 : p.a})`;
+        ctx.fill();
+      });
+
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 120) {
+            ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.strokeStyle = `rgba(200,255,0,${0.02 * (1 - d / 120)})`;
+            ctx.lineWidth = 0.5; ctx.stroke();
+          }
+        }
+      }
+      id = requestAnimationFrame(draw);
+    };
+
+    resize(); draw();
+    window.addEventListener('resize', resize);
+    return () => { cancelAnimationFrame(id); window.removeEventListener('resize', resize); window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseleave', off); };
+  }, []);
+
+  return <canvas ref={ref} className="absolute inset-0 pointer-events-none" style={{ width: '100%', height: '100%' }} />;
+}
 
 export default function CV() {
   const [viewing, setViewing] = useState(false);
 
   return (
-    <section id="cv" className="px-6 md:px-12 py-24 border-t border-border">
+    <section id="cv" className="px-6 md:px-12 py-24 border-t border-border relative overflow-hidden">
+      <BgCanvas />
       <div className="max-w-8xl mx-auto">
 
         {/* Header row */}

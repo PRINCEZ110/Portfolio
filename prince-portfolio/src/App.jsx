@@ -39,7 +39,7 @@ export default function App() {
           <Route path="/work/:projectId" element={<ProjectDetail />} />
         </Routes>
       </main>
-      <Footer />
+      {!isProjectPage && <Footer />}
     </>
   );
 }

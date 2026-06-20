@@ -37,7 +37,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="px-6 md:px-12 py-24">
+    <section id="contact" className="px-6 md:px-12 lg:px-20 py-24 md:py-32">
       <div className="max-w-8xl mx-auto">
         <div className="mb-14">
           <span className="font-mono text-xs text-accent tracking-widest uppercase">get in touch</span>
