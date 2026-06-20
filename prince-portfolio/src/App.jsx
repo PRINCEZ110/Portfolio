@@ -1,6 +1,7 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Cursor from './components/Cursor';
 import Navbar from './components/Navbar';
+import ProjectNavbar from './components/ProjectNavbar';
 import Hero from './components/Hero';
 import Marquee from './components/Marquee';
 import Work from './components/Work';
@@ -16,10 +17,13 @@ const techStack = [
 ];
 
 export default function App() {
+  const location = useLocation();
+  const isProjectPage = location.pathname.startsWith('/work/');
+
   return (
     <>
       <Cursor />
-      <Navbar />
+      {isProjectPage ? <ProjectNavbar /> : <Navbar />}
       <main>
         <Routes>
           <Route path="/" element={
