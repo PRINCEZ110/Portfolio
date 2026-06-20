@@ -62,14 +62,3 @@ body::before {
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: #0A0A0A; }
 ::-webkit-scrollbar-thumb { background: #C8FF00; border-radius: 2px; }
-
-.tag {
-  display: inline-block;
-  padding: 3px 10px;
-  border: 1px solid #333;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.05em;
-  color: #888880;
-}
