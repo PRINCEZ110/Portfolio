@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const projects = [
   {
@@ -7,13 +7,7 @@ const projects = [
     title: 'NagarSewa',
     subtitle: 'E-Governance Web Application',
     year: '2025 – 2026',
-    tags: ['Web App', 'React', 'Civic Tech'],
-    description: 'A citizen-focused digital platform designed to improve communication between citizens and local government bodies by enabling issue reporting and tracking resolution progress.',
-    highlights: [
-      'React.js + Tailwind CSS frontend',
-      'Responsive civic engagement platform',
-      'Transparent issue tracking workflow',
-    ],
+    tags: ['Web App / React / Civic Tech'],
     color: '#C8FF00',
   },
   {
@@ -21,13 +15,7 @@ const projects = [
     title: 'TimeStar',
     subtitle: 'E-Commerce Online Watch Store',
     year: '2024 – 2025',
-    tags: ['E-Commerce', 'Frontend', 'UI Design'],
-    description: 'A modern online watch store designed with a focus on clean navigation, product discovery, and smooth user experience for e-commerce browsing.',
-    highlights: [
-      'Product browsing and search system',
-      'Clean UI/UX design focused on conversions',
-      'Built with HTML, CSS, and Java',
-    ],
+    tags: ['E-Commerce / Frontend / UI Design'],
     color: '#A0CFFF',
   },
   {
@@ -35,14 +23,7 @@ const projects = [
     title: 'SahakariNet',
     subtitle: 'Cooperative Management System',
     year: '2026',
-    tags: ['Enterprise', 'Java', 'Database'],
-    description: 'A full-stack cooperative management system built using Java MVC architecture, designed for managing members, financial transactions, and cooperative operations efficiently.',
-    highlights: [
-      'Java, JSP, Servlets, JDBC, MySQL',
-      'Role-based access control system',
-      'Secure authentication with session management and BCrypt encryption',
-      'Features: deposits, withdrawals, loans, member management',
-    ],
+    tags: ['Enterprise / Java / Database'],
     color: '#FFB86C',
   },
 ];
@@ -55,287 +36,157 @@ export default function Work() {
   });
 
   return (
-    <section id="work" className="relative px-6 md:px-12 lg:px-20 py-32 md:py-48 overflow-hidden" ref={sectionRef}>
+    <section id="work" className="px-6 md:px-12 lg:px-20 py-32 md:py-48" ref={sectionRef}>
       <div className="max-w-[1440px] mx-auto">
-        {/* ─── SECTION HEADER ─── */}
+        {/* HEADER */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-32 md:mb-48"
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-24"
         >
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="font-['JetBrains_Mono'] text-[11px] tracking-[0.25em] text-muted uppercase block mb-5"
-          >
+          <p className="font-body text-[11px] tracking-[0.25em] text-muted uppercase mb-3">
             Selected Projects
-          </motion.span>
-
-          <h2 className="font-['Inter'] font-extrabold text-snow leading-[0.95] mb-6" style={{ fontSize: 'clamp(2.8rem, 8vw, 7rem)' }}>
-            {['Work', 'that', 'matters'].map((word, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.2 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-block mr-[0.15em]"
-              >
-                {word}
-              </motion.span>
-            ))}
+          </p>
+          <h2 className="font-body font-bold text-snow leading-[1.05] mb-4" style={{ fontSize: 'clamp(2.4rem, 6vw, 4.5rem)' }}>
+            Work<br />that matters.
           </h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="font-['Inter'] text-muted text-sm md:text-base max-w-lg leading-relaxed tracking-wide"
-          >
-            A collection of systems, platforms, and digital experiences I've built.
-          </motion.p>
-
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="h-[1px] bg-white/10 origin-left mt-10"
-          />
         </motion.div>
 
-        {/* ─── PROJECT 1: FULL-SCREEN FEATURE ─── */}
-        <FullFeatureBlock
-          project={projects[0]}
-          scrollYProgress={scrollYProgress}
-          index={0}
-          mockup={<NagarSewaMockup />}
-        />
-
-        {/* ─── PROJECT 2: SPLIT LAYOUT ─── */}
-        <SplitBlock
-          project={projects[1]}
-          scrollYProgress={scrollYProgress}
-          index={1}
-          mockup={<TimeStarMockup />}
-        />
-
-        {/* ─── PROJECT 3: FULL-WIDTH ENTERPRISE ─── */}
-        <FullFeatureBlock
-          project={projects[2]}
-          scrollYProgress={scrollYProgress}
-          index={2}
-          mockup={<SahakariNetMockup />}
-        />
+        {/* PROJECTS — full-bleed vertical stack like Behance */}
+        {projects.map((p, i) => (
+          <ProjectBlock key={p.id} project={p} index={i} scrollYProgress={scrollYProgress} />
+        ))}
       </div>
     </section>
   );
 }
 
-/* ─── FULL-WIDTH CINEMATIC FEATURE BLOCK ─── */
-function FullFeatureBlock({ project, scrollYProgress, index, mockup }) {
+function ProjectBlock({ project, index, scrollYProgress }) {
   const ref = useRef(null);
-  const blockProgress = useTransform(scrollYProgress, [index * 0.18, index * 0.18 + 0.25], [0, 1]);
-  const imgScale = useTransform(blockProgress, [0, 1], [1, 1.08]);
-  const imgOpacity = useTransform(blockProgress, [0, 1], [0.4, 1]);
-  const contentY = useTransform(blockProgress, [0, 1], [30, 0]);
+  const progress = useTransform(scrollYProgress, [index * 0.2, index * 0.2 + 0.3], [0, 1]);
+  const imgParallax = useTransform(progress, [0, 1], [15, -15]);
+
+  const isSplit = index === 1;
 
   return (
     <motion.div
       ref={ref}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-80px' }}
-      className="mb-40 md:mb-56 last:mb-0"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+      className="mb-32 md:mb-44 last:mb-0"
     >
-      {/* Left title + Right mockup — cinematic spread */}
-      <div className="grid md:grid-cols-2 gap-12 md:gap-16 mb-12 md:mb-16">
-        {/* Left: text */}
-        <div>
-          <motion.div
-            variants={textFadeUp}
-            className="flex flex-wrap items-center gap-4 md:gap-6 mb-6"
-          >
-            <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase">{project.year}</span>
-            {project.tags.map((tag) => (
-              <span key={tag} className="flex items-center gap-4">
-                <span className="w-px h-3 bg-white/10" />
-                <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase">{tag}</span>
-              </span>
-            ))}
-          </motion.div>
-
-          <motion.h3
-            variants={textFadeUp}
-            className="font-['Inter'] font-bold text-snow leading-[1.05] mb-6"
-            style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
-          >
-            {project.title}
-            <span className="text-muted font-light block md:inline md:ml-3">{project.subtitle}</span>
-          </motion.h3>
-
-          <motion.p
-            variants={textFadeUp}
-            className="font-['Inter'] text-muted text-sm md:text-base leading-[1.8] tracking-wide"
-          >
-            {project.description}
-          </motion.p>
-        </div>
-
-        {/* Right: cinematic mockup with parallax zoom */}
-        <motion.div
-          style={{ scale: imgScale, opacity: imgOpacity }}
-          className="relative overflow-hidden"
-        >
-          {mockup}
-        </motion.div>
-      </div>
-
-      {/* Highlights */}
-      <motion.div variants={textFadeUp} className="max-w-2xl">
-        <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase block mb-4">
-          Key Highlights
+      {/* Year + Tags — Behance-style metadata bar */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="flex items-center gap-3 mb-4"
+      >
+        <span className="font-body text-[11px] tracking-[0.2em] text-muted uppercase font-medium">
+          {project.year}
         </span>
-        <div className="flex flex-wrap gap-x-10 gap-y-2.5">
-          {project.highlights.map((h, j) => (
-            <motion.span
-              key={j}
-              initial={{ opacity: 0, x: -8 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: j * 0.06 }}
-              className="flex items-center gap-2.5 font-['Inter'] text-sm text-snow/70"
-            >
-              <span className="inline-block w-[3px] h-[3px] rounded-full flex-shrink-0" style={{ backgroundColor: project.color }} />
-              {h}
-            </motion.span>
-          ))}
+        <span className="w-6 h-px bg-white/10" />
+        <span className="font-body text-[11px] tracking-[0.15em] text-muted">
+          {project.tags[0]}
+        </span>
+      </motion.div>
+
+      {/* Title */}
+      <motion.h3
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        className="font-body font-bold text-snow leading-[1.05] mb-8"
+        style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+      >
+        {project.title}
+        <span className="block text-muted font-light text-base md:text-xl mt-2">
+          {project.subtitle}
+        </span>
+      </motion.h3>
+
+      {/* Mockup — full width block */}
+      <motion.div
+        style={{ y: imgParallax }}
+        className="mb-8"
+      >
+        <div className="w-full overflow-hidden bg-card/50 border border-white/[0.03]">
+          {project.id === 'nagarsewa' && <NagarSewaMockup />}
+          {project.id === 'timestar' && <TimeStarMockup />}
+          {project.id === 'sahakarinet' && <SahakariNetMockup />}
         </div>
       </motion.div>
+
+      {/* Thin divider line — Behance-style */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="h-px origin-left"
+        style={{ backgroundColor: project.color + '30' }}
+      />
     </motion.div>
   );
 }
 
-/* ─── SPLIT 50/50 LAYOUT ─── */
-function SplitBlock({ project, scrollYProgress, index, mockup }) {
-  const ref = useRef(null);
-  const blockProgress = useTransform(scrollYProgress, [index * 0.18, index * 0.18 + 0.25], [0, 1]);
-  const imgY = useTransform(blockProgress, [0, 1], [20, -20]);
-
-  return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-80px' }}
-      className="mb-40 md:mb-56 last:mb-0"
-    >
-      <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-        {/* Left: mockup */}
-        <motion.div style={{ y: imgY }}>
-          {mockup}
-        </motion.div>
-
-        {/* Right: text */}
-        <div>
-          <motion.div
-            variants={textFadeUp}
-            className="flex flex-wrap items-center gap-4 md:gap-6 mb-6"
-          >
-            <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase">{project.year}</span>
-            {project.tags.map((tag) => (
-              <span key={tag} className="flex items-center gap-4">
-                <span className="w-px h-3 bg-white/10" />
-                <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase">{tag}</span>
-              </span>
-            ))}
-          </motion.div>
-
-          <motion.h3
-            variants={textFadeUp}
-            className="font-['Inter'] font-bold text-snow leading-[1.05] mb-6"
-            style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
-          >
-            {project.title}
-            <span className="text-muted font-light block md:inline md:ml-3">{project.subtitle}</span>
-          </motion.h3>
-
-          <motion.p
-            variants={textFadeUp}
-            className="font-['Inter'] text-muted text-sm md:text-base leading-[1.8] tracking-wide mb-8"
-          >
-            {project.description}
-          </motion.p>
-
-          <motion.div variants={textFadeUp}>
-            <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-muted uppercase block mb-4">
-              Key Highlights
-            </span>
-            <div className="flex flex-col gap-2.5">
-              {project.highlights.map((h, j) => (
-                <motion.span
-                  key={j}
-                  initial={{ opacity: 0, x: -8 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: j * 0.06 }}
-                  className="flex items-center gap-2.5 font-['Inter'] text-sm text-snow/70"
-                >
-                  <span className="inline-block w-[3px] h-[3px] rounded-full flex-shrink-0" style={{ backgroundColor: project.color }} />
-                  {h}
-                </motion.span>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-const textFadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
-};
-
-/* ─── MOCKUP COMPONENTS ─── */
+/* ─── MOCKUPS — Behance-style full-bleed visual blocks ─── */
 
 function NagarSewaMockup() {
   return (
-    <div className="mockup-frame">
-      <div className="mockup-dashboard">
-        <div className="mockup-dash-top" />
-        <div className="mockup-dash-body">
-          <div className="mockup-dash-side" />
-          <div className="mockup-dash-main">
-            <div className="mockup-stat">
-              <div className="mockup-stat-item">
-                <div className="mockup-stat-label" />
-                <div className="mockup-stat-value" />
+    <div className="relative w-full" style={{ paddingTop: '56%' }}>
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #0d0d0d, #111)' }} />
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 80% 20%, rgba(200,255,0,0.03), transparent)' }} />
+
+        {/* Dashboard frame */}
+        <div className="absolute inset-4 md:inset-8 rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.04)' }}>
+          {/* Title bar */}
+          <div className="h-7 bg-white/[0.02] flex items-center px-3 gap-2 border-b border-white/[0.03]">
+            <span className="w-2 h-2 rounded-full bg-white/10" />
+            <span className="w-2 h-2 rounded-full bg-white/10" />
+            <span className="w-2 h-2 rounded-full bg-white/10" />
+            <span className="ml-3 text-[8px] font-body text-white/20 tracking-wider uppercase">nagar sewa · dashboard</span>
+          </div>
+
+          {/* Content */}
+          <div className="flex h-[calc(100%-28px)]">
+            {/* Sidebar */}
+            <div className="w-10 bg-white/[0.01] border-r border-white/[0.03]" />
+
+            {/* Main area */}
+            <div className="flex-1 p-4 md:p-6 space-y-4">
+              {/* Stat cards */}
+              <div className="grid grid-cols-3 gap-3">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="p-3 rounded" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                    <div className="h-1.5 w-14 rounded mb-1.5" style={{ background: 'rgba(255,255,255,0.05)' }} />
+                    <div className="h-3 w-10 rounded" style={{ background: i === 0 ? 'rgba(200,255,0,0.15)' : 'rgba(255,255,255,0.03)' }} />
+                  </div>
+                ))}
               </div>
-              <div className="mockup-stat-item">
-                <div className="mockup-stat-label" />
-                <div className="mockup-stat-value" />
-              </div>
-              <div className="mockup-stat-item">
-                <div className="mockup-stat-label" />
-                <div className="mockup-stat-value" />
-              </div>
-            </div>
-            <div className="mockup-list">
+
+              {/* Table */}
               {[...Array(4)].map((_, i) => (
-                <div className="mockup-list-item" key={i}>
-                  <span /><span /><span />
+                <div key={i} className="flex gap-3 py-1.5" style={{ borderBottom: '1px solid rgba(255,255,255,0.02)' }}>
+                  <div className="h-1.5 flex-1 rounded" style={{ background: 'rgba(255,255,255,0.04)' }} />
+                  <div className="h-1.5 w-16 rounded" style={{ background: 'rgba(255,255,255,0.03)' }} />
+                  <div className="h-1.5 w-12 rounded" style={{ background: 'rgba(200,255,0,0.08)' }} />
                 </div>
               ))}
             </div>
           </div>
         </div>
+
+        {/* Accent line */}
+        <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, rgba(200,255,0,0.15), transparent)' }} />
       </div>
     </div>
   );
@@ -343,16 +194,40 @@ function NagarSewaMockup() {
 
 function TimeStarMockup() {
   return (
-    <div className="mockup-frame">
-      <div className="mockup-product">
-        <div className="mockup-product-inner">
-          <div className="mockup-watch-ring" />
-          <div className="mockup-product-label">Chronograph Edition</div>
-          <div className="mockup-product-price">$349</div>
-          <div className="mockup-product-btns">
-            <span /><span />
+    <div className="relative w-full" style={{ paddingTop: '66%' }}>
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(145deg, #0d0d0d, #141414)' }} />
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(160,207,255,0.03), transparent)' }} />
+
+        <div className="absolute inset-4 md:inset-8 flex items-center justify-center">
+          {/* Mockup frame */}
+          <div className="w-full max-w-sm rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.04)' }}>
+            <div className="h-7 bg-white/[0.02] flex items-center px-3 border-b border-white/[0.03]">
+              <span className="text-[8px] font-body text-white/20 tracking-wider">timestar</span>
+            </div>
+
+            <div className="p-6 flex flex-col items-center">
+              {/* Watch */}
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full relative mb-4" style={{
+                background: 'radial-gradient(circle at 40% 35%, rgba(255,255,255,0.03), rgba(255,255,255,0.01))',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}>
+                <div className="absolute inset-[30%] rounded-full" style={{
+                  background: 'radial-gradient(circle at 40% 35%, rgba(255,255,255,0.02), transparent)',
+                  border: '1px solid rgba(255,255,255,0.04)'
+                }} />
+              </div>
+              <p className="text-[10px] font-body text-white/30 tracking-[0.2em] mb-1 uppercase">Chronograph Edition</p>
+              <p className="text-lg font-body text-white/60 font-light tracking-wide mb-4">$349</p>
+              <div className="flex gap-2 w-32">
+                <div className="flex-1 h-7 rounded" style={{ background: 'rgba(160,207,255,0.06)' }} />
+                <div className="flex-1 h-7 rounded" style={{ background: 'rgba(255,255,255,0.03)' }} />
+              </div>
+            </div>
           </div>
         </div>
+
+        <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, rgba(160,207,255,0.15), transparent)' }} />
       </div>
     </div>
   );
@@ -360,18 +235,38 @@ function TimeStarMockup() {
 
 function SahakariNetMockup() {
   return (
-    <div className="mockup-frame">
-      <div className="mockup-enterprise">
-        <div className="mockup-enterprise-inner">
-          <div className="mockup-ent-header">
-            <span /><span /><span /><span />
+    <div className="relative w-full" style={{ paddingTop: '52%' }}>
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #0d0d0d, #111)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(255,184,108,0.02), transparent)' }} />
+
+        <div className="absolute inset-4 md:inset-8 rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.04)' }}>
+          <div className="h-7 bg-white/[0.02] flex items-center px-3 border-b border-white/[0.03]">
+            <span className="text-[8px] font-body text-white/20 tracking-wider uppercase">sahakarinet · admin</span>
           </div>
-          {[...Array(6)].map((_, i) => (
-            <div className="mockup-ent-row" key={i}>
-              <span /><span /><span /><span />
+
+          <div className="p-4 md:p-6">
+            {/* Table header */}
+            <div className="grid grid-cols-4 gap-3 pb-2 mb-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="h-2 rounded" style={{ background: 'rgba(255,255,255,0.06)' }} />
+              ))}
             </div>
-          ))}
+            {/* Table rows */}
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="grid grid-cols-4 gap-3 py-2" style={{ borderBottom: '1px solid rgba(255,255,255,0.015)' }}>
+                {[...Array(4)].map((_, j) => (
+                  <div key={j} className="h-1.5 rounded" style={{
+                    background: j === 3 ? 'rgba(255,184,108,0.08)' : 'rgba(255,255,255,0.03)',
+                    width: j === 0 ? '70%' : j === 3 ? '50%' : '100%'
+                  }} />
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
+
+        <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, rgba(255,184,108,0.15), transparent)' }} />
       </div>
     </div>
   );
