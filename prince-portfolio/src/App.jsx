@@ -1,5 +1,4 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import Cursor from './components/Cursor';
 import Navbar from './components/Navbar';
 import ProjectNavbar from './components/ProjectNavbar';
 import Hero from './components/Hero';
@@ -22,7 +21,6 @@ export default function App() {
 
   return (
     <>
-      <Cursor />
       {isProjectPage ? <ProjectNavbar /> : <Navbar />}
       <main>
         <Routes>

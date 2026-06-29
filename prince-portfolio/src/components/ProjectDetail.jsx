@@ -318,24 +318,14 @@ function TimeStarDetailMockup({ variant = 'mac' }) {
   return (
     <BrowserFrame url="timestar.com/products/chronograph-edition-2100" variant={variant}>
       <div className="flex" style={{ minHeight: '450px' }}>
-        <div className="w-1/2 flex flex-col items-center justify-center p-8 relative" style={{ background: '#111' }}>
-          <motion.div
-            className="w-40 h-40 md:w-48 md:h-48 rounded-full relative"
-            style={{
-              background: 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.05), rgba(255,255,255,0.01))',
-              border: '2px solid rgba(255,255,255,0.06)',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)',
-            }}
-          >
-            <div className="absolute inset-[18%] rounded-full" style={{
-              background: 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.02), transparent)',
-              border: '1px solid rgba(255,255,255,0.04)',
-            }} />
-            <div className="absolute top-1/2 left-1/2 w-[38%] h-[2px] origin-left rounded-full" style={{ background: 'rgba(255,255,255,0.1)', transform: 'translate(0, -50%) rotate(-20deg)' }} />
-            <div className="absolute top-1/2 left-1/2 w-[28%] h-[2px] origin-left rounded-full" style={{ background: 'rgba(255,255,255,0.07)', transform: 'translate(0, -50%) rotate(50deg)' }} />
-            <div className="absolute top-[16%] left-[50%] w-[8%] h-[5%] -translate-x-1/2 rounded-sm" style={{ background: 'rgba(255,255,255,0.04)' }} />
-            <div className="absolute bottom-[16%] left-[50%] -translate-x-1/2 text-[6px] font-mono" style={{ color: 'rgba(255,255,255,0.08)' }}>SWISS</div>
-          </motion.div>
+        <div className="w-1/2 flex flex-col items-center justify-center p-8 relative overflow-hidden" style={{ background: '#111' }}>
+          <motion.img
+            src="/watch.png"
+            alt="Chronograph Edition 2100"
+            className="w-40 h-40 md:w-48 md:h-48 object-contain drop-shadow-2xl"
+            whileHover={{ scale: 1.06, rotate: 2 }}
+            transition={{ type: 'spring', stiffness: 200 }}
+          />
           <div className="flex items-center gap-1 mt-5">
             {[...Array(5)].map((_, i) => (
               <svg key={i} className={`w-3.5 h-3.5 ${i < 4 ? 'text-blue-300/50' : 'text-white/10'}`} viewBox="0 0 24 24" fill="currentColor">

@@ -617,35 +617,14 @@ function TimeStarMockup({ variant = 'mac' }) {
     >
       <BrowserFrame url="timestar.com/products/chronograph-edition" variant={variant}>
         <div className="flex" style={{ minHeight: '320px' }}>
-          <div className="w-1/2 flex flex-col items-center justify-center p-5 relative" style={{ background: '#111' }}>
-            <motion.div
-              className="w-28 h-28 md:w-32 md:h-32 rounded-full relative"
-              style={{
-                background: 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.05), rgba(255,255,255,0.01))',
-                border: '2px solid rgba(255,255,255,0.06)',
-                boxShadow: '0 12px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)',
-              }}
-              whileHover={{ scale: 1.04, rotate: 3 }}
+          <div className="w-1/2 flex flex-col items-center justify-center p-5 relative overflow-hidden" style={{ background: '#111' }}>
+            <motion.img
+              src="/watch.png"
+              alt="Chronograph Edition 2100"
+              className="w-28 h-28 md:w-32 md:h-32 object-contain drop-shadow-2xl"
+              whileHover={{ scale: 1.06, rotate: 2 }}
               transition={{ type: 'spring', stiffness: 200 }}
-            >
-              <div className="absolute inset-[20%] rounded-full" style={{
-                background: 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.02), transparent)',
-                border: '1px solid rgba(255,255,255,0.04)',
-              }} />
-              <motion.div
-                className="absolute top-1/2 left-1/2 w-[35%] h-[1.5px] origin-left rounded-full"
-                style={{ background: 'rgba(255,255,255,0.1)', transform: 'translate(0, -50%) rotate(-25deg)' }}
-                animate={{ rotate: [-25, 30, -25] }}
-                transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-              />
-              <motion.div
-                className="absolute top-1/2 left-1/2 w-[25%] h-[1px] origin-left rounded-full"
-                style={{ background: 'rgba(255,255,255,0.07)', transform: 'translate(0, -50%) rotate(55deg)' }}
-                animate={{ rotate: [55, 85, 55] }}
-                transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-              />
-              <div className="absolute top-[18%] left-[50%] w-[6%] h-[4%] -translate-x-1/2 rounded-sm" style={{ background: 'rgba(255,255,255,0.04)' }} />
-            </motion.div>
+            />
             <div className="flex items-center gap-1 mt-4">
               {[...Array(5)].map((_, i) => (
                 <svg key={i} className={`w-3 h-3 ${i < 4 ? 'text-blue-300/50' : 'text-white/10'}`} viewBox="0 0 24 24" fill="currentColor">

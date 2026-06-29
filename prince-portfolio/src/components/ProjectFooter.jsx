@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const navLinks = [
@@ -11,6 +11,22 @@ const navLinks = [
 
 export default function ProjectFooter({ projectTitle }) {
   const year = new Date().getFullYear();
+  const navigate = useNavigate();
+
+  const handleNav = (href) => {
+    if (href.startsWith('/#')) {
+      const sectionId = href.substring(2);
+      navigate('/');
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const el = document.getElementById(sectionId);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 80);
+      });
+    } else {
+      navigate(href);
+    }
+  };
 
   return (
     <footer className="relative overflow-hidden border-t border-white/5 bg-ink">
@@ -29,9 +45,9 @@ export default function ProjectFooter({ projectTitle }) {
         >
           <p className="font-['Inter'] text-muted text-sm md:text-base leading-relaxed max-w-lg mx-auto">
             Like this project?{' '}
-            <Link to="/#contact" className="text-snow hover:text-accent transition-colors underline underline-offset-4 decoration-white/10 hover:decoration-accent/50">
+            <button onClick={() => handleNav('/#contact')} className="text-snow hover:text-accent transition-colors underline underline-offset-4 decoration-white/10 hover:decoration-accent/50 bg-transparent border-none cursor-pointer font-['Inter'] text-sm md:text-base">
               Let's work together
-            </Link>
+            </button>
             .
           </p>
         </motion.div>
@@ -45,13 +61,13 @@ export default function ProjectFooter({ projectTitle }) {
           className="flex flex-wrap justify-center gap-x-8 gap-y-3 mb-10"
         >
           {navLinks.map((link) => (
-            <Link
+            <button
               key={link.label}
-              to={link.href}
-              className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase hover:text-accent transition-colors duration-300"
+              onClick={() => handleNav(link.href)}
+              className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase hover:text-accent transition-colors duration-300 bg-transparent border-none cursor-pointer"
             >
               {link.label}
-            </Link>
+            </button>
           ))}
           <a
             href="#"

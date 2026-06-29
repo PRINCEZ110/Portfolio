@@ -22,7 +22,18 @@ export default function ProjectNavbar() {
 
   const handleNav = (href) => {
     setOpen(false);
-    navigate(href);
+    if (href.startsWith('/#')) {
+      const sectionId = href.substring(2);
+      navigate('/');
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const el = document.getElementById(sectionId);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 80);
+      });
+    } else {
+      navigate(href);
+    }
   };
 
   useEffect(() => {
