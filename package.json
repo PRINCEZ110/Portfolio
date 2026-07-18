@@ -1,0 +1,7 @@
+{
+  "name": "prince-portfolio-root",
+  "private": true,
+  "scripts": {
+    "build": "npm run build --prefix prince-portfolio"
+  }
+}

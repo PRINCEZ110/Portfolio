@@ -41,12 +41,12 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h2 className="font-display font-bold text-slate leading-[1.05] mb-8" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)' }}>
+            <h2 className="font-display font-bold text-slate leading-[1.05] mb-8" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)', fontFamily: "'Josefin Sans', sans-serif" }} >
               Hi, I'm{' '}
               <span className="text-wine">Prince</span>
             </h2>
 
-            <div className="space-y-5 font-body text-gray leading-relaxed text-[15px] md:text-[16px]">
+            <div className="space-y-5 font-body text-gray leading-relaxed text-[15px] md:text-[16px]" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
               <p>
                 I'm a web designer and developer, crafting refined, high-performance digital experiences with a strong focus on modern aesthetics, precision, and usability.
               </p>

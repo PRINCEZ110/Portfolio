@@ -1,7 +1,6 @@
 {
-  "rootDirectory": "prince-portfolio",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
+  "outputDirectory": "prince-portfolio/dist",
   "framework": "vite",
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
