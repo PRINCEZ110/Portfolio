@@ -4,10 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Josefin Sans"', 'sans-serif'],
-        body: ['"Lato"', 'sans-serif'],
+        display: ['"Eczar"', 'serif'],
+        body: ['"Eczar"', 'serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
-        serif: ['"Eczar"', 'serif'],
       },
       colors: {
         clay: '#F8F7E5',
@@ -28,45 +27,21 @@ export default {
         footer: '#111111',
         footertext: '#F8F7E5',
       },
-      maxWidth: { '8xl': '90rem' },
+      maxWidth: {
+        '8xl': '90rem',
+      },
       borderRadius: {
-        xl: '0.75rem',
+        'xl': '0.75rem',
         '2xl': '1rem',
         '3xl': '1.125rem',
-        '4xl': '1.5rem',
       },
       boxShadow: {
-        soft: '0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02)',
-        card: '0 4px 16px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.02)',
+        'soft': '0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02)',
+        'card': '0 4px 16px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.02)',
         'card-hover': '0 12px 40px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.03)',
-        button: '0 1px 3px rgba(0,0,0,0.06)',
-        glow: '0 0 20px rgba(179,156,79,0.15)',
-        'glow-wine': '0 0 20px rgba(139,26,43,0.2)',
-        glass: '0 8px 32px rgba(0,0,0,0.08)',
-        premium: '0 20px 60px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.04)',
-      },
-      backdropBlur: {
-        glass: '16px',
-      },
-      spacing: {
-        '4.5': '1.125rem',
-        '18': '4.5rem',
-        '22': '5.5rem',
-        '30': '7.5rem',
-      },
-      keyframes: {
-        'spin-slow': { '0%': { transform: 'rotate(0deg)' }, '100%': { transform: 'rotate(360deg)' } },
-        'ping-slow': { '0%, 100%': { opacity: 0.6 }, '50%': { opacity: 0.2 } },
-        'float': { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' } },
-        'shimmer': { '0%': { backgroundPosition: '-200% 0' }, '100%': { backgroundPosition: '200% 0' } },
-      },
-      animation: {
-        'spin-slow': 'spin-slow 8s linear infinite',
-        'ping-slow': 'ping-slow 3s ease-in-out infinite',
-        'float': 'float 4s ease-in-out infinite',
-        'shimmer': 'shimmer 3s ease-in-out infinite',
+        'button': '0 1px 3px rgba(0,0,0,0.06)',
       },
     },
   },
   plugins: [],
-};
+}
