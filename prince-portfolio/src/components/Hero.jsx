@@ -15,7 +15,7 @@ export default function Hero() {
     <section className="min-h-screen flex flex-col justify-end px-6 md:px-12 lg:px-20 pb-16 pt-28 relative overflow-hidden bg-clay">
       {/* Background grid */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.04]"
         style={{
           backgroundImage: `linear-gradient(#E3DEC8 1px, transparent 1px), linear-gradient(90deg, #E3DEC8 1px, transparent 1px)`,
           backgroundSize: '80px 80px',
@@ -23,10 +23,11 @@ export default function Hero() {
       />
       {/* Black blueprint grid overlay */}
       <div
-        className="absolute inset-0 opacity-[0.05]"
+        className="absolute inset-0"
         style={{
           backgroundImage: `linear-gradient(#000000 0.5px, transparent 0.5px), linear-gradient(90deg, #000000 0.5px, transparent 0.5px)`,
           backgroundSize: '40px 40px',
+          opacity: 0.12,
           maskImage: 'radial-gradient(ellipse at 50% 60%, black 30%, transparent 70%)',
           WebkitMaskImage: 'radial-gradient(ellipse at 50% 60%, black 30%, transparent 70%)',
         }}
@@ -41,9 +42,9 @@ export default function Hero() {
         transition={{ delay: 0.2 }}
         className="flex items-center gap-2 mb-10"
       >
-        <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-        <span className="font-mono text-xs text-muted tracking-widest uppercase">
-          available for work in Nepal
+        <span className="w-2 h-2 rounded-full bg-[#541E24] animate-pulse" />
+        <span className="font-mono text-xs text-[#000000] tracking-widest uppercase">
+          available for work 
         </span>
       </motion.div>
 
@@ -87,8 +88,8 @@ export default function Hero() {
           transition={{ delay: 0.6 }}
           className="mt-12 flex flex-col md:flex-row md:items-center md:justify-between gap-8"
         >
-          <p className="font-body text-gray max-w-md text-base leading-relaxed">
-            I'm <span className="text-slate font-medium">Prince</span>, a Web designer & developer building modern, responsive websites with clean, fast, user-focused design.
+          <p className="font-body text-black max-w-md text-base leading-relaxed">
+            I'm <span className="text-slate text-[#541E24] font-medium">Prince</span>, a Web designer & developer building modern, responsive websites with clean, fast, user-focused design.
             High-performance digital experiences for clients and businesses.</p>
 
           <div className="flex items-center gap-6 flex-wrap">
