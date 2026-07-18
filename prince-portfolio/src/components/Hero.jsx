@@ -114,22 +114,36 @@ export default function Hero() {
           <p className="font-body text-black max-w-md text-base leading-relaxed" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
             I'm <span className="text-[#541E24]  font-medium">Prince</span>, a Web designer & developer building modern, responsive websites with clean, fast, user-focused design.
             High-performance digital experiences for clients and businesses.</p>
-
-          <div className="flex items-center gap-6 flex-wrap">
-            <a
-              href="#work"
-              className="group flex items-center gap-3 font-display font-semibold text-slate border border-border px-6 py-3 hover:border-steel hover:text-steel transition-all duration-300 rounded-xl"
-              style={{ fontFamily: "'Josefin Sans', sans-serif" }}
-            >
-              View Work
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </a>
-            <a href="#contact" className="font-display font-semibold text-white bg-slate px-6 py-3 hover:bg-gold transition-all duration-300 rounded-xl shadow-button" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
-              Let's Talk
-            </a>
-          </div>
         </motion.div>
       </div>
+
+      {/* Buttons floated over the photo */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8 }}
+        className="absolute z-40 flex items-center gap-4"
+        style={{
+          bottom: 'clamp(2rem, 5vw, 5rem)',
+          right: 'clamp(1rem, 6vw, 6rem)',
+        }}
+      >
+        <a
+          href="#work"
+          className="group font-display font-semibold text-slate bg-white/70 backdrop-blur-md border border-white/50 px-5 py-2.5 hover:bg-white hover:border-steel hover:text-steel transition-all duration-300 rounded-xl text-sm shadow-lg"
+          style={{ fontFamily: "'Josefin Sans', sans-serif" }}
+        >
+          View Work
+          <span className="group-hover:translate-x-1 transition-transform">→</span>
+        </a>
+        <a
+          href="#contact"
+          className="group font-display font-semibold text-white bg-slate/90 backdrop-blur-md px-5 py-2.5 hover:bg-gold transition-all duration-300 rounded-xl text-sm shadow-lg"
+          style={{ fontFamily: "'Josefin Sans', sans-serif" }}
+        >
+          Let's Talk
+        </a>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
