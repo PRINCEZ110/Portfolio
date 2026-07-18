@@ -43,14 +43,14 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 lg:px-20 py-5 flex items-center justify-between transition-all duration-300 ${
-        scrolled ? 'bg-ink/80 backdrop-blur-md border-b border-border' : ''
+        scrolled ? 'bg-clay/92 backdrop-blur-md border-b border-border' : ''
       }`}
     >
       <a
         href="#"
-        className="font-display font-semibold text-snow text-base tracking-tight"
+        className="font-display font-semibold text-slate text-base tracking-tight"
       >
-        Prince<span className="text-accent"> Shrestha</span>
+        Prince<span className="text-wine [text-shadow:0_0_10px_rgba(84,30,36,0.3)]"> Shrestha</span>
       </a>
 
       {/* Desktop nav */}
@@ -61,8 +61,8 @@ export default function Navbar() {
             href={l.href}
             className={`font-body text-sm tracking-wide transition-all duration-300 ${
               active === l.label
-                ? 'text-accent drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]'
-                : 'text-muted hover:text-snow'
+                ? 'text-wine [text-shadow:0_0_12px_rgba(84,30,36,0.4)]'
+                : 'text-wine hover:[text-shadow:0_0_12px_rgba(84,30,36,0.4)]'
             }`}
           >
             {l.label}
@@ -73,14 +73,14 @@ export default function Navbar() {
       {/* Hire button */}
       <a
         href="#contact"
-        className="hidden md:inline-flex items-center gap-2 bg-accent text-ink text-sm font-display font-semibold px-5 py-2 hover:bg-snow transition-colors duration-200"
+        className="hidden md:inline-flex items-center gap-2 bg-slate text-white text-sm font-display font-semibold px-5 py-2 hover:bg-gold transition-all duration-300"
       >
         hire me
       </a>
 
       {/* Mobile hamburger */}
       <button
-        className="md:hidden text-snow"
+        className="md:hidden text-slate"
         onClick={() => setOpen(!open)}
       >
         <span className="font-mono text-xs">
@@ -95,7 +95,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 bg-ink border-b border-border py-6 flex flex-col items-center gap-6 md:hidden"
+            className="absolute top-full left-0 right-0 bg-white border-b border-border py-6 flex flex-col items-center gap-6 md:hidden shadow-soft"
           >
             {links.map((l) => (
               <a
@@ -103,9 +103,9 @@ export default function Navbar() {
                 href={l.href}
                 onClick={() => setOpen(false)}
                 className={`font-display text-xl transition-all ${
-                  active === l.label
-                    ? 'text-accent drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]'
-                    : 'text-snow'
+                    active === l.label
+                    ? 'text-wine [text-shadow:0_0_12px_rgba(84,30,36,0.4)]'
+                    : 'text-wine hover:[text-shadow:0_0_12px_rgba(84,30,36,0.4)]'
                 }`}
               >
                 {l.label}
@@ -114,7 +114,7 @@ export default function Navbar() {
 
             <a
               href="#contact"
-              className="bg-accent text-ink font-display font-bold px-8 py-3"
+              className="bg-slate text-white font-display font-bold px-8 py-3 hover:bg-gold transition-all duration-300"
             >
               hire me
             </a>

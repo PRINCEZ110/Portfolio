@@ -30,10 +30,10 @@ export default function ProjectDetail() {
 
   if (!project) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+          <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="font-['Inter'] text-4xl font-bold text-snow mb-4">Project not found</h1>
-          <Link to="/" className="font-mono text-sm text-muted hover:text-accent transition-colors">← Back home</Link>
+          <h1 className="font-['Inter'] text-4xl font-bold text-slate mb-4">Project not found</h1>
+          <Link to="/" className="font-mono text-sm text-muted hover:text-steel transition-colors">← Back home</Link>
         </div>
       </div>
     );
@@ -54,19 +54,19 @@ export default function ProjectDetail() {
       {/* ─── HERO ─── */}
       <motion.div
         style={{ scale: heroScale, opacity: heroOpacity }}
-        className="relative min-h-[60vh] md:min-h-[70vh] flex items-end px-6 md:px-12 lg:px-20 py-16 md:py-20 overflow-hidden"
+        className="relative min-h-[60vh] md:min-h-[70vh] flex items-end px-6 md:px-12 lg:px-20 py-16 md:py-20 overflow-hidden bg-clay"
       >
         <div className="absolute inset-0" style={{
-          background: `linear-gradient(135deg, ${project.id === 'nagarsewa' ? '#0a0a0a' : project.id === 'timestar' ? '#0c0c0f' : '#0d0a08'} 0%, #0A0A0A 100%)`,
+          background: `linear-gradient(135deg, #F8F7E5 0%, #F0EDD8 100%)`,
         }} />
         <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none" style={{
-          background: `radial-gradient(ellipse at 50% 20%, ${project.color}08, transparent 60%)`,
+          background: `radial-gradient(ellipse at 50% 20%, rgba(111,142,153,0.04), transparent 60%)`,
         }} />
 
         <div className="relative z-10 max-w-[1440px] w-full mx-auto">
           <motion.div variants={stagger} initial="hidden" animate="visible">
             <motion.div variants={fadeUp} className="flex items-center gap-4 mb-4">
-              <Link to="/#work" className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase hover:text-accent transition-colors">
+              <Link to="/#work" className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase hover:text-steel transition-colors">
                 ← Back to projects
               </Link>
             </motion.div>
@@ -75,7 +75,7 @@ export default function ProjectDetail() {
               <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">{project.year}</span>
               {project.tags.map((tag) => (
                 <span key={tag} className="flex items-center gap-3">
-                  <span className="w-px h-3 bg-white/10" />
+                  <span className="w-px h-3 bg-border" />
                   <span className="font-mono text-[10px] tracking-[0.15em] text-muted uppercase">{tag}</span>
                 </span>
               ))}
@@ -83,15 +83,15 @@ export default function ProjectDetail() {
 
             <motion.h1
               variants={fadeUp}
-              className="font-['Inter'] font-bold text-snow leading-[1.02] mb-4"
-              style={{ fontSize: 'clamp(2.8rem, 8vw, 6rem)' }}
+               className="font-['Inter'] font-bold text-slate leading-[1.02] mb-4"
+               style={{ fontSize: 'clamp(2.8rem, 8vw, 6rem)' }}
             >
               {project.title}
             </motion.h1>
 
             <motion.p
               variants={fadeUp}
-              className="font-['Inter'] text-muted text-base md:text-lg max-w-xl leading-relaxed"
+               className="font-['Inter'] text-gray text-base md:text-lg max-w-xl leading-relaxed"
             >
               {project.subtitle}
             </motion.p>
@@ -113,7 +113,7 @@ export default function ProjectDetail() {
               <motion.span variants={fadeUp} className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase block mb-4">
                 About the Project
               </motion.span>
-              <motion.p variants={fadeUp} className="font-['Inter'] text-muted text-sm md:text-base leading-[1.8] tracking-wide">
+              <motion.p variants={fadeUp} className="font-['Inter'] text-gray text-sm md:text-base leading-[1.8] tracking-wide">
                 {project.description}
               </motion.p>
             </div>
@@ -127,9 +127,9 @@ export default function ProjectDetail() {
                   { label: 'Timeline', value: project.duration },
                   { label: 'Tech Stack', value: project.tech.join(', ') },
                 ].map((d, i) => (
-                  <div key={i} className="flex items-start gap-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                    <span className="font-mono text-[10px] tracking-[0.1em] text-white/30 uppercase w-24 flex-shrink-0 py-3">{d.label}</span>
-                    <span className="font-['Inter'] text-sm text-snow/70 py-3">{d.value}</span>
+                  <div key={i} className="flex items-start gap-4 border-b border-border">
+                    <span className="font-mono text-[10px] tracking-[0.1em] text-muted uppercase w-24 flex-shrink-0 py-3">{d.label}</span>
+                    <span className="font-['Inter'] text-sm text-slate/70 py-3">{d.value}</span>
                   </div>
                 ))}
               </div>
@@ -144,23 +144,23 @@ export default function ProjectDetail() {
             transition={{ duration: 0.4, delay: 0.2 }}
             className="flex items-center gap-3 mb-8"
           >
-            <span className="font-mono text-[9px] tracking-[0.15em] text-white/20 uppercase">View as</span>
-            <div className="flex rounded-md overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+            <span className="font-mono text-[9px] tracking-[0.15em] text-muted/50 uppercase">View as</span>
+            <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid #E3DEC8' }}>
               <button
                 onClick={() => setBrowserPref('mac')}
                 className={`px-3 py-1.5 font-mono text-[9px] tracking-wider uppercase transition-all duration-300 ${
-                  browserPref === 'mac' ? 'text-ink' : 'text-white/30 hover:text-white/60'
+                  browserPref === 'mac' ? 'text-white' : 'text-muted hover:text-slate'
                 }`}
-                style={{ background: browserPref === 'mac' ? 'rgba(200,255,0,0.9)' : 'rgba(255,255,255,0.03)' }}
+                style={{ background: browserPref === 'mac' ? '#B39C4F' : '#FFFFFF' }}
               >
                 Mac
               </button>
               <button
                 onClick={() => setBrowserPref('windows')}
                 className={`px-3 py-1.5 font-mono text-[9px] tracking-wider uppercase transition-all duration-300 ${
-                  browserPref === 'windows' ? 'text-ink' : 'text-white/30 hover:text-white/60'
+                  browserPref === 'windows' ? 'text-white' : 'text-muted hover:text-slate'
                 }`}
-                style={{ background: browserPref === 'windows' ? 'rgba(200,255,0,0.9)' : 'rgba(255,255,255,0.03)' }}
+                style={{ background: browserPref === 'windows' ? '#B39C4F' : '#FFFFFF' }}
               >
                 Windows
               </button>
@@ -193,13 +193,12 @@ export default function ProjectDetail() {
                 <motion.div
                   key={i}
                   variants={fadeUp}
-                  className="flex items-start gap-3 p-4 rounded-xl"
-                  style={{ background: `${project.color}06`, border: `1px solid ${project.color}10` }}
+                  className="flex items-start gap-3 p-4 rounded-xl bg-white border border-border shadow-soft"
                 >
-                  <span className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: `${project.color}15` }}>
-                    <span className="text-[8px]" style={{ color: project.color }}>✓</span>
+                    <span className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-steel/15">
+                    <span className="text-[8px] text-steel">✓</span>
                   </span>
-                  <span className="font-['Inter'] text-sm text-snow/70">{h}</span>
+                  <span className="font-['Inter'] text-sm text-slate/70">{h}</span>
                 </motion.div>
               ))}
             </div>
@@ -227,7 +226,7 @@ function NagarSewaDetailMockup({ variant = 'mac' }) {
             <svg key="s" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>,
             <svg key="c" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>,
           ].map((icon, i) => (
-            <div key={i} className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ color: i === 0 ? 'rgba(200,255,0,0.6)' : 'rgba(255,255,255,0.25)' }}>
+            <div key={i} className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ color: i === 0 ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.25)' }}>
               {icon}
             </div>
           ))}
@@ -238,7 +237,7 @@ function NagarSewaDetailMockup({ variant = 'mac' }) {
               <svg className="w-3 h-3 text-white/15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
               <span className="text-[9px] font-mono text-white/20">Search issues, reports, citizens...</span>
             </div>
-            <div className="h-10 px-4 rounded-lg flex items-center text-[8px] font-mono font-medium" style={{ background: 'rgba(200,255,0,0.08)', color: 'rgba(200,255,0,0.6)' }}>
+            <div className="h-10 px-4 rounded-lg flex items-center text-[8px] font-mono font-medium" style={{ background: 'rgba(179,156,79,0.08)', color: 'rgba(179,156,79,0.6)' }}>
               + New Report
             </div>
           </div>
@@ -253,7 +252,7 @@ function NagarSewaDetailMockup({ variant = 'mac' }) {
               <div key={i} className="p-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
                 <div className="text-[7px] font-mono text-white/25 uppercase tracking-wider">{s.label}</div>
                 <div className="text-base font-bold text-white/80 mt-1">{s.value}</div>
-                <div className="text-[7px] font-mono mt-0.5" style={{ color: s.change.startsWith('+') ? 'rgba(200,255,0,0.6)' : 'rgba(255,100,100,0.6)' }}>
+                <div className="text-[7px] font-mono mt-0.5" style={{ color: s.change.startsWith('+') ? 'rgba(179,156,79,0.6)' : 'rgba(255,100,100,0.6)' }}>
                   {s.change} vs last month
                 </div>
               </div>
@@ -264,7 +263,7 @@ function NagarSewaDetailMockup({ variant = 'mac' }) {
             {[45, 60, 35, 75, 50, 65, 55, 85, 70, 90, 60, 80].map((h, i) => (
               <div key={i} className="flex-1 rounded-t-md relative group" style={{
                 height: `${h}%`,
-                background: i >= 7 ? 'rgba(200,255,0,0.15)' : 'rgba(255,255,255,0.05)',
+                background: i >= 7 ? 'rgba(179,156,79,0.15)' : 'rgba(255,255,255,0.05)',
               }}>
                 <div className="absolute -top-5 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-[6px] font-mono text-white/40 whitespace-nowrap">{h}</div>
               </div>
@@ -291,15 +290,15 @@ function NagarSewaDetailMockup({ variant = 'mac' }) {
                 <div>
                   <span className="inline-block text-[6px] font-mono px-1.5 py-0.5 rounded" style={{
                     background: row[3] === 'High' ? 'rgba(255,80,80,0.1)' : row[3] === 'Medium' ? 'rgba(255,200,0,0.1)' : 'rgba(200,255,0,0.1)',
-                    color: row[3] === 'High' ? 'rgba(255,80,80,0.7)' : row[3] === 'Medium' ? 'rgba(255,200,0,0.7)' : 'rgba(200,255,0,0.7)',
+                    color: row[3] === 'High' ? 'rgba(255,80,80,0.7)' : row[3] === 'Medium' ? 'rgba(255,200,0,0.7)' : 'rgba(179,156,79,0.7)',
                   }}>
                     {row[3]}
                   </span>
                 </div>
                 <div>
                   <span className="inline-block text-[6px] font-mono px-1.5 py-0.5 rounded" style={{
-                    background: row[4] === 'Resolved' ? 'rgba(200,255,0,0.08)' : row[4] === 'In Progress' ? 'rgba(100,200,255,0.08)' : 'rgba(255,255,255,0.04)',
-                    color: row[4] === 'Resolved' ? 'rgba(200,255,0,0.6)' : row[4] === 'In Progress' ? 'rgba(100,200,255,0.6)' : 'rgba(255,255,255,0.4)',
+                    background: row[4] === 'Resolved' ? 'rgba(179,156,79,0.08)' : row[4] === 'In Progress' ? 'rgba(100,200,255,0.08)' : 'rgba(255,255,255,0.04)',
+                    color: row[4] === 'Resolved' ? 'rgba(179,156,79,0.6)' : row[4] === 'In Progress' ? 'rgba(100,200,255,0.6)' : 'rgba(255,255,255,0.4)',
                   }}>
                     {row[4]}
                   </span>
@@ -328,7 +327,7 @@ function TimeStarDetailMockup({ variant = 'mac' }) {
           />
           <div className="flex items-center gap-1 mt-5">
             {[...Array(5)].map((_, i) => (
-              <svg key={i} className={`w-3.5 h-3.5 ${i < 4 ? 'text-blue-300/50' : 'text-white/10'}`} viewBox="0 0 24 24" fill="currentColor">
+              <svg key={i} className={`w-3.5 h-3.5 ${i < 4 ? 'text-steel/50' : 'text-white/10'}`} viewBox="0 0 24 24" fill="currentColor">
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
               </svg>
             ))}
@@ -348,7 +347,7 @@ function TimeStarDetailMockup({ variant = 'mac' }) {
           <div className="flex items-center gap-2 mb-3">
             <span className="text-lg md:text-xl font-bold text-white/80">$349</span>
             <span className="text-xs font-mono text-white/30 line-through">$499</span>
-            <span className="text-[8px] font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(160,207,255,0.08)', color: 'rgba(160,207,255,0.5)' }}>-30%</span>
+            <span className="text-[8px] font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(111,142,153,0.08)', color: 'rgba(111,142,153,0.5)' }}>-30%</span>
           </div>
           <div className="text-[9px] font-['Inter'] text-white/40 leading-relaxed mb-4 max-w-sm">
             Precision quartz movement with sapphire crystal glass, date display, and 100m water resistance. Minimalist design meets everyday durability.
@@ -356,9 +355,9 @@ function TimeStarDetailMockup({ variant = 'mac' }) {
           <div className="flex flex-wrap gap-1.5 mb-4">
             {['Black', 'Silver', 'Gold'].map((c) => (
               <div key={c} className="px-3 py-1.5 rounded-md text-[7px] font-mono" style={{
-                background: c === 'Black' ? 'rgba(160,207,255,0.08)' : 'rgba(255,255,255,0.03)',
-                color: c === 'Black' ? 'rgba(160,207,255,0.6)' : 'rgba(255,255,255,0.3)',
-                border: c === 'Black' ? '1px solid rgba(160,207,255,0.15)' : '1px solid rgba(255,255,255,0.05)',
+                background: c === 'Black' ? 'rgba(111,142,153,0.08)' : 'rgba(255,255,255,0.03)',
+                color: c === 'Black' ? 'rgba(111,142,153,0.6)' : 'rgba(255,255,255,0.3)',
+                border: c === 'Black' ? '1px solid rgba(111,142,153,0.15)' : '1px solid rgba(255,255,255,0.05)',
               }}>
                 {c}
               </div>
@@ -367,8 +366,8 @@ function TimeStarDetailMockup({ variant = 'mac' }) {
           <div className="flex gap-2">
             <motion.div
               className="flex-1 h-10 rounded-lg flex items-center justify-center text-[9px] font-mono font-medium tracking-wider cursor-pointer"
-              style={{ background: 'rgba(160,207,255,0.08)', color: 'rgba(160,207,255,0.6)' }}
-              whileHover={{ background: 'rgba(160,207,255,0.14)', scale: 1.015 }}
+              style={{ background: 'rgba(111,142,153,0.08)', color: 'rgba(111,142,153,0.6)' }}
+              whileHover={{ background: 'rgba(111,142,153,0.14)', scale: 1.015 }}
               whileTap={{ scale: 0.97 }}
               transition={{ type: 'spring', stiffness: 200, damping: 25, mass: 0.5 }}
             >
@@ -381,7 +380,7 @@ function TimeStarDetailMockup({ variant = 'mac' }) {
             </div>
           </div>
           <div className="flex items-center gap-3 mt-3 text-[7px] font-mono text-white/15">
-            <span style={{ color: 'rgba(160,207,255,0.5)' }}>In stock</span>
+            <span style={{ color: 'rgba(111,142,153,0.5)' }}>In stock</span>
             <span>•</span>
             <span>Free shipping</span>
             <span>•</span>
@@ -406,7 +405,7 @@ function SahakariNetDetailMockup({ variant = 'mac' }) {
             <svg key="ch" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>,
             <svg key="st" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>,
           ].map((icon, i) => (
-            <div key={i} className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ color: i === 1 ? 'rgba(255,184,108,0.6)' : 'rgba(255,255,255,0.25)' }}>
+            <div key={i} className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ color: i === 1 ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.25)' }}>
               {icon}
             </div>
           ))}
@@ -422,7 +421,7 @@ function SahakariNetDetailMockup({ variant = 'mac' }) {
                 <svg className="w-3 h-3 text-white/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
                 Export
               </div>
-              <div className="px-3 h-8 rounded-lg flex items-center text-[7px] font-mono font-medium" style={{ background: 'rgba(255,184,108,0.08)', color: 'rgba(255,184,108,0.5)' }}>
+              <div className="px-3 h-8 rounded-lg flex items-center text-[7px] font-mono font-medium" style={{ background: 'rgba(179,156,79,0.08)', color: 'rgba(179,156,79,0.5)' }}>
                 + Add Member
               </div>
             </div>
@@ -464,8 +463,8 @@ function SahakariNetDetailMockup({ variant = 'mac' }) {
                 <div className="text-[8px] font-mono text-white/20">{row[4]}</div>
                 <div>
                   <span className="inline-block text-[6px] font-mono px-1.5 py-0.5 rounded" style={{
-                    background: row[5] === 'Active' ? 'rgba(255,184,108,0.08)' : 'rgba(255,255,255,0.03)',
-                    color: row[5] === 'Active' ? 'rgba(255,184,108,0.6)' : 'rgba(255,255,255,0.3)',
+                    background: row[5] === 'Active' ? 'rgba(179,156,79,0.08)' : 'rgba(255,255,255,0.03)',
+                    color: row[5] === 'Active' ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.3)',
                   }}>
                     {row[5]}
                   </span>
@@ -478,13 +477,13 @@ function SahakariNetDetailMockup({ variant = 'mac' }) {
           <div className="flex items-center justify-between mt-4">
             <div className="flex items-center gap-3 text-[7px] font-mono text-white/15">
               <span>Showing 5 of 248</span>
-              <span style={{ color: 'rgba(255,184,108,0.4)' }}>● 12 new this month</span>
+              <span style={{ color: 'rgba(179,156,79,0.4)' }}>● 12 new this month</span>
             </div>
             <div className="flex items-center gap-1">
               {[1, 2, 3, '...', '8'].map((n, i) => (
                 <div key={i} className="w-7 h-7 rounded-md flex items-center justify-center text-[7px] font-mono" style={{
-                  background: n === 1 ? 'rgba(255,184,108,0.08)' : 'rgba(255,255,255,0.02)',
-                  color: n === 1 ? 'rgba(255,184,108,0.5)' : 'rgba(255,255,255,0.25)',
+background: n === 1 ? 'rgba(179,156,79,0.08)' : 'rgba(255,255,255,0.02)',
+                    color: n === 1 ? 'rgba(179,156,79,0.5)' : 'rgba(255,255,255,0.25)',
                 }}>
                   {n}
                 </div>

@@ -12,15 +12,27 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="min-h-screen flex flex-col justify-end px-6 md:px-12 lg:px-20 pb-16 pt-28 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-end px-6 md:px-12 lg:px-20 pb-16 pt-28 relative overflow-hidden bg-clay">
       {/* Background grid */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: `linear-gradient(#F5F5F0 1px, transparent 1px), linear-gradient(90deg, #F5F5F0 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(#E3DEC8 1px, transparent 1px), linear-gradient(90deg, #E3DEC8 1px, transparent 1px)`,
           backgroundSize: '80px 80px',
         }}
       />
+      {/* Black blueprint grid overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.05]"
+        style={{
+          backgroundImage: `linear-gradient(#000000 0.5px, transparent 0.5px), linear-gradient(90deg, #000000 0.5px, transparent 0.5px)`,
+          backgroundSize: '40px 40px',
+          maskImage: 'radial-gradient(ellipse at 50% 60%, black 30%, transparent 70%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at 50% 60%, black 30%, transparent 70%)',
+        }}
+      />
+      {/* Subtle warm gradient */}
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-gold/10 to-transparent pointer-events-none" />
 
       {/* Status pill */}
       <motion.div
@@ -29,7 +41,7 @@ export default function Hero() {
         transition={{ delay: 0.2 }}
         className="flex items-center gap-2 mb-10"
       >
-        <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+        <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
         <span className="font-mono text-xs text-muted tracking-widest uppercase">
           available for work in Nepal
         </span>
@@ -41,7 +53,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display font-bold leading-[0.92] text-snow"
+          className="font-display font-bold leading-[0.92] text-slate"
           style={{ fontSize: 'clamp(3.5rem, 9vw, 10rem)' }}
         >
           Web
@@ -52,7 +64,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-bold leading-[0.92] text-accent overflow-hidden"
+            className="font-display font-bold leading-[0.92] text-wine overflow-hidden"
             style={{ fontSize: 'clamp(3.5rem, 9vw, 10rem)' }}
           >
             <motion.span
@@ -75,19 +87,19 @@ export default function Hero() {
           transition={{ delay: 0.6 }}
           className="mt-12 flex flex-col md:flex-row md:items-center md:justify-between gap-8"
         >
-          <p className="font-body text-muted max-w-md text-base leading-relaxed">
-            I'm <span className="text-snow font-medium">Prince</span>, a Web designer & developer building modern, responsive websites with clean, fast, user-focused design.
+          <p className="font-body text-gray max-w-md text-base leading-relaxed">
+            I'm <span className="text-slate font-medium">Prince</span>, a Web designer & developer building modern, responsive websites with clean, fast, user-focused design.
             High-performance digital experiences for clients and businesses.</p>
 
           <div className="flex items-center gap-6 flex-wrap">
             <a
               href="#work"
-              className="group flex items-center gap-3 font-display font-semibold text-snow border border-border px-6 py-3 hover:border-accent hover:text-accent transition-all duration-200"
+              className="group flex items-center gap-3 font-display font-semibold text-slate border border-border px-6 py-3 hover:border-steel hover:text-steel transition-all duration-300 rounded-xl"
             >
               View Work
               <span className="group-hover:translate-x-1 transition-transform">→</span>
             </a>
-            <a href="#contact" className="font-display font-semibold text-ink bg-accent px-6 py-3 hover:bg-snow transition-colors duration-200">
+            <a href="#contact" className="font-display font-semibold text-white bg-slate px-6 py-3 hover:bg-gold transition-all duration-300 rounded-xl shadow-button">
               Let's Talk
             </a>
           </div>
@@ -105,7 +117,7 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
-          className="w-px h-12 bg-gradient-to-b from-accent to-transparent"
+          className="w-px h-12 bg-gradient-to-b from-steel/50 to-transparent"
         />
       </motion.div>
     </section>

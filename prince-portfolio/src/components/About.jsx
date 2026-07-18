@@ -9,7 +9,7 @@ const skills = [
 
 export default function About() {
   return (
-    <section id="about" className="px-6 md:px-12 lg:px-20 py-24 md:py-32 bg-card border-y border-border">
+    <section id="about" className="px-6 md:px-12 lg:px-20 py-24 md:py-32 bg-white">
       <div className="max-w-8xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-start">
         {/* Left */}
         <motion.div
@@ -18,12 +18,12 @@ export default function About() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="font-mono text-xs text-accent tracking-widest uppercase">about me</span>
-          <h2 className="font-display font-bold text-snow mt-3 mb-6" style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}>
+          <span className="font-mono text-xs text-steel tracking-widest uppercase">about me</span>
+          <h2 className="font-display font-bold text-slate mt-3 mb-6" style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}>
             Hi I'm Prince
           </h2>
 
-          <div className="space-y-4 font-body text-muted leading-relaxed">
+          <div className="space-y-4 font-body text-gray leading-relaxed">
             <p>
               I'm a web designer and developer, crafting refined, high-performance digital experiences with a strong focus on modern aesthetics, precision, and usability.
             </p>
@@ -37,17 +37,17 @@ export default function About() {
 
           <div className="mt-12 flex gap-6">
             <div>
-              <span className="font-display font-bold text-snow text-4xl">3+</span>
+              <span className="font-display font-bold text-slate text-4xl">3+</span>
               <p className="font-mono text-xs text-muted mt-1 tracking-wide">projects shipped</p>
             </div>
             <div className="w-px bg-border" />
             <div>
-              <span className="font-display font-bold text-snow text-4xl">3+</span>
+              <span className="font-display font-bold text-slate text-4xl">3+</span>
               <p className="font-mono text-xs text-muted mt-1 tracking-wide">years learning</p>
             </div>
             <div className="w-px bg-border" />
             <div>
-              <span className="font-display font-bold text-accent text-4xl">∞</span>
+              <span className="font-display font-bold text-gold text-4xl">∞</span>
               <p className="font-mono text-xs text-muted mt-1 tracking-wide">curiosity</p>
             </div>
           </div>
@@ -62,12 +62,12 @@ export default function About() {
           className="grid grid-cols-2 gap-4"
         >
           {skills.map((s, i) => (
-            <div key={i} className="border border-border p-5 hover:border-accent/40 transition-colors duration-300">
-              <span className="font-mono text-[10px] text-accent tracking-widest uppercase">{s.category}</span>
+            <div key={i} className="border border-border bg-white rounded-xl p-5 hover:border-steel/30 transition-all duration-300 hover:shadow-card-hover hover:-translate-y-0.5">
+              <span className="font-mono text-[10px] text-steel tracking-widest uppercase">{s.category}</span>
               <ul className="mt-3 space-y-1.5">
                 {s.items.map(item => (
-                  <li key={item} className="font-body text-snow text-sm flex items-center gap-2">
-                    <span className="w-1 h-1 rounded-full bg-border flex-shrink-0" />
+                  <li key={item} className="font-body text-slate text-sm flex items-center gap-2">
+                    <span className="w-1 h-1 rounded-full bg-gold/40 flex-shrink-0" />
                     {item}
                   </li>
                 ))}

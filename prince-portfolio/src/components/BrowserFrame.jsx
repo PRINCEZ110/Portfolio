@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion';
-
 function MacControls() {
   return (
     <div className="flex items-center gap-[6px] flex-shrink-0">
@@ -43,11 +41,11 @@ export default function BrowserFrame({ children, url, variant = 'mac' }) {
       {/* Outer desk shadow */}
       <div
         className="absolute -bottom-4 left-[3%] right-[3%] h-8 blur-2xl"
-        style={{ background: 'rgba(0,0,0,0.6)' }}
+        style={{ background: 'rgba(179,156,79,0.08)' }}
       />
       <div
         className="absolute -bottom-2 left-[8%] right-[8%] h-4 blur-lg"
-        style={{ background: 'rgba(0,0,0,0.4)' }}
+        style={{ background: 'rgba(179,156,79,0.05)' }}
       />
 
       {/* Window */}

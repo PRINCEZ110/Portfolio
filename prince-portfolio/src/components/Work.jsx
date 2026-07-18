@@ -15,11 +15,11 @@ export default function Work() {
   const bgOpacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0.3, 0.8, 0.8, 0.3]);
 
   return (
-    <section id="work" className="relative px-6 md:px-12 lg:px-20 py-24 md:py-32 overflow-hidden" ref={sectionRef}>
+    <section id="work" className="relative px-6 md:px-12 lg:px-20 py-24 md:py-32 overflow-hidden bg-sand" ref={sectionRef}>
       {/* Scroll-driven background glow */}
       <motion.div
         className="fixed top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{ opacity: bgOpacity, background: 'radial-gradient(circle, rgba(200,255,0,0.03), transparent 70%)' }}
+        style={{ opacity: bgOpacity, background: 'radial-gradient(circle, rgba(111,142,153,0.03), transparent 70%)' }}
       />
 
       <div className="max-w-8xl mx-auto relative z-10">
@@ -36,12 +36,12 @@ export default function Work() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="font-mono text-[11px] tracking-[0.25em] text-muted uppercase block mb-5"
+            className="font-mono text-[11px] tracking-[0.25em] text-steel uppercase block mb-5"
           >
             Selected Projects
           </motion.span>
 
-          <h2 className="font-['Inter'] font-bold text-snow leading-[0.95] mb-6" style={{ fontSize: 'clamp(2.5rem, 7vw, 6rem)' }}>
+          <h2 className="font-['Inter'] font-bold text-slate leading-[0.95] mb-6" style={{ fontSize: 'clamp(2.5rem, 7vw, 6rem)' }}>
             {'Work that matters.'.split(' ').map((word, i) => (
               <motion.span
                 key={i}
@@ -61,7 +61,7 @@ export default function Work() {
             whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="font-['Inter'] text-muted text-sm md:text-base max-w-lg leading-relaxed tracking-wide"
+            className="font-['Inter'] text-gray text-sm md:text-base max-w-lg leading-relaxed tracking-wide"
           >
             A collection of systems, platforms, and digital experiences I've built.
           </motion.p>
@@ -74,23 +74,23 @@ export default function Work() {
             transition={{ duration: 0.4, delay: 0.55 }}
             className="flex items-center gap-3 mt-8"
           >
-            <span className="font-mono text-[9px] tracking-[0.15em] text-white/20 uppercase">View as</span>
-            <div className="flex rounded-md overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+            <span className="font-mono text-[9px] tracking-[0.15em] text-muted/50 uppercase">View as</span>
+            <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid #E3DEC8' }}>
               <button
                 onClick={() => setBrowserPref('mac')}
                 className={`px-3 py-1.5 font-mono text-[9px] tracking-wider uppercase transition-all duration-300 ${
-                  browserPref === 'mac' ? 'text-ink' : 'text-white/30 hover:text-white/60'
+                  browserPref === 'mac' ? 'text-white' : 'text-muted hover:text-slate'
                 }`}
-                style={{ background: browserPref === 'mac' ? 'rgba(200,255,0,0.9)' : 'rgba(255,255,255,0.03)' }}
+                style={{ background: browserPref === 'mac' ? '#B39C4F' : '#FFFFFF' }}
               >
                 Mac
               </button>
               <button
                 onClick={() => setBrowserPref('windows')}
                 className={`px-3 py-1.5 font-mono text-[9px] tracking-wider uppercase transition-all duration-300 ${
-                  browserPref === 'windows' ? 'text-ink' : 'text-white/30 hover:text-white/60'
+                  browserPref === 'windows' ? 'text-white' : 'text-muted hover:text-slate'
                 }`}
-                style={{ background: browserPref === 'windows' ? 'rgba(200,255,0,0.9)' : 'rgba(255,255,255,0.03)' }}
+                style={{ background: browserPref === 'windows' ? '#B39C4F' : '#FFFFFF' }}
               >
                 Windows
               </button>
@@ -102,7 +102,7 @@ export default function Work() {
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="h-px bg-gradient-to-r from-white/20 via-white/10 to-transparent origin-left mt-10"
+            className="h-px bg-gradient-to-r from-gold/20 via-brown/10 to-transparent origin-left mt-10"
           />
         </motion.div>
 
@@ -168,7 +168,7 @@ function FeatureBlock({ project, index, browserPref }) {
                 transition={{ duration: 0.3, delay: 0.1 + i * 0.06 }}
                 className="flex items-center gap-3"
               >
-                {i > 0 && <span className="w-px h-3 bg-white/10" />}
+                {i > 0 && <span className="w-px h-3 bg-border" />}
                 <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">{item}</span>
               </motion.span>
             ))}
@@ -179,7 +179,7 @@ function FeatureBlock({ project, index, browserPref }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="font-['Inter'] font-bold text-snow leading-[1.05] mb-6"
+            className="font-['Inter'] font-bold text-slate leading-[1.05] mb-6"
             style={{ fontSize: 'clamp(2rem, 4.5vw, 3.5rem)' }}
           >
             {project.title.split('').map((char, i) => (
@@ -194,7 +194,7 @@ function FeatureBlock({ project, index, browserPref }) {
                 {char}
               </motion.span>
             ))}
-            <span className="block text-muted font-light text-base md:text-xl mt-2">
+            <span className="block text-gray font-light text-base md:text-xl mt-2">
               {project.subtitle}
             </span>
           </motion.h3>
@@ -204,7 +204,7 @@ function FeatureBlock({ project, index, browserPref }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.35 }}
-            className="font-['Inter'] text-muted text-sm md:text-base leading-relaxed tracking-wide mb-6"
+            className="font-['Inter'] text-gray text-sm md:text-base leading-relaxed tracking-wide mb-6"
           >
             {project.description}
           </motion.p>
@@ -217,33 +217,22 @@ function FeatureBlock({ project, index, browserPref }) {
           >
             <Link
               to={`/work/${project.id}`}
-              className="relative inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-sm overflow-hidden group/btn transition-all duration-300"
-              style={{
-                color: project.color,
-                border: `1px solid ${project.color}20`,
-              }}
-            >
-              <motion.span
-                className="absolute inset-0"
-                style={{ background: `${project.color}08` }}
-                whileHover={{ background: `${project.color}15` }}
-                transition={{ duration: 0.3 }}
-              />
-              <span className="relative z-10">View Project</span>
-              <motion.span
-                className="relative z-10 inline-block"
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              >→</motion.span>
+                className="relative inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-xl overflow-hidden group/btn transition-all duration-300 border border-gold/30 text-gold hover:bg-gold/10"
+              >
+                <span className="relative z-10">View Project</span>
+                <motion.span
+                  className="relative z-10 inline-block"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                >→</motion.span>
             </Link>
           </motion.div>
 
           {/* Scroll progress indicator */}
           <motion.div
-            className="h-px w-0 mt-8"
+            className="h-px w-0 mt-8 bg-gold/40"
             style={{
               width: useTransform(progress, [0, 1], ['0%', '40%']),
-              backgroundColor: project.color,
             }}
           />
         </motion.div>
@@ -260,7 +249,7 @@ function FeatureBlock({ project, index, browserPref }) {
             <motion.div
               className="absolute -inset-4 rounded-2xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"
               style={{
-                background: `radial-gradient(ellipse at center, ${project.color}08, transparent 70%)`,
+                background: `radial-gradient(ellipse at center, rgba(111,142,153,0.06), transparent 70%)`,
                 filter: 'blur(20px)',
               }}
             />
@@ -273,15 +262,14 @@ function FeatureBlock({ project, index, browserPref }) {
             <motion.div
               className="absolute bottom-4 right-4 opacity-0 group-hover/card:opacity-100 transition-all duration-400 translate-y-2 group-hover/card:translate-y-0"
             >
-              <span className="font-mono text-[9px] tracking-wider text-white/50 bg-black/70 px-3 py-1.5 rounded-sm backdrop-blur-md border border-white/5">
+              <span className="font-mono text-[9px] tracking-wider text-gold bg-white/90 px-3 py-1.5 rounded-lg backdrop-blur-md border border-border shadow-soft">
                 Click to explore →
               </span>
             </motion.div>
           </motion.div>
         </Link>
-      </div>
 
-      {/* Highlights */}
+        {/* Highlights */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -299,11 +287,10 @@ function FeatureBlock({ project, index, browserPref }) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: 0.5 + j * 0.06 }}
-              className="flex items-center gap-2.5 font-['Inter'] text-sm text-snow/70"
+              className="flex items-center gap-2.5 font-['Inter'] text-sm text-slate/70"
             >
               <motion.span
-                className="inline-block w-[3px] h-[3px] rounded-full flex-shrink-0"
-                style={{ backgroundColor: project.color }}
+                className="inline-block w-[3px] h-[3px] rounded-full flex-shrink-0 bg-steel/60"
                 animate={{ scale: [1, 1.5, 1], opacity: [0.7, 1, 0.7] }}
                 transition={{ duration: 2, repeat: Infinity, delay: j * 0.3 }}
               />
@@ -312,6 +299,7 @@ function FeatureBlock({ project, index, browserPref }) {
           ))}
         </div>
       </motion.div>
+    </div>
     </motion.div>
   );
 }
@@ -344,7 +332,7 @@ function SplitBlock({ project, index, browserPref }) {
             <motion.div
               className="absolute -inset-4 rounded-2xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"
               style={{
-                background: `radial-gradient(ellipse at center, ${project.color}08, transparent 70%)`,
+                background: `radial-gradient(ellipse at center, rgba(111,142,153,0.06), transparent 70%)`,
                 filter: 'blur(20px)',
               }}
             />
@@ -352,7 +340,7 @@ function SplitBlock({ project, index, browserPref }) {
             <motion.div
               className="absolute bottom-4 right-4 opacity-0 group-hover/card:opacity-100 transition-all duration-400 translate-y-2 group-hover/card:translate-y-0"
             >
-              <span className="font-mono text-[9px] tracking-wider text-white/50 bg-black/70 px-3 py-1.5 rounded-sm backdrop-blur-md border border-white/5">
+              <span className="font-mono text-[9px] tracking-wider text-gold bg-white/90 px-3 py-1.5 rounded-lg backdrop-blur-md border border-border shadow-soft">
                 Click to explore →
               </span>
             </motion.div>
@@ -377,7 +365,7 @@ function SplitBlock({ project, index, browserPref }) {
                 transition={{ duration: 0.3, delay: 0.1 + i * 0.06 }}
                 className="flex items-center gap-3"
               >
-                {i > 0 && <span className="w-px h-3 bg-white/10" />}
+                {i > 0 && <span className="w-px h-3 bg-border" />}
                 <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">{item}</span>
               </motion.span>
             ))}
@@ -388,7 +376,7 @@ function SplitBlock({ project, index, browserPref }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="font-['Inter'] font-bold text-snow leading-[1.05] mb-6"
+            className="font-['Inter'] font-bold text-slate leading-[1.05] mb-6"
             style={{ fontSize: 'clamp(2rem, 4.5vw, 3.5rem)' }}
           >
             {project.title.split('').map((char, i) => (
@@ -403,7 +391,7 @@ function SplitBlock({ project, index, browserPref }) {
                 {char}
               </motion.span>
             ))}
-            <span className="block text-muted font-light text-base md:text-xl mt-2">{project.subtitle}</span>
+            <span className="block text-gray font-light text-base md:text-xl mt-2">{project.subtitle}</span>
           </motion.h3>
 
           <motion.p
@@ -411,7 +399,7 @@ function SplitBlock({ project, index, browserPref }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.35 }}
-            className="font-['Inter'] text-muted text-sm md:text-base leading-relaxed tracking-wide mb-6"
+            className="font-['Inter'] text-gray text-sm md:text-base leading-relaxed tracking-wide mb-6"
           >
             {project.description}
           </motion.p>
@@ -424,15 +412,8 @@ function SplitBlock({ project, index, browserPref }) {
           >
             <Link
               to={`/work/${project.id}`}
-              className="relative inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-sm overflow-hidden group/btn transition-all duration-300"
-              style={{ color: project.color, border: `1px solid ${project.color}20` }}
+              className="relative inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-xl overflow-hidden group/btn transition-all duration-300 border border-gold/30 text-gold hover:bg-gold/10"
             >
-              <motion.span
-                className="absolute inset-0"
-                style={{ background: `${project.color}08` }}
-                whileHover={{ background: `${project.color}15` }}
-                transition={{ duration: 0.3 }}
-              />
               <span className="relative z-10">View Project</span>
               <motion.span
                 className="relative z-10 inline-block"
@@ -479,8 +460,8 @@ function NagarSewaMockup({ variant = 'mac' }) {
               <motion.div
                 key={i}
                 className="w-8 h-8 rounded-lg flex items-center justify-center"
-                style={{ color: i === 0 ? 'rgba(200,255,0,0.6)' : 'rgba(255,255,255,0.25)' }}
-                whileHover={{ color: 'rgba(200,255,0,0.8)', background: 'rgba(200,255,0,0.08)' }}
+                style={{ color: i === 0 ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.25)' }}
+                whileHover={{ color: 'rgba(179,156,79,0.8)', background: 'rgba(179,156,79,0.08)' }}
                 whileTap={{ scale: 0.9 }}
               >
                 {icon}
@@ -499,8 +480,8 @@ function NagarSewaMockup({ variant = 'mac' }) {
               </motion.div>
               <motion.div
                 className="h-9 px-3 rounded-lg flex items-center justify-center text-[8px] font-mono font-medium cursor-pointer"
-                style={{ background: 'rgba(200,255,0,0.08)', color: 'rgba(200,255,0,0.6)' }}
-                whileHover={{ background: 'rgba(200,255,0,0.14)', scale: 1.02 }}
+                style={{ background: 'rgba(179,156,79,0.08)', color: 'rgba(179,156,79,0.6)' }}
+                whileHover={{ background: 'rgba(179,156,79,0.14)', scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
                 + New
@@ -537,9 +518,9 @@ function NagarSewaMockup({ variant = 'mac' }) {
                   className="flex-1 rounded-t-md cursor-pointer origin-bottom relative group"
                   style={{
                     height: `${h}%`,
-                    background: i >= 7 ? 'rgba(200,255,0,0.2)' : 'rgba(255,255,255,0.06)',
+                    background: i >= 7 ? 'rgba(179,156,79,0.2)' : 'rgba(255,255,255,0.06)',
                   }}
-                  whileHover={{ scaleY: 1.06, background: 'rgba(200,255,0,0.3)' }}
+                  whileHover={{ scaleY: 1.06, background: 'rgba(179,156,79,0.3)' }}
                   layout
                   transition={{ type: 'spring', stiffness: 200, damping: 25, mass: 0.5 }}
                 >
@@ -581,15 +562,15 @@ function NagarSewaMockup({ variant = 'mac' }) {
                   <div>
                     <span className="inline-block text-[6px] font-mono px-1.5 py-0.5 rounded" style={{
                       background: row[2] === 'High' ? 'rgba(255,100,100,0.1)' : row[2] === 'Medium' ? 'rgba(255,200,0,0.1)' : 'rgba(200,255,0,0.1)',
-                      color: row[2] === 'High' ? 'rgba(255,100,100,0.7)' : row[2] === 'Medium' ? 'rgba(255,200,0,0.7)' : 'rgba(200,255,0,0.7)',
+                      color: row[2] === 'High' ? 'rgba(255,100,100,0.7)' : row[2] === 'Medium' ? 'rgba(255,200,0,0.7)' : 'rgba(179,156,79,0.7)',
                     }}>
                       {row[2]}
                     </span>
                   </div>
                   <div>
                     <span className="inline-block text-[6px] font-mono px-1.5 py-0.5 rounded" style={{
-                      background: row[3] === 'Resolved' ? 'rgba(200,255,0,0.08)' : 'rgba(255,255,255,0.04)',
-                      color: row[3] === 'Resolved' ? 'rgba(200,255,0,0.6)' : 'rgba(255,255,255,0.4)',
+                      background: row[3] === 'Resolved' ? 'rgba(179,156,79,0.08)' : 'rgba(255,255,255,0.04)',
+                      color: row[3] === 'Resolved' ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.4)',
                     }}>
                       {row[3]}
                     </span>
@@ -627,7 +608,7 @@ function TimeStarMockup({ variant = 'mac' }) {
             />
             <div className="flex items-center gap-1 mt-4">
               {[...Array(5)].map((_, i) => (
-                <svg key={i} className={`w-3 h-3 ${i < 4 ? 'text-blue-300/50' : 'text-white/10'}`} viewBox="0 0 24 24" fill="currentColor">
+                <svg key={i} className={`w-3 h-3 ${i < 4 ? 'text-steel/50' : 'text-white/10'}`} viewBox="0 0 24 24" fill="currentColor">
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                 </svg>
               ))}
@@ -647,8 +628,8 @@ function TimeStarMockup({ variant = 'mac' }) {
             <div className="flex gap-2 pt-1">
               <motion.div
                 className="flex-1 h-8 rounded-lg text-[8px] font-mono flex items-center justify-center font-medium tracking-wider cursor-pointer"
-                style={{ background: 'rgba(160,207,255,0.08)', color: 'rgba(160,207,255,0.6)' }}
-                whileHover={{ background: 'rgba(160,207,255,0.18)', scale: 1.02 }}
+                style={{ background: 'rgba(111,142,153,0.08)', color: 'rgba(111,142,153,0.6)' }}
+                whileHover={{ background: 'rgba(111,142,153,0.18)', scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
                 Add to Cart
@@ -665,7 +646,7 @@ function TimeStarMockup({ variant = 'mac' }) {
               </motion.div>
             </div>
             <div className="flex items-center gap-2 pt-1 text-[7px] font-mono text-white/15">
-              <span style={{ color: 'rgba(160,207,255,0.5)' }}>In stock</span>
+              <span style={{ color: 'rgba(111,142,153,0.5)' }}>In stock</span>
               <span>•</span>
               <span>Free returns</span>
               <span>•</span>
@@ -704,8 +685,8 @@ function SahakariNetMockup({ variant = 'mac' }) {
               <motion.div
                 key={i}
                 className="w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer"
-                style={{ color: i === 1 ? 'rgba(255,184,108,0.6)' : 'rgba(255,255,255,0.25)' }}
-                whileHover={{ color: 'rgba(255,184,108,0.8)', background: 'rgba(255,184,108,0.08)' }}
+                style={{ color: i === 1 ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.25)' }}
+                whileHover={{ color: 'rgba(179,156,79,0.8)', background: 'rgba(179,156,79,0.08)' }}
                 whileTap={{ scale: 0.9 }}
               >
                 {icon}
@@ -721,8 +702,8 @@ function SahakariNetMockup({ variant = 'mac' }) {
               </div>
               <motion.div
                 className="px-3 h-7 rounded-lg flex items-center justify-center text-[7px] font-mono font-medium cursor-pointer"
-                style={{ background: 'rgba(255,184,108,0.08)', color: 'rgba(255,184,108,0.5)' }}
-                whileHover={{ background: 'rgba(255,184,108,0.14)', scale: 1.02 }}
+                style={{ background: 'rgba(179,156,79,0.08)', color: 'rgba(179,156,79,0.5)' }}
+                whileHover={{ background: 'rgba(179,156,79,0.14)', scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
                 + Add Member
@@ -781,8 +762,8 @@ function SahakariNetMockup({ variant = 'mac' }) {
                   <div className="text-[8px] font-mono text-white/45">{row[3]}</div>
                   <div>
                     <span className="inline-block text-[6px] font-mono px-1.5 py-0.5 rounded" style={{
-                      background: row[4] === 'Active' ? 'rgba(255,184,108,0.08)' : 'rgba(255,255,255,0.03)',
-                      color: row[4] === 'Active' ? 'rgba(255,184,108,0.6)' : 'rgba(255,255,255,0.3)',
+                      background: row[4] === 'Active' ? 'rgba(179,156,79,0.08)' : 'rgba(255,255,255,0.03)',
+                      color: row[4] === 'Active' ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.3)',
                     }}>
                       {row[4]}
                     </span>
@@ -806,10 +787,10 @@ function SahakariNetMockup({ variant = 'mac' }) {
                     key={i}
                     className="w-6 h-6 rounded-md flex items-center justify-center text-[7px] font-mono cursor-pointer"
                     style={{
-                      background: n === 1 ? 'rgba(255,184,108,0.08)' : 'rgba(255,255,255,0.02)',
-                      color: n === 1 ? 'rgba(255,184,108,0.5)' : 'rgba(255,255,255,0.25)',
+                      background: n === 1 ? 'rgba(179,156,79,0.08)' : 'rgba(255,255,255,0.02)',
+                      color: n === 1 ? 'rgba(179,156,79,0.5)' : 'rgba(255,255,255,0.25)',
                     }}
-                    whileHover={{ background: 'rgba(255,184,108,0.12)', scale: 1.05 }}
+                    whileHover={{ background: 'rgba(179,156,79,0.12)', scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     {n}

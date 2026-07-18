@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const navLinks = [
@@ -29,9 +29,9 @@ export default function ProjectFooter({ projectTitle }) {
   };
 
   return (
-    <footer className="relative overflow-hidden border-t border-white/5 bg-ink">
+    <footer className="relative overflow-hidden border-t border-white/5 bg-footer">
       {/* Subtle glow */}
-      <div className="absolute left-1/2 top-0 h-px w-[300px] -translate-x-1/2 bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
+      <div className="absolute left-1/2 top-0 h-px w-[300px] -translate-x-1/2 bg-gradient-to-r from-transparent via-gold/10 to-transparent" />
 
       <div className="max-w-8xl mx-auto px-6 md:px-12 lg:px-20 py-16 md:py-20">
 
@@ -43,9 +43,9 @@ export default function ProjectFooter({ projectTitle }) {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-10"
         >
-          <p className="font-['Inter'] text-muted text-sm md:text-base leading-relaxed max-w-lg mx-auto">
+          <p className="font-['Inter'] text-footertext/60 text-sm md:text-base leading-relaxed max-w-lg mx-auto">
             Like this project?{' '}
-            <button onClick={() => handleNav('/#contact')} className="text-snow hover:text-accent transition-colors underline underline-offset-4 decoration-white/10 hover:decoration-accent/50 bg-transparent border-none cursor-pointer font-['Inter'] text-sm md:text-base">
+            <button onClick={() => handleNav('/#contact')} className="text-footertext hover:text-gold transition-colors underline underline-offset-4 decoration-white/10 hover:decoration-gold/50 bg-transparent border-none cursor-pointer font-['Inter'] text-sm md:text-base">
               Let's work together
             </button>
             .
@@ -64,7 +64,7 @@ export default function ProjectFooter({ projectTitle }) {
             <button
               key={link.label}
               onClick={() => handleNav(link.href)}
-              className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase hover:text-accent transition-colors duration-300 bg-transparent border-none cursor-pointer"
+              className="font-mono text-[10px] tracking-[0.2em] text-footertext/40 uppercase hover:text-gold transition-colors duration-300 bg-transparent border-none cursor-pointer"
             >
               {link.label}
             </button>
@@ -72,7 +72,7 @@ export default function ProjectFooter({ projectTitle }) {
           <a
             href="#"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className="font-mono text-[10px] tracking-[0.2em] text-white/20 uppercase hover:text-accent transition-colors duration-300"
+            className="font-mono text-[10px] tracking-[0.2em] text-footertext/20 uppercase hover:text-gold transition-colors duration-300"
           >
             ↑ Back to top
           </a>
@@ -89,15 +89,15 @@ export default function ProjectFooter({ projectTitle }) {
           transition={{ duration: 0.3, delay: 0.2 }}
           className="flex flex-col md:flex-row items-center justify-between gap-3"
         >
-          <span className="font-mono text-[9px] tracking-wider text-white/15">
+          <span className="font-mono text-[9px] tracking-wider text-footertext/30">
             © {year} Prince Shrestha
           </span>
           {projectTitle && (
-            <span className="font-mono text-[9px] tracking-wider text-white/10 uppercase">
+            <span className="font-mono text-[9px] tracking-wider text-footertext/20 uppercase">
               {projectTitle}
             </span>
           )}
-          <span className="font-mono text-[9px] tracking-wider text-white/15">
+          <span className="font-mono text-[9px] tracking-wider text-footertext/30">
             Crafted with precision
           </span>
         </motion.div>

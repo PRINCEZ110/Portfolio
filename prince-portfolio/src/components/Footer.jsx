@@ -75,14 +75,14 @@ export default function Footer() {
       animate={controls}
       initial="hidden"
       variants={container}
-      className="relative overflow-hidden border-t border-border bg-ink"
+      className="relative overflow-hidden border-t border-white/5 bg-footer"
     >
       {/* glow */}
       <motion.div
         style={{ y }}
-        className="absolute inset-0 opacity-30 pointer-events-none"
+        className="absolute inset-0 opacity-20 pointer-events-none"
       >
-        <div className="absolute left-1/2 top-0 h-[300px] w-[600px] -translate-x-1/2 bg-accent/10 blur-[120px]" />
+        <div className="absolute left-1/2 top-0 h-[300px] w-[600px] -translate-x-1/2 bg-gold/10 blur-[120px]" />
       </motion.div>
 
       <div className="max-w-9xl mx-auto px-6 md:px-12 lg:px-20 py-24 md:py-32 relative z-10">
@@ -90,15 +90,15 @@ export default function Footer() {
         {/* NAME */}
         <motion.h2
           variants={item}
-          className="font-display text-[clamp(3.5rem,9vw,8rem)] font-bold leading-none tracking-tight text-snow text-center"
+          className="font-display text-[clamp(3.5rem,9vw,8rem)] font-bold leading-none tracking-tight text-footertext text-center"
         >
-          Simple <span className="text-accent">Modern</span> Relaible
+          Simple <span className="text-gold">Modern</span> Reliable
         </motion.h2>
 
         {/* divider */}
         <motion.div
           variants={item}
-          className="my-12 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+          className="my-12 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"
         />
 
         {/* GRID */}
@@ -106,7 +106,7 @@ export default function Footer() {
 
           {/* CONTACT */}
           <motion.div variants={item}>
-            <p className="text-xs font-mono tracking-[0.35em] text-muted mb-5">
+            <p className="text-xs font-mono tracking-[0.35em] text-footertext/40 mb-5">
               CONTACT
             </p>
 
@@ -114,7 +114,7 @@ export default function Footer() {
               href="mailto:princezstha6110@gmail.com"
               whileHover={{ x: 6 }}
               transition={hoverSpring}
-              className="group inline-flex items-center gap-2 text-lg text-snow hover:text-accent "
+              className="group inline-flex items-center gap-2 text-lg text-footertext hover:text-gold"
             >
               princezstha6110@gmail.com
               <motion.span
@@ -128,7 +128,7 @@ export default function Footer() {
 
           {/* NAV */}
           <motion.div variants={item}>
-            <p className="text-xs font-mono tracking-[0.35em] text-muted mb-5 text-center">
+            <p className="text-xs font-mono tracking-[0.35em] text-footertext/40 mb-5 text-center">
               NAVIGATION
             </p>
 
@@ -139,10 +139,10 @@ export default function Footer() {
                   href={link === "Home" ? "#" : `#${link.toLowerCase()}`}
                   whileHover={{ x: 8 }}
                   transition={hoverSpring}
-                  className="group text-snow hover:text-accent relative"
+                  className="group text-footertext hover:text-gold relative"
                 >
                   {link}
-                  <span className="absolute left-0 -bottom-1 h-px w-0 bg-accent transition-all duration-500 group-hover:w-full" />
+                  <span className="absolute left-0 -bottom-1 h-px w-0 bg-gold transition-all duration-500 group-hover:w-full" />
                 </motion.a>
               ))}
             </div>
@@ -150,7 +150,7 @@ export default function Footer() {
 
           {/* SOCIAL */}
           <motion.div variants={item}>
-            <p className="text-xs font-mono tracking-[0.35em] text-muted mb-5 text-right">
+            <p className="text-xs font-mono tracking-[0.35em] text-footertext/40 mb-5 text-right">
               SOCIAL
             </p>
 
@@ -167,10 +167,10 @@ export default function Footer() {
                   rel="noreferrer"
                   whileHover={{ x: 8 }}
                   transition={hoverSpring}
-                  className="group text-snow hover:text-accent relative"
+                  className="group text-footertext hover:text-gold relative"
                 >
                   {social.label}
-                  <span className="absolute left-0 -bottom-1 h-px w-0 bg-accent transition-all duration-500 group-hover:w-full" />
+                  <span className="absolute left-0 -bottom-1 h-px w-0 bg-gold transition-all duration-500 group-hover:w-full" />
                 </motion.a>
               ))}
             </div>
@@ -180,13 +180,13 @@ export default function Footer() {
         {/* BOTTOM */}
         <motion.div
           variants={item}
-          className="mt-20 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4"
+          className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4"
         >
-          <p className="text-xs font-mono text-muted max-w-xl">
+          <p className="text-xs font-mono text-footertext/50 max-w-xl">
           lets build something great together. currently seeking frontend roles, internships, and freelance projects. feel free to reach out for collaborations, coffee chats, or just to say hi! &#128075;
           </p>
 
-          <p className="text-xs font-mono text-border">
+          <p className="text-xs font-mono text-footertext/30">
             © {year} Prince Shrestha
           </p>
         </motion.div>

@@ -25,10 +25,10 @@ function BgCanvas() {
     const off = () => { mouse.current.x = -1000; mouse.current.y = -1000; };
     window.addEventListener('mousemove', onMove); window.addEventListener('mouseleave', off);
 
-    const pts = Array.from({ length: 40 }, () => ({
+    const pts = Array.from({ length: 30 }, () => ({
       x: Math.random() * w, y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
-      s: Math.random() * 1.5 + 0.5, a: Math.random() * 0.04 + 0.02,
+      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+      s: Math.random() * 1.2 + 0.3, a: Math.random() * 0.03 + 0.01,
     }));
 
     const draw = () => {
@@ -44,7 +44,7 @@ function BgCanvas() {
         if (p.x < 0) p.x = w; if (p.x > w) p.x = 0; if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
 
         ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(200,255,0,${d < 150 ? 0.12 : p.a})`;
+        ctx.fillStyle = `rgba(179,156,79,${d < 150 ? 0.08 : p.a})`;
         ctx.fill();
       });
 
@@ -54,7 +54,7 @@ function BgCanvas() {
           const d = Math.sqrt(dx * dx + dy * dy);
           if (d < 120) {
             ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y);
-            ctx.strokeStyle = `rgba(200,255,0,${0.02 * (1 - d / 120)})`;
+            ctx.strokeStyle = `rgba(179,156,79,${0.015 * (1 - d / 120)})`;
             ctx.lineWidth = 0.5; ctx.stroke();
           }
         }
@@ -74,34 +74,34 @@ export default function CV() {
   const [viewing, setViewing] = useState(false);
 
   return (
-    <section id="cv" className="px-6 md:px-12 py-24 border-t border-border relative overflow-hidden">
+    <section id="cv" className="px-6 md:px-12 py-24 border-t border-border relative overflow-hidden bg-sand">
       <BgCanvas />
       <div className="max-w-8xl mx-auto">
 
         {/* Header row */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <div>
-            <span className="font-mono text-xs text-accent tracking-widest uppercase">resume</span>
+            <span className="font-mono text-xs text-steel tracking-widest uppercase">resume</span>
             <h2
-              className="font-display font-bold text-snow mt-3 leading-tight"
+              className="font-display font-bold text-slate mt-3 leading-tight"
               style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}
             >
               Curriculum<br />
-              <span className="text-accent">Vitae.</span>
+              <span className="text-steel">Vitae.</span>
             </h2>
           </div>
 
           <div className="flex gap-3">
             <button
               onClick={() => setViewing(v => !v)}
-              className="flex items-center gap-2 border border-border px-6 py-3 font-display text-sm text-snow hover:border-accent hover:text-accent transition-all duration-200"
+              className="flex items-center gap-2 border border-border px-6 py-3 font-display text-sm text-slate hover:border-steel hover:text-steel transition-all duration-300 rounded-xl bg-white shadow-soft"
             >
               {viewing ? '✕ Close' : '👁 Preview'}
             </button>
             <a
               href="/Prince_Shrestha_CV.pdf"
               download="Prince_Shrestha_CV.pdf"
-              className="flex items-center gap-2 bg-accent text-ink font-display font-bold px-6 py-3 hover:bg-snow transition-colors duration-200"
+              className="flex items-center gap-2 bg-slate text-white font-display font-bold px-6 py-3 hover:bg-gold transition-all duration-300 rounded-xl shadow-button"
             >
               ↓ Download CV
             </a>
@@ -121,11 +121,11 @@ export default function CV() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="border border-border p-5 hover:border-accent/40 transition-colors duration-300"
+              className="border border-border bg-white rounded-xl p-5 hover:border-steel/30 transition-all duration-300 hover:shadow-card-hover hover:-translate-y-0.5"
             >
-              <span className="font-mono text-[10px] text-accent tracking-widest uppercase">{item.label}</span>
-              <p className="font-display font-semibold text-snow mt-2 text-base">{item.value}</p>
-              <p className="font-body text-muted text-xs mt-1">{item.sub}</p>
+              <span className="font-mono text-[10px] text-steel tracking-widest uppercase">{item.label}</span>
+              <p className="font-display font-semibold text-slate mt-2 text-base">{item.value}</p>
+              <p className="font-body text-gray text-xs mt-1">{item.sub}</p>
             </motion.div>
           ))}
         </div>
@@ -140,14 +140,14 @@ export default function CV() {
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="overflow-hidden"
             >
-              <div className="border border-border overflow-hidden">
-                <div className="bg-card px-4 py-2 flex items-center justify-between border-b border-border">
+              <div className="border border-border rounded-xl overflow-hidden bg-white shadow-card">
+                <div className="bg-cream px-4 py-2 flex items-center justify-between border-b border-border">
                   <span className="font-mono text-xs text-muted">Prince_Shrestha_CV.pdf</span>
                   <a
                     href="/Prince_Shrestha_CV.pdf"
                     target="_blank"
                     rel="noreferrer"
-                    className="font-mono text-xs text-accent hover:underline"
+                    className="font-mono text-xs text-steel hover:underline"
                   >
                     open in new tab ↗
                   </a>
