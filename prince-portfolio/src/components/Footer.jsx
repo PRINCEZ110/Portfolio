@@ -92,7 +92,7 @@ export default function Footer() {
           variants={item}
           className="font-display text-[clamp(3.5rem,9vw,8rem)] font-bold leading-none tracking-tight text-footertext text-center"
         >
-          Simple <span className="text-gold">Modern</span> Reliable
+          Simple <span className="text-[#541E24]">Modern</span> Reliable
         </motion.h2>
 
         {/* divider */}

@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Eczar:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -14,7 +14,7 @@ html {
 body {
   background-color: #F8F7E5;
   color: #1C1C1C;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Eczar', serif;
   overflow-x: hidden;
 }
 
@@ -40,3 +40,7 @@ body::before {
 
 ::selection { background: #6F8E99; color: #FFFFFF; }
 ::-webkit-scrollbar-thumb { background: #B39C4F; border-radius: 2px; }
+
+.mockup-root * { font-family: 'Josefin Sans', sans-serif; }
+.mockup-root .lato { font-family: 'Lato', sans-serif; }
+

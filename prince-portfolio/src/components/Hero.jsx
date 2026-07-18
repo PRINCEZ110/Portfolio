@@ -27,9 +27,7 @@ export default function Hero() {
         style={{
           backgroundImage: `linear-gradient(#000000 0.5px, transparent 0.5px), linear-gradient(90deg, #000000 0.5px, transparent 0.5px)`,
           backgroundSize: '40px 40px',
-          opacity: 0.12,
-          maskImage: 'radial-gradient(ellipse at 50% 60%, black 30%, transparent 70%)',
-          WebkitMaskImage: 'radial-gradient(ellipse at 50% 60%, black 30%, transparent 70%)',
+          opacity: 0.08,
         }}
       />
       {/* Subtle warm gradient */}
@@ -43,7 +41,7 @@ export default function Hero() {
         className="flex items-center gap-2 mb-10"
       >
         <span className="w-2 h-2 rounded-full bg-[#541E24] animate-pulse" />
-        <span className="font-mono text-xs text-[#000000] tracking-widest uppercase">
+        <span className="text-xs text-[#000000] tracking-widest uppercase" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
           available for work 
         </span>
       </motion.div>
@@ -55,7 +53,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="font-display font-bold leading-[0.92] text-slate"
-          style={{ fontSize: 'clamp(3.5rem, 9vw, 10rem)' }}
+          style={{ fontSize: 'clamp(3.5rem, 9vw, 10rem)', fontFamily: "'Josefin Sans', sans-serif" }}
         >
           Web
         </motion.h1>
@@ -66,7 +64,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-display font-bold leading-[0.92] text-wine overflow-hidden"
-            style={{ fontSize: 'clamp(3.5rem, 9vw, 10rem)' }}
+            style={{ fontSize: 'clamp(3.5rem, 9vw, 10rem)', fontFamily: "'Josefin Sans', sans-serif" }}
           >
             <motion.span
               key={roleIdx}
@@ -88,19 +86,20 @@ export default function Hero() {
           transition={{ delay: 0.6 }}
           className="mt-12 flex flex-col md:flex-row md:items-center md:justify-between gap-8"
         >
-          <p className="font-body text-black max-w-md text-base leading-relaxed">
-            I'm <span className="text-slate text-[#541E24] font-medium">Prince</span>, a Web designer & developer building modern, responsive websites with clean, fast, user-focused design.
+          <p className="font-body text-black max-w-md text-base leading-relaxed" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
+            I'm <span className="text-[#541E24]  font-medium">Prince</span>, a Web designer & developer building modern, responsive websites with clean, fast, user-focused design.
             High-performance digital experiences for clients and businesses.</p>
 
           <div className="flex items-center gap-6 flex-wrap">
             <a
               href="#work"
               className="group flex items-center gap-3 font-display font-semibold text-slate border border-border px-6 py-3 hover:border-steel hover:text-steel transition-all duration-300 rounded-xl"
+              style={{ fontFamily: "'Josefin Sans', sans-serif" }}
             >
               View Work
               <span className="group-hover:translate-x-1 transition-transform">→</span>
             </a>
-            <a href="#contact" className="font-display font-semibold text-white bg-slate px-6 py-3 hover:bg-gold transition-all duration-300 rounded-xl shadow-button">
+            <a href="#contact" className="font-display font-semibold text-white bg-slate px-6 py-3 hover:bg-gold transition-all duration-300 rounded-xl shadow-button" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
               Let's Talk
             </a>
           </div>

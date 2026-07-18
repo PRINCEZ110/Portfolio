@@ -36,12 +36,12 @@ export default function Work() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="font-mono text-[11px] tracking-[0.25em] text-steel uppercase block mb-5"
+            className="text-[11px] tracking-[0.25em] text-wine uppercase block mb-5" style={{ fontFamily: "'Lato', sans-serif" }}
           >
             Selected Projects
           </motion.span>
 
-          <h2 className="font-['Inter'] font-bold text-slate leading-[0.95] mb-6" style={{ fontSize: 'clamp(2.5rem, 7vw, 6rem)' }}>
+          <h2 className="font-bold text-slate leading-[0.95] mb-6" style={{ fontSize: 'clamp(2.5rem, 7vw, 6rem)', fontFamily: "'Josefin Sans', sans-serif" }}>
             {'Work that matters.'.split(' ').map((word, i) => (
               <motion.span
                 key={i}
@@ -61,7 +61,7 @@ export default function Work() {
             whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="font-['Inter'] text-gray text-sm md:text-base max-w-lg leading-relaxed tracking-wide"
+            className="text-gray text-sm md:text-base max-w-lg leading-relaxed tracking-wide" style={{ fontFamily: "'Lato', sans-serif" }}
           >
             A collection of systems, platforms, and digital experiences I've built.
           </motion.p>
@@ -74,23 +74,23 @@ export default function Work() {
             transition={{ duration: 0.4, delay: 0.55 }}
             className="flex items-center gap-3 mt-8"
           >
-            <span className="font-mono text-[9px] tracking-[0.15em] text-muted/50 uppercase">View as</span>
+            <span className="text-[9px] tracking-[0.15em] text-muted/50 uppercase" style={{ fontFamily: "'Lato', sans-serif" }}>View as</span>
             <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid #E3DEC8' }}>
               <button
                 onClick={() => setBrowserPref('mac')}
-                className={`px-3 py-1.5 font-mono text-[9px] tracking-wider uppercase transition-all duration-300 ${
+                className={`px-3 py-1.5 text-[9px] tracking-wider uppercase transition-all duration-300 ${
                   browserPref === 'mac' ? 'text-white' : 'text-muted hover:text-slate'
                 }`}
-                style={{ background: browserPref === 'mac' ? '#B39C4F' : '#FFFFFF' }}
+                style={{ background: browserPref === 'mac' ? '#B39C4F' : '#FFFFFF', fontFamily: "'Lato', sans-serif" }}
               >
                 Mac
               </button>
               <button
                 onClick={() => setBrowserPref('windows')}
-                className={`px-3 py-1.5 font-mono text-[9px] tracking-wider uppercase transition-all duration-300 ${
+                className={`px-3 py-1.5 text-[9px] tracking-wider uppercase transition-all duration-300 ${
                   browserPref === 'windows' ? 'text-white' : 'text-muted hover:text-slate'
                 }`}
-                style={{ background: browserPref === 'windows' ? '#B39C4F' : '#FFFFFF' }}
+                style={{ background: browserPref === 'windows' ? '#B39C4F' : '#FFFFFF', fontFamily: "'Lato', sans-serif" }}
               >
                 Windows
               </button>
@@ -169,7 +169,7 @@ function FeatureBlock({ project, index, browserPref }) {
                 className="flex items-center gap-3"
               >
                 {i > 0 && <span className="w-px h-3 bg-border" />}
-                <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">{item}</span>
+                <span className="text-[10px] tracking-[0.2em] text-muted uppercase" style={{ fontFamily: "'Lato', sans-serif" }}>{item}</span>
               </motion.span>
             ))}
           </motion.div>
@@ -179,8 +179,8 @@ function FeatureBlock({ project, index, browserPref }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="font-['Inter'] font-bold text-slate leading-[1.05] mb-6"
-            style={{ fontSize: 'clamp(2rem, 4.5vw, 3.5rem)' }}
+            className="font-bold text-slate leading-[1.05] mb-6"
+            style={{ fontSize: 'clamp(2rem, 4.5vw, 3.5rem)', fontFamily: "'Josefin Sans', sans-serif" }}
           >
             {project.title.split('').map((char, i) => (
               <motion.span
@@ -204,7 +204,7 @@ function FeatureBlock({ project, index, browserPref }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.35 }}
-            className="font-['Inter'] text-gray text-sm md:text-base leading-relaxed tracking-wide mb-6"
+            className="text-gray text-sm md:text-base leading-relaxed tracking-wide mb-6" style={{ fontFamily: "'Lato', sans-serif" }}
           >
             {project.description}
           </motion.p>
@@ -217,7 +217,8 @@ function FeatureBlock({ project, index, browserPref }) {
           >
             <Link
               to={`/work/${project.id}`}
-                className="relative inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-xl overflow-hidden group/btn transition-all duration-300 border border-gold/30 text-gold hover:bg-gold/10"
+                className="relative inline-flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-xl overflow-hidden group/btn transition-all duration-300 border border-gold/30 text-gold hover:bg-gold/10"
+                style={{ fontFamily: "'Josefin Sans', sans-serif" }}
               >
                 <span className="relative z-10">View Project</span>
                 <motion.span
@@ -262,7 +263,7 @@ function FeatureBlock({ project, index, browserPref }) {
             <motion.div
               className="absolute bottom-4 right-4 opacity-0 group-hover/card:opacity-100 transition-all duration-400 translate-y-2 group-hover/card:translate-y-0"
             >
-              <span className="font-mono text-[9px] tracking-wider text-gold bg-white/90 px-3 py-1.5 rounded-lg backdrop-blur-md border border-border shadow-soft">
+              <span className="text-[9px] tracking-wider text-gold bg-white/90 px-3 py-1.5 rounded-lg backdrop-blur-md border border-border shadow-soft" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
                 Click to explore →
               </span>
             </motion.div>
@@ -276,8 +277,8 @@ function FeatureBlock({ project, index, browserPref }) {
         viewport={{ once: true }}
         transition={{ duration: 0.4, delay: 0.5 }}
       >
-        <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase block mb-4">
-          Key Highlights
+          <span className="text-[10px] tracking-[0.2em] text-muted uppercase block mb-4" style={{ fontFamily: "'Lato', sans-serif" }}>
+            Key Highlights
         </span>
         <div className="flex flex-wrap gap-x-10 gap-y-2">
           {project.highlights.map((h, j) => (
@@ -287,7 +288,7 @@ function FeatureBlock({ project, index, browserPref }) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: 0.5 + j * 0.06 }}
-              className="flex items-center gap-2.5 font-['Inter'] text-sm text-slate/70"
+              className="flex items-center gap-2.5 text-sm text-slate/70" style={{ fontFamily: "'Lato', sans-serif" }}
             >
               <motion.span
                 className="inline-block w-[3px] h-[3px] rounded-full flex-shrink-0 bg-steel/60"
@@ -340,7 +341,7 @@ function SplitBlock({ project, index, browserPref }) {
             <motion.div
               className="absolute bottom-4 right-4 opacity-0 group-hover/card:opacity-100 transition-all duration-400 translate-y-2 group-hover/card:translate-y-0"
             >
-              <span className="font-mono text-[9px] tracking-wider text-gold bg-white/90 px-3 py-1.5 rounded-lg backdrop-blur-md border border-border shadow-soft">
+              <span className="text-[9px] tracking-wider text-gold bg-white/90 px-3 py-1.5 rounded-lg backdrop-blur-md border border-border shadow-soft" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
                 Click to explore →
               </span>
             </motion.div>
@@ -366,7 +367,7 @@ function SplitBlock({ project, index, browserPref }) {
                 className="flex items-center gap-3"
               >
                 {i > 0 && <span className="w-px h-3 bg-border" />}
-                <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">{item}</span>
+                <span className="text-[10px] tracking-[0.2em] text-muted uppercase" style={{ fontFamily: "'Lato', sans-serif" }}>{item}</span>
               </motion.span>
             ))}
           </motion.div>
@@ -376,8 +377,8 @@ function SplitBlock({ project, index, browserPref }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="font-['Inter'] font-bold text-slate leading-[1.05] mb-6"
-            style={{ fontSize: 'clamp(2rem, 4.5vw, 3.5rem)' }}
+            className="font-bold text-slate leading-[1.05] mb-6"
+            style={{ fontSize: 'clamp(2rem, 4.5vw, 3.5rem)', fontFamily: "'Josefin Sans', sans-serif" }}
           >
             {project.title.split('').map((char, i) => (
               <motion.span
@@ -399,7 +400,7 @@ function SplitBlock({ project, index, browserPref }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.35 }}
-            className="font-['Inter'] text-gray text-sm md:text-base leading-relaxed tracking-wide mb-6"
+            className="text-gray text-sm md:text-base leading-relaxed tracking-wide mb-6" style={{ fontFamily: "'Lato', sans-serif" }}
           >
             {project.description}
           </motion.p>
@@ -445,6 +446,7 @@ function NagarSewaMockup({ variant = 'mac' }) {
       className="origin-center cursor-pointer"
     >
       <BrowserFrame url="nagar-sewa.gov/dashboard" variant={variant}>
+        <div className="mockup-root">
         <div className="flex" style={{ minHeight: '320px' }}>
           <motion.div
             className="w-14 md:w-16 py-4 flex flex-col items-center gap-3"
@@ -581,6 +583,7 @@ function NagarSewaMockup({ variant = 'mac' }) {
             </motion.div>
           </div>
         </div>
+        </div>
       </BrowserFrame>
     </motion.div>
   );
@@ -597,6 +600,7 @@ function TimeStarMockup({ variant = 'mac' }) {
       className="origin-center cursor-pointer"
     >
       <BrowserFrame url="timestar.com/products/chronograph-edition" variant={variant}>
+        <div className="mockup-root">
         <div className="flex" style={{ minHeight: '320px' }}>
           <div className="w-1/2 flex flex-col items-center justify-center p-5 relative overflow-hidden" style={{ background: '#111' }}>
             <motion.img
@@ -654,6 +658,7 @@ function TimeStarMockup({ variant = 'mac' }) {
             </div>
           </div>
         </div>
+        </div>
       </BrowserFrame>
     </motion.div>
   );
@@ -670,6 +675,7 @@ function SahakariNetMockup({ variant = 'mac' }) {
       className="origin-center cursor-pointer"
     >
       <BrowserFrame url="sahakarinet.org/admin/members" variant={variant}>
+        <div className="mockup-root">
         <div className="flex" style={{ minHeight: '320px' }}>
           <motion.div
             className="w-14 md:w-16 py-4 flex flex-col items-center gap-2.5"
@@ -799,6 +805,7 @@ function SahakariNetMockup({ variant = 'mac' }) {
               </div>
             </motion.div>
           </div>
+        </div>
         </div>
       </BrowserFrame>
     </motion.div>

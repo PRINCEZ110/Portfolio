@@ -87,7 +87,7 @@ export default function CV() {
               style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}
             >
               Curriculum<br />
-              <span className="text-steel">Vitae.</span>
+              <span className="text-[#541E24]">Vitae.</span>
             </h2>
           </div>
 

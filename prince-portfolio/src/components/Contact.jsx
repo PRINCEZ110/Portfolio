@@ -10,9 +10,22 @@ const interests = [
   'Open Source',
 ];
 
+const socials = [
+  { label: 'GitHub', href: 'https://github.com/PRINCEZ110' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/princez-shrestha-b12a0132b/' },
+  { label: 'Instagram', href: 'https://www.instagram.com/princezstha/?hl=en' },
+];
+
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+};
+
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState(null); // null | 'sending' | 'sent' | 'error'
+  const [status, setStatus] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -37,141 +50,168 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="px-6 md:px-12 lg:px-20 py-24 md:py-32 bg-clay">
+    <section id="contact" className="px-6 md:px-12 lg:px-20 py-24 md:py-32 bg-[#F9F8F4]">
       <div className="max-w-8xl mx-auto">
-        <div className="mb-14">
-          <span className="font-mono text-xs text-steel tracking-widest uppercase">get in touch</span>
-          <h2
-            className="font-display font-bold text-slate mt-3 leading-tight"
-            style={{ fontSize: 'clamp(2.5rem, 7vw, 5.5rem)' }}
-          >
-            Let's<br />
-            <span className="text-steel">Connect.</span>
-          </h2>
-          <p className="font-body text-gray mt-4 max-w-md leading-relaxed">
-            I'm always open to new projects, collaborations, and interesting conversations.
-          </p>
-        </div>
+        {/* Section label */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-3 mb-14"
+        >
+          <span className="w-8 h-px bg-gold" />
+          <span className="font-mono text-xs text-gold tracking-[0.15em] uppercase">Contact</span>
+        </motion.div>
 
-        {/* Interest tag buttons */}
-        <div className="flex flex-wrap gap-3 mb-10">
-          {interests.map(item => (
-            <a
-              key={item}
-              href={`mailto:princezstha6110@gmail.com?subject=${encodeURIComponent('RE: ' + item)}`}
-              className="group border border-border px-5 py-2.5 font-display text-sm text-muted hover:border-steel hover:text-steel transition-all duration-300 rounded-xl bg-white flex items-center gap-2 shadow-soft"
-            >
-              {item}
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
-            </a>
-          ))}
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Form */}
-          <motion.form
-            onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="space-y-5"
-          >
-            <div>
-              <label className="font-mono text-xs text-muted tracking-widest uppercase block mb-2">Name</label>
-              <input
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                required
-                placeholder="Your name"
-                className="w-full bg-white border border-border rounded-xl px-4 py-3 font-body text-slate text-sm focus:outline-none focus:border-steel transition-all duration-300 placeholder:text-border shadow-soft"
-              />
-            </div>
-            <div>
-              <label className="font-mono text-xs text-muted tracking-widest uppercase block mb-2">Email</label>
-              <input
-                name="email"
-                type="email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                placeholder="your@email.com"
-                className="w-full bg-white border border-border rounded-xl px-4 py-3 font-body text-slate text-sm focus:outline-none focus:border-steel transition-all duration-300 placeholder:text-border shadow-soft"
-              />
-            </div>
-            <div>
-              <label className="font-mono text-xs text-muted tracking-widest uppercase block mb-2">Message</label>
-              <textarea
-                name="message"
-                value={form.message}
-                onChange={handleChange}
-                required
-                rows={5}
-                placeholder="Tell me about your project..."
-                className="w-full bg-white border border-border rounded-xl px-4 py-3 font-body text-slate text-sm focus:outline-none focus:border-steel transition-all duration-300 placeholder:text-border resize-none shadow-soft"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={status === 'sending'}
-              className="w-full bg-slate text-white font-display font-bold py-4 rounded-xl hover:bg-gold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-button"
-            >
-              {status === 'sending'
-                ? 'Sending...'
-                : status === 'sent'
-                ? '✓ Message sent! Check your inbox.'
-                : 'Send Message →'}
-            </button>
-
-            {status === 'error' && (
-              <p className="font-mono text-xs text-red-400 text-center">{errorMsg}</p>
-            )}
-          </motion.form>
-
-          {/* Contact info */}
+        <div className="grid md:grid-cols-2 gap-14 md:gap-20 items-start">
+          {/* Left: heading + info */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="space-y-8"
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div>
-              <span className="font-mono text-xs text-steel tracking-widest uppercase block mb-3">direct contact</span>
-              <a href="mailto:princezstha6110@gmail.com" className="font-display text-slate text-lg hover:text-steel transition-colors">
-                princezstha6110@gmail.com
+            <h2 className="font-display font-bold text-slate leading-[1.05] mb-6" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)' }}>
+              Let's work<br />
+              <span className="text-wine">together.</span>
+            </h2>
+
+            <p className="font-body text-gray text-[15px] md:text-[16px] leading-relaxed max-w-md mb-10">
+              I'm always open to new projects, collaborations, and interesting conversations.
+            </p>
+
+            {/* Direct contact cards */}
+            <div className="space-y-3">
+              <a
+                href="mailto:princezstha6110@gmail.com"
+                className="flex items-center justify-between bg-white border border-[#E8E5D8] rounded-xl px-5 py-4 hover:border-gold/30 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 group"
+              >
+                <div>
+                  <span className="font-mono text-[10px] text-muted tracking-[0.15em] uppercase block mb-0.5">Email</span>
+                  <span className="font-body text-sm text-slate">princezstha6110@gmail.com</span>
+                </div>
+                <span className="text-gold opacity-0 group-hover:opacity-100 transition-opacity text-sm">→</span>
               </a>
+              <div className="flex items-center justify-between bg-white border border-[#E8E5D8] rounded-xl px-5 py-4">
+                <div>
+                  <span className="font-mono text-[10px] text-muted tracking-[0.15em] uppercase block mb-0.5">Phone</span>
+                  <span className="font-body text-sm text-slate">+977-9825046110</span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between bg-white border border-[#E8E5D8] rounded-xl px-5 py-4">
+                <div>
+                  <span className="font-mono text-[10px] text-muted tracking-[0.15em] uppercase block mb-0.5">Location</span>
+                  <span className="font-body text-sm text-slate">Nepal, Itahari</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <span className="font-mono text-xs text-steel tracking-widest uppercase block mb-3">phone</span>
-              <p className="font-body text-gray">+977-9825046110</p>
+
+            {/* Interest tags */}
+            <div className="mt-10">
+              <span className="font-mono text-[10px] text-muted tracking-[0.15em] uppercase block mb-4">I'm interested in</span>
+              <div className="flex flex-wrap gap-2.5">
+                {interests.map(item => (
+                  <a
+                    key={item}
+                    href={`mailto:princezstha6110@gmail.com?subject=${encodeURIComponent('RE: ' + item)}`}
+                    className="font-body text-xs text-slate/70 bg-white border border-[#E8E5D8] px-4 py-2 rounded-lg hover:border-gold/30 hover:text-gold transition-all duration-300 flex items-center gap-1.5 group"
+                  >
+                    {item}
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px]">↗</span>
+                  </a>
+                ))}
+              </div>
             </div>
-            <div>
-              <span className="font-mono text-xs text-steel tracking-widest uppercase block mb-3">country / city</span>
-              <p className="font-body text-gray">Nepal, Itahari</p>
-            </div>
-            <div>
-              <span className="font-mono text-xs text-steel tracking-widest uppercase block mb-3">socials</span>
-              <div className="space-y-2">
-                {[
-                  { label: 'GitHub', href: 'https://github.com/PRINCEZ110' },
-                  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/princez-shrestha-b12a0132b/' },
-                  { label: 'Instagram', href: 'https://www.instagram.com/princezstha/?hl=en' },
-                ].map(s => (
+          </motion.div>
+
+          {/* Right: form + socials */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <motion.form
+              onSubmit={handleSubmit}
+              {...fadeUp}
+              className="bg-white border border-[#E8E5D8] rounded-xl p-6 md:p-8 space-y-5 mb-6"
+            >
+              <span className="font-mono text-[10px] text-gold tracking-[0.15em] uppercase block">Send a message</span>
+
+              <div>
+                <input
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                  placeholder="Your name"
+                  className="w-full bg-[#F9F8F4] border border-[#E8E5D8] rounded-lg px-4 py-3 font-body text-sm text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border"
+                />
+              </div>
+              <div>
+                <input
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                  placeholder="your@email.com"
+                  className="w-full bg-[#F9F8F4] border border-[#E8E5D8] rounded-lg px-4 py-3 font-body text-sm text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border"
+                />
+              </div>
+              <div>
+                <textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  required
+                  rows={5}
+                  placeholder="Tell me about your project..."
+                  className="w-full bg-[#F9F8F4] border border-[#E8E5D8] rounded-lg px-4 py-3 font-body text-sm text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border resize-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={status === 'sending'}
+                className="w-full bg-slate text-white font-display font-semibold py-3.5 rounded-lg hover:bg-gold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm tracking-wide"
+              >
+                {status === 'sending'
+                  ? 'Sending...'
+                  : status === 'sent'
+                  ? '✓ Message sent! Check your inbox.'
+                  : 'Send Message →'}
+              </button>
+
+              {status === 'error' && (
+                <p className="font-body text-xs text-red-400 text-center">{errorMsg}</p>
+              )}
+            </motion.form>
+
+            {/* Socials */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <span className="font-mono text-[10px] text-muted tracking-[0.15em] uppercase block mb-3">Socials</span>
+              <div className="space-y-2.5">
+                {socials.map(s => (
                   <a
                     key={s.label}
                     href={s.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center justify-between border border-border bg-white rounded-xl px-4 py-3 hover:border-steel group transition-all duration-300 shadow-soft"
+                    className="flex items-center justify-between bg-white border border-[#E8E5D8] rounded-xl px-5 py-3.5 hover:border-gold/30 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 group"
                   >
-                    <span className="font-display text-slate text-sm">{s.label}</span>
-                    <span className="text-muted group-hover:text-steel transition-colors">↗</span>
+                    <span className="font-body text-sm text-slate">{s.label}</span>
+                    <span className="text-muted group-hover:text-gold transition-colors text-sm">↗</span>
                   </a>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

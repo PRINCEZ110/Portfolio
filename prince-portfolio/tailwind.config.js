@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Space Grotesk"', 'sans-serif'],
-        body: ['"DM Sans"', 'sans-serif'],
+        display: ['"Eczar"', 'serif'],
+        body: ['"Eczar"', 'serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       colors: {
