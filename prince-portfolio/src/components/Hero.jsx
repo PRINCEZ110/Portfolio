@@ -22,7 +22,7 @@ export default function Hero() {
     <section ref={sectionRef} className="min-h-screen flex flex-col justify-end px-6 md:px-12 lg:px-20 pb-16 pt-28 relative overflow-hidden bg-clay">
       {/* Profile image — scroll-revealed */}
       <motion.img
-        src="/img.png"
+        src="./image.png"
         alt="Profile"
         className="absolute right-4 md:right-12 lg:right-20 z-30 pointer-events-none select-none"
         style={{
