@@ -4,7 +4,9 @@ import ProjectNavbar from './components/ProjectNavbar';
 import Hero from './components/Hero';
 import Marquee from './components/Marquee';
 import Work from './components/Work';
+import Skills from './components/Skills';
 import About from './components/About';
+import Experience from './components/Experience';
 import CV from './components/CV';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -29,7 +31,9 @@ export default function App() {
               <Hero />
               <Marquee items={techStack} />
               <Work />
+              <Skills />
               <About />
+              <Experience />
               <CV />
               <Contact />
             </>

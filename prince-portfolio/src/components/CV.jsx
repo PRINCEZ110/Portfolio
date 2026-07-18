@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Download, Eye, FileText } from 'lucide-react';
 
 function BgCanvas() {
   const ref = useRef(null);
@@ -74,42 +75,71 @@ export default function CV() {
   const [viewing, setViewing] = useState(false);
 
   return (
-    <section id="cv" className="px-6 md:px-12 py-24 border-t border-border relative overflow-hidden bg-sand">
+    <section id="cv" className="px-6 md:px-12 lg:px-20 py-24 md:py-32 relative overflow-hidden bg-sand">
       <BgCanvas />
-      <div className="max-w-8xl mx-auto">
+      <div className="max-w-8xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="section-label"
+        >
+          <span /><span>Resume / CV</span>
+        </motion.div>
 
-        {/* Header row */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
-          <div>
-            <span className="font-mono text-xs text-steel tracking-widest uppercase">resume</span>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
             <h2
-              className="font-display font-bold text-slate mt-3 leading-tight"
-              style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}
+              className="font-display font-bold text-slate leading-tight"
+              style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}
             >
-              Curriculum<br />
-              <span className="text-[#541E24]">Vitae.</span>
+              My{' '}
+              <span className="text-wine">Resume.</span>
             </h2>
-          </div>
+            <p className="font-body text-gray/70 text-sm mt-3 max-w-md leading-relaxed">
+              A snapshot of my education, experience, and technical skills.
+            </p>
+          </motion.div>
 
-          <div className="flex gap-3">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="flex gap-3"
+          >
             <button
               onClick={() => setViewing(v => !v)}
-              className="flex items-center gap-2 border border-border px-6 py-3 font-display text-sm text-slate hover:border-steel hover:text-steel transition-all duration-300 rounded-xl bg-white shadow-soft"
+              className="group inline-flex items-center gap-2 border border-[#E8E5D8] bg-white px-5 py-3 rounded-xl hover:border-steel/30 hover:shadow-soft transition-all duration-300"
             >
-              {viewing ? '✕ Close' : '👁 Preview'}
+              <Eye size={14} className="text-muted group-hover:text-steel transition-colors" />
+              <span className="font-display text-sm text-slate">{viewing ? 'Close' : 'Preview'}</span>
             </button>
             <a
               href="/Prince_Shrestha_CV.pdf"
               download="Prince_Shrestha_CV.pdf"
-              className="flex items-center gap-2 bg-slate text-white font-display font-bold px-6 py-3 hover:bg-gold transition-all duration-300 rounded-xl shadow-button"
+              className="group inline-flex items-center gap-2 bg-slate text-white px-5 py-3 rounded-xl hover:bg-gold transition-all duration-300 shadow-button"
             >
-              ↓ Download CV
+              <Download size={14} className="group-hover:translate-y-0.5 transition-transform" />
+              <span className="font-display text-sm font-semibold">Download CV</span>
             </a>
-          </div>
+          </motion.div>
         </div>
 
-        {/* CV highlights from the real CV */}
-        <div className="grid md:grid-cols-3 gap-4 mb-10">
+        {/* Highlights */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="grid md:grid-cols-3 gap-4 mb-10"
+        >
           {[
             { label: 'Education', value: 'BSc (Hons) Computing', sub: 'Itahari International College x London Met' },
             { label: 'Experience', value: '3 Projects', sub: 'NagarSewa | TimeStar | SahakariNet' },
@@ -121,16 +151,19 @@ export default function CV() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="border border-border bg-white rounded-xl p-5 hover:border-steel/30 transition-all duration-300 hover:shadow-card-hover hover:-translate-y-0.5"
+              className="bg-white border border-[#E8E5D8] rounded-xl p-5 hover:border-gold/20 hover:shadow-soft transition-all duration-300"
             >
-              <span className="font-mono text-[10px] text-steel tracking-widest uppercase">{item.label}</span>
-              <p className="font-display font-semibold text-slate mt-2 text-base">{item.value}</p>
-              <p className="font-body text-gray text-xs mt-1">{item.sub}</p>
+              <div className="flex items-center gap-2 mb-3">
+                <FileText size={12} className="text-gold" />
+                <span className="font-mono text-[9px] text-gold tracking-[0.15em] uppercase">{item.label}</span>
+              </div>
+              <p className="font-display font-semibold text-slate text-sm">{item.value}</p>
+              <p className="font-body text-xs text-gray/70 mt-1">{item.sub}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Inline PDF viewer */}
+        {/* PDF viewer */}
         <AnimatePresence>
           {viewing && (
             <motion.div
@@ -140,16 +173,19 @@ export default function CV() {
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="overflow-hidden"
             >
-              <div className="border border-border rounded-xl overflow-hidden bg-white shadow-card">
-                <div className="bg-cream px-4 py-2 flex items-center justify-between border-b border-border">
-                  <span className="font-mono text-xs text-muted">Prince_Shrestha_CV.pdf</span>
+              <div className="border border-[#E8E5D8] rounded-2xl overflow-hidden bg-white shadow-card">
+                <div className="bg-clay px-5 py-3 flex items-center justify-between border-b border-[#E8E5D8]">
+                  <div className="flex items-center gap-2.5">
+                    <FileText size={14} className="text-gold" />
+                    <span className="font-mono text-[11px] text-muted tracking-wide">Prince_Shrestha_CV.pdf</span>
+                  </div>
                   <a
                     href="/Prince_Shrestha_CV.pdf"
                     target="_blank"
                     rel="noreferrer"
-                    className="font-mono text-xs text-steel hover:underline"
+                    className="font-mono text-[10px] text-steel hover:text-gold transition-colors flex items-center gap-1"
                   >
-                    open in new tab ↗
+                    open new tab ↗
                   </a>
                 </div>
                 <iframe
@@ -157,12 +193,12 @@ export default function CV() {
                   title="Prince Shrestha CV"
                   className="w-full"
                   style={{ height: '80vh' }}
+                  loading="lazy"
                 />
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-
       </div>
     </section>
   );
