@@ -1,10 +1,17 @@
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
 
 const roles = ['Developer', 'Designer', 'Problem Solver'];
 
 export default function Hero() {
   const [roleIdx, setRoleIdx] = useState(0);
+  const sectionRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+  const imgY = useTransform(scrollYProgress, [0.25, 0.6], [500, 0]);
 
   useEffect(() => {
     const t = setInterval(() => setRoleIdx(i => (i + 1) % roles.length), 2200);
@@ -12,7 +19,25 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="min-h-screen flex flex-col justify-end px-6 md:px-12 lg:px-20 pb-16 pt-28 relative overflow-hidden bg-clay">
+    <section ref={sectionRef} className="min-h-screen flex flex-col justify-end px-6 md:px-12 lg:px-20 pb-16 pt-28 relative overflow-hidden bg-clay">
+      {/* Profile image — scroll-revealed */}
+      <motion.img
+        src="/img.png"
+        alt="Profile"
+        className="absolute right-4 md:right-12 lg:right-20 z-30 pointer-events-none select-none"
+        style={{
+          height: 'clamp(18rem, 40vw, 36rem)',
+          y: imgY,
+          bottom: 0,
+          objectFit: 'contain',
+          objectPosition: 'center bottom',
+          filter: 'drop-shadow(0 25px 25px rgba(0,0,0,0.15))',
+        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+      />
+
       {/* Background grid */}
       <div
         className="absolute inset-0 opacity-[0.04]"
