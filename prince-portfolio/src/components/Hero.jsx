@@ -112,7 +112,7 @@ export default function Hero() {
           className="mt-12 flex flex-col md:flex-row md:items-center md:justify-between gap-8"
         >
           <p className="font-body text-black max-w-md text-base leading-relaxed" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
-            I'm <span className="text-[#541E24]  font-medium">Prince</span>, a Web designer & developer building modern, responsive websites with clean, fast, user-focused design.
+            I'm <span className="text-[#541E24]  font-medium">Prince</span>, a Full-stack developer building modern, responsive websites with clean, fast, user-focused design.
             High-performance digital experiences for clients and businesses.</p>
         </motion.div>
       </div>
