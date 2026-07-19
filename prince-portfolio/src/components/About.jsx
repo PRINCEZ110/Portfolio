@@ -1,5 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import {
+  SiReact, SiJavascript, SiHtml5, SiCss, SiTailwindcss,
+  SiOpenjdk, SiApache, SiMysql,
+  SiFigma, SiGit, SiGithub,
+} from 'react-icons/si';
+import {
+  Database, Palette, Monitor, Shield, Server,
+} from 'lucide-react';
 
 /* ─── Animated Counter ─── */
 function AnimatedCounter({ value, suffix = '', label }) {
@@ -36,6 +44,47 @@ function AnimatedCounter({ value, suffix = '', label }) {
   );
 }
 
+/* ─── Skill icons mapping ─── */
+const skillIcons = {
+  'React.js': SiReact,
+  'JavaScript': SiJavascript,
+  'HTML5': SiHtml5,
+  'CSS3': SiCss,
+  'Tailwind CSS': SiTailwindcss,
+  'Java': SiOpenjdk,
+  'JSP': Server,
+  'Servlet': SiApache,
+  'JDBC': Database,
+  'MySQL': SiMysql,
+  'UI/UX Design': Palette,
+  'Responsive Design': Monitor,
+  'Figma': SiFigma,
+  'Git': SiGit,
+  'GitHub': SiGithub,
+  'MVC Architecture': Server,
+  'BCrypt': Shield,
+};
+
+const skillColors = {
+  'React.js': '#61DAFB',
+  'JavaScript': '#F7DF1E',
+  'HTML5': '#E34F26',
+  'CSS3': '#1572B6',
+  'Tailwind CSS': '#06B6D4',
+  'Java': '#007396',
+  'JSP': '#E85C33',
+  'Servlet': '#D22128',
+  'JDBC': '#4479A1',
+  'MySQL': '#4479A1',
+  'UI/UX Design': '#FF61F6',
+  'Responsive Design': '#4285F4',
+  'Figma': '#F24E1E',
+  'Git': '#F05032',
+  'GitHub': '#181717',
+  'MVC Architecture': '#6DB33F',
+  'BCrypt': '#47A248',
+};
+
 /* ─── Skill Card ─── */
 const skillData = [
   { category: 'Frontend', items: ['React.js', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS'] },
@@ -46,25 +95,57 @@ const skillData = [
 
 const staggerSkill = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
+  show: { transition: { staggerChildren: 0.08 } },
 };
 
-const skillReveal = {
-  hidden: { opacity: 0, y: 15 },
+const skillCardVariant = {
+  hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const logoVariant = {
+  hidden: { scale: 0, rotate: -15 },
+  show: { scale: 1, rotate: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
 };
 
 function SkillCard({ category, items }) {
   return (
-    <motion.div variants={skillReveal} className="border-t-2 border-black/10 pt-4 transition-all duration-300 hover:border-black/40">
-      <span className="text-[10px] tracking-[0.25em] uppercase text-black/40 font-lato block mb-3">{category}</span>
-      <ul className="space-y-1">
-        {items.map((item) => (
-          <li key={item}>
-            <span className="text-sm text-black/70 font-lato tracking-wide transition-colors duration-200 hover:text-black">{item}</span>
-          </li>
-        ))}
-      </ul>
+    <motion.div
+      variants={skillCardVariant}
+      className="border-t border-black/10 pt-4 transition-all duration-400 group"
+    >
+      <span className="text-[10px] tracking-[0.25em] uppercase text-black/40 font-lato block mb-4">
+        {category}
+      </span>
+      <div className="flex flex-wrap gap-3">
+        {items.map((item) => {
+          const Icon = skillIcons[item];
+          const color = skillColors[item];
+          return (
+            <motion.div
+              key={item}
+              variants={logoVariant}
+              className="relative flex flex-col items-center gap-1.5 p-2.5 rounded-lg bg-black/[0.02] border border-transparent transition-all duration-300 hover:bg-black/[0.04] hover:border-black/10 hover:shadow-sm"
+            >
+              <span className="relative">
+                <Icon
+                  style={{ color }}
+                  className="text-xl md:text-2xl transition-all duration-300 group-hover:scale-110"
+                />
+                <motion.span
+                  className="absolute -inset-2 rounded-full opacity-0 pointer-events-none"
+                  style={{ background: `${color}15` }}
+                  whileHover={{ opacity: 1, scale: 1.2 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </span>
+              <span className="text-[9px] text-black/60 font-lato tracking-tight whitespace-nowrap">
+                {item}
+              </span>
+            </motion.div>
+          );
+        })}
+      </div>
     </motion.div>
   );
 }
@@ -203,6 +284,7 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
               className="text-lg md:text-xl text-black/90 font-lato font-bold leading-relaxed mb-5 max-w-[600px]"
+              style={{ fontFamily: "'Josefin Sans', sans-serif" }}
             >
               Building premium digital experiences through thoughtful design, clean code, and meaningful interactions.
             </motion.p>
