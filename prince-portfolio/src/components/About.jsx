@@ -25,58 +25,59 @@ function AnimatedCounter({ value, suffix = '', label }) {
   }, [inView, value]);
 
   return (
-    <div ref={ref} className="group text-center md:text-left">
-      <span className="block text-4xl md:text-5xl font-josefin font-bold text-ivory transition-transform duration-500 group-hover:scale-105">
+    <div ref={ref} className="group cursor-default">
+      <span className="block text-5xl md:text-6xl font-josefin font-bold text-[#F5F5F2] transition-all duration-500 group-hover:scale-110 group-hover:[filter:drop-shadow(0_0_20px_rgba(84,30,36,0.3))]">
         {typeof value === 'number' ? displayed : value}{suffix}
       </span>
-      <span className="block text-[11px] tracking-[0.2em] uppercase text-muteddark/70 mt-1.5 relative inline-block after:block after:h-px after:bg-wine/40 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">
+      <span className="block text-[11px] tracking-[0.25em] uppercase text-[#9B9B9B]/70 mt-2 relative inline-block after:block after:h-px after:bg-[#541E24]/50 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">
         {label}
       </span>
     </div>
   );
 }
 
-/* ─── Infinite Symbol (∞) ─── */
+/* ─── Infinite ─── */
 function InfinityValue() {
   return (
-    <span className="block text-4xl md:text-5xl font-josefin font-bold text-wine transition-transform duration-500 group-hover:scale-105">
+    <span className="block text-5xl md:text-6xl font-josefin font-bold text-[#541E24] transition-all duration-500 group-hover:scale-110 group-hover:[filter:drop-shadow(0_0_20px_rgba(84,30,36,0.3))]">
       ∞
     </span>
   );
 }
 
-/* ─── Skill Category ─── */
+/* ─── Skill Card ─── */
 const skillData = [
-  { category: 'Frontend', icon: '◇', items: ['React.js', 'HTML5', 'CSS3', 'JavaScript', 'Tailwind CSS'] },
-  { category: 'Backend', icon: '○', items: ['Java', 'JSP', 'Servlet', 'JDBC', 'MySQL'] },
-  { category: 'Design', icon: '▽', items: ['UI/UX Design', 'Responsive Design', 'Figma'] },
-  { category: 'Tools', icon: '□', items: ['Git', 'GitHub', 'MVC Architecture', 'BCrypt'] },
+  { category: 'Frontend', items: ['React.js', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS'] },
+  { category: 'Backend', items: ['Java', 'JSP', 'Servlet', 'JDBC', 'MySQL'] },
+  { category: 'Design', items: ['UI/UX Design', 'Responsive Design', 'Figma'] },
+  { category: 'Tools', items: ['Git', 'GitHub', 'MVC Architecture', 'BCrypt'] },
 ];
 
-const containerVariants = {
+const staggerContainer = {
   hidden: {},
   show: { transition: { staggerChildren: 0.12 } },
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, x: -24 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+const skillReveal = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
-function SkillCard({ category, icon, items, index }) {
+function SkillCard({ category, items }) {
   return (
     <motion.div
-      variants={cardVariants}
-      className="group border-l border-white/10 pl-5 py-2 transition-all duration-500 hover:border-wine/40 hover:shadow-glow rounded-sm"
+      variants={skillReveal}
+      className="group border-t border-white/10 pt-5 transition-all duration-500 hover:border-[#541E24]/40 hover:translate-y-[-2px]"
     >
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-wine/60 text-xs font-light">{icon}</span>
-        <span className="text-[10px] tracking-[0.2em] uppercase text-muteddark/50 font-lato">{category}</span>
-      </div>
-      <ul className="space-y-2">
+      <span className="text-[10px] tracking-[0.25em] uppercase text-[#9B9B9B]/50 font-lato block mb-4 transition-colors duration-300 group-hover:text-[#541E24]/60">
+        {category}
+      </span>
+      <ul className="space-y-1.5">
         {items.map((item) => (
-          <li key={item} className="text-sm text-ivory/70 font-josefin tracking-wide transition-colors duration-300 hover:text-ivory">
-            {item}
+          <li key={item}>
+            <span className="text-sm text-[#F5F5F2]/60 font-josefin tracking-wide transition-colors duration-300 hover:text-[#F5F5F2]">
+              {item}
+            </span>
           </li>
         ))}
       </ul>
@@ -84,8 +85,31 @@ function SkillCard({ category, icon, items, index }) {
   );
 }
 
-/* ─── Magnetic Heading ─── */
-function MagneticHeading({ children, className, as: Tag = 'h2' }) {
+/* ─── Letter Animation ─── */
+function AnimatedHeading({ text, className, as: Tag = 'h2' }) {
+  const letters = text.split('');
+
+  return (
+    <Tag className={className} style={{ fontSize: 'clamp(7rem, 10vw, 11rem)' }}>
+      {letters.map((char, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 80, rotateX: -20 }}
+          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] }}
+          className="inline-block"
+          style={{ letterSpacing: '-0.04em' }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </motion.span>
+      ))}
+    </Tag>
+  );
+}
+
+/* ─── Magnetic Button ─── */
+function MagneticButton({ children, className }) {
   const ref = useRef(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
@@ -94,27 +118,54 @@ function MagneticHeading({ children, className, as: Tag = 'h2' }) {
     const rect = ref.current.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
-    const dx = (e.clientX - cx) / 12;
-    const dy = (e.clientY - cy) / 12;
+    const dx = (e.clientX - cx) / 8;
+    const dy = (e.clientY - cy) / 8;
     setPos({ x: dx, y: dy });
   }, []);
 
   const onMouseLeave = useCallback(() => setPos({ x: 0, y: 0 }), []);
 
   return (
-    <Tag
+    <motion.div
       ref={ref}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       className={className}
-      style={{
-        transform: `translate(${pos.x}px, ${pos.y}px)`,
-        transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-      }}
+      animate={{ x: pos.x, y: pos.y }}
+      transition={{ type: 'spring', stiffness: 150, damping: 15, mass: 0.1 }}
     >
       {children}
-    </Tag>
+    </motion.div>
   );
+}
+
+/* ─── Spotlight ─── */
+function useSpotlight() {
+  const ref = useRef(null);
+  const [spot, setSpot] = useState({ x: '50%', y: '50%', opacity: 0 });
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const onMove = (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      setSpot({ x: `${x}%`, y: `${y}%`, opacity: 1 });
+    };
+
+    const onLeave = () => setSpot((s) => ({ ...s, opacity: 0 }));
+
+    el.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', onLeave);
+    return () => {
+      el.removeEventListener('mousemove', onMove);
+      el.removeEventListener('mouseleave', onLeave);
+    };
+  }, []);
+
+  return { ref, spot };
 }
 
 /* ─── Main Component ─── */
@@ -125,163 +176,216 @@ export default function About() {
     offset: ['start end', 'end start'],
   });
 
-  const imageParallax = useTransform(scrollYProgress, [0, 0.5, 1], [40, 0, -40]);
-  const contentParallax = useTransform(scrollYProgress, [0, 0.5, 1], [20, 0, -20]);
-  const bgGlowOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.2, 0.5, 0.5, 0.2]);
+  const imgParallax = useTransform(scrollYProgress, [0, 0.5, 1], [60, 0, -60]);
+  const contentParallax = useTransform(scrollYProgress, [0, 0.5, 1], [30, 0, -30]);
+  const bgGlow = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.2, 0.5, 0.5, 0.2]);
 
-  const descriptionRef = useRef(null);
-  const descInView = useInView(descriptionRef, { once: true, margin: '-40px' });
+  const { ref: spotlightRef, spot } = useSpotlight();
+  const statsRef = useRef(null);
 
   return (
     <section
       ref={sectionRef}
       id="about"
-      className="relative px-6 md:px-12 lg:px-20 py-24 md:py-32 bg-night overflow-hidden"
+      className="relative bg-[#0D0D0D] overflow-hidden"
+      style={{ minHeight: '100vh' }}
     >
-      {/* Blueprint grid background */}
+      {/* Blueprint grid */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(rgba(247,245,242,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(247,245,242,0.03) 1px, transparent 1px)`,
+          backgroundImage:
+            'linear-gradient(rgba(245,245,242,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(245,245,242,0.03) 1px, transparent 1px)',
           backgroundSize: '60px 60px',
-          opacity: 0.05,
+          opacity: 0.04,
+        }}
+      />
+
+      {/* Grain texture */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E\")",
+          opacity: 0.5,
         }}
       />
 
       {/* Radial glow */}
+
       <motion.div
-        className="absolute top-1/3 -left-1/4 w-[800px] h-[800px] rounded-full pointer-events-none"
-        style={{
-          opacity: bgGlowOpacity,
-          background: 'radial-gradient(circle, rgba(84,30,36,0.08), transparent 70%)',
-        }}
+        className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full pointer-events-none"
+        style={{ opacity: bgGlow, background: 'radial-gradient(circle, rgba(84,30,36,0.06), transparent 70%)' }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 -left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none"
+        style={{ opacity: bgGlow, background: 'radial-gradient(circle, rgba(84,30,36,0.04), transparent 70%)' }}
       />
 
-      <div className="max-w-8xl mx-auto relative z-10">
-        <div className="grid md:grid-cols-2 gap-16 md:gap-20 lg:gap-24 items-start">
-          {/* ═══ LEFT COLUMN — Sticky ═══ */}
+      <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16 relative z-10 h-full">
+        <div className="grid md:grid-cols-2 min-h-screen items-center gap-12 md:gap-16 lg:gap-20 py-16 md:py-0">
+          {/* ═══ LEFT — Image ═══ */}
           <motion.div
-            className="md:sticky md:top-28"
-            style={{ y: contentParallax }}
+            ref={spotlightRef}
+            style={{ y: imgParallax }}
+            initial={{ opacity: 0, x: -80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="relative aspect-[4/5] md:aspect-auto md:h-[85vh] max-h-[900px] w-full"
           >
+            {/* Spotlight */}
+            <motion.div
+              className="absolute inset-0 z-20 pointer-events-none rounded-[32px]"
+              style={{
+                background: `radial-gradient(600px circle at ${spot.x} ${spot.y}, rgba(84,30,36,0.08), transparent 60%)`,
+                opacity: spot.opacity,
+                transition: 'opacity 0.3s ease',
+              }}
+            />
+
+            {/* Geometric lines behind */}
+            <div className="absolute -top-12 -right-12 w-64 h-64 rounded-full border border-white/[0.03] pointer-events-none" />
+            <div className="absolute -bottom-8 -left-8 w-48 h-48 rounded-full bg-[#541E24]/[0.04] blur-3xl pointer-events-none" />
+
+            <div
+              className="relative h-full w-full overflow-hidden rounded-[32px] group cursor-none"
+              style={{ boxShadow: '0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,245,242,0.05)' }}
+            >
+              {/* Grain */}
+              <div
+                className="absolute inset-0 z-10 pointer-events-none"
+                style={{
+                  backgroundImage:
+                    "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E\")",
+                  opacity: 0.6,
+                  mixBlendMode: 'overlay',
+                }}
+              />
+
+              {/* Dark overlay */}
+              <div className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-t from-black/40 via-transparent to-black/10" />
+
+              {/* Vignette */}
+              <div
+                className="absolute inset-0 z-[2] pointer-events-none"
+                style={{
+                  background: 'radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.4) 100%)',
+                }}
+              />
+
+              <motion.img
+                src="./image.png"
+                alt="Prince Shrestha"
+                className="h-full w-full object-cover transition-all duration-[0.8s] ease-out group-hover:scale-105 group-hover:brightness-110"
+                style={{ filter: 'grayscale(30%) sepia(10%) contrast(105%)' }}
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              />
+
+              {/* ─── Floating ABOUT ME Button ─── */}
+              <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+                <MagneticButton className="pointer-events-auto">
+                  <motion.div
+                    className="w-28 h-28 md:w-32 md:h-32 rounded-full border border-white/60 flex items-center justify-center backdrop-blur-md cursor-pointer group/btn"
+                    style={{ background: 'rgba(255,255,255,0.04)' }}
+                    whileHover={{ scale: 1.12, rotate: 5 }}
+                    transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                  >
+                    <span className="text-[10px] tracking-[0.25em] uppercase text-white/80 font-lato">
+                      ABOUT<br />ME
+                    </span>
+                  </motion.div>
+                </MagneticButton>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ═══ RIGHT — Content ═══ */}
+          <motion.div
+            style={{ y: contentParallax }}
+            initial={{ opacity: 0, x: 80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col justify-center py-8"
+          >
+            {/* ABOUT label */}
             <motion.span
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[10px] tracking-[0.25em] uppercase text-wine/70 font-lato block mb-8"
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="text-[10px] tracking-[0.3em] uppercase text-[#541E24]/80 font-lato block mb-8"
             >
               About
             </motion.span>
 
-            {/* Vertical accent */}
-            <div className="relative">
-              <motion.div
-                initial={{ scaleY: 0 }}
-                whileInView={{ scaleY: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute -left-6 top-0 w-px h-full origin-top bg-gradient-to-b from-wine/40 via-wine/10 to-transparent"
-              />
+            {/* PRINCE heading */}
+            <AnimatedHeading
+              text="PRINCE"
+              className="font-josefin font-bold text-[#F5F5F2] leading-[0.85] mb-6"
+            />
 
-              <MagneticHeading
-                as="h2"
-                className="font-josefin font-bold text-ivory leading-[0.92] mb-6"
-                style={{ fontSize: 'clamp(2.8rem, 6vw, 5rem)' }}
-              >
-                Hi,<br />
-                <span className="text-wine">I'm Prince</span>
-              </MagneticHeading>
-            </div>
-
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="font-lato text-muteddark/60 text-sm tracking-wide leading-relaxed"
-            >
-              Web Designer<br />&amp; Frontend Developer
-            </motion.p>
-          </motion.div>
-
-          {/* ═══ RIGHT COLUMN — Scrollable ═══ */}
-          <motion.div style={{ y: imageParallax }}>
-            {/* ─── Portrait ─── */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 30 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="relative mb-16 md:mb-20"
-            >
-              {/* Geometric circle behind */}
-              <div className="absolute -top-10 -right-10 w-48 h-48 md:w-64 md:h-64 rounded-full border border-white/5 pointer-events-none" />
-              {/* Blurred radial behind */}
-              <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full bg-wine/5 blur-3xl pointer-events-none" />
-
-              <div
-                className="relative overflow-hidden rounded-[28px]"
-                style={{
-                  boxShadow: '0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(247,245,242,0.06)',
-                }}
-              >
-                {/* Grain overlay */}
-                <div
-                  className="absolute inset-0 z-10 pointer-events-none mix-blend-overlay"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E")`,
-                    opacity: 0.5,
-                  }}
-                />
-
-                <motion.img
-                  src="./image.png"
-                  alt="Prince Shrestha"
-                  className="w-full h-[400px] md:h-[480px] object-cover object-center"
-                  style={{
-                    filter: 'grayscale(100%) sepia(25%) contrast(105%) brightness(85%)',
-                  }}
-                  animate={{ y: [0, -6, 0] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                />
-              </div>
-            </motion.div>
-
-            {/* ─── Editorial Paragraphs ─── */}
-            <div ref={descriptionRef} className="space-y-6 mb-16 max-w-prose">
-              {[
-                'I design and build refined digital experiences that combine modern aesthetics with high-performance engineering.',
-                'Every interface is crafted with precision, balancing visual elegance, usability, accessibility, and performance to create products that feel effortless across every interaction.',
-                'My passion lies in transforming ideas into polished digital products through thoughtful design systems, scalable frontend architecture, and continuous learning.',
-              ].map((text, i) => (
-                <motion.p
-                  key={i}
-                  initial={descInView ? false : { opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.15 * i, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-ivory/65 text-base md:text-lg leading-relaxed font-lato tracking-wide"
-                  style={{ maxWidth: '68ch' }}
-                >
-                  {text}
-                </motion.p>
-              ))}
-            </div>
-
-            {/* ─── Statistics ─── */}
+            {/* Subtitle + Badge */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-wrap gap-x-16 gap-y-8 mb-16 pb-16 border-b border-white/10"
+              transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center gap-4 mb-10"
             >
-              <AnimatedCounter value={3} suffix="+" label="Projects Shipped" />
+              <span className="text-lg md:text-xl font-josefin font-light text-[#F5F5F2]/80 tracking-wide">
+                Frontend Developer
+              </span>
+              <span className="text-[9px] tracking-[0.2em] uppercase text-[#9B9B9B]/50 font-lato border border-white/10 px-3 py-1 rounded-full">
+                NEPAL
+              </span>
+            </motion.div>
+
+            {/* Editorial Statement */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="text-lg md:text-xl font-lato text-[#F5F5F2]/90 leading-relaxed mb-8 tracking-wide"
+              style={{ maxWidth: '650px' }}
+            >
+              Building premium digital experiences through thoughtful design, clean code, and meaningful interactions.
+            </motion.p>
+
+            {/* Body Text */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="space-y-4 mb-14"
+              style={{ maxWidth: '650px' }}
+            >
+              <p className="text-[15px] md:text-base font-lato text-[#9B9B9B]/80 leading-relaxed">
+                Hi, I'm Prince. I'm a frontend developer passionate about building elegant digital experiences using React, Tailwind CSS, JavaScript, and modern UI design.
+              </p>
+              <p className="text-[15px] md:text-base font-lato text-[#9B9B9B]/80 leading-relaxed">
+                Every project combines clean architecture, accessibility, performance, and refined visual design to create seamless user experiences.
+              </p>
+            </motion.div>
+
+            {/* ─── Statistics ─── */}
+            <motion.div
+              ref={statsRef}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="flex gap-14 md:gap-20 mb-14 pb-14 border-b border-white/10"
+            >
+              <AnimatedCounter value={3} suffix="+" label="Projects" />
               <AnimatedCounter value={3} suffix="+" label="Years Learning" />
-              <div className="group text-center md:text-left">
+              <div className="group cursor-default">
                 <InfinityValue />
-                <span className="block text-[11px] tracking-[0.2em] uppercase text-muteddark/70 mt-1.5 relative inline-block after:block after:h-px after:bg-wine/40 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">
+                <span className="block text-[11px] tracking-[0.25em] uppercase text-[#9B9B9B]/70 mt-2 relative inline-block after:block after:h-px after:bg-[#541E24]/50 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">
                   Curiosity
                 </span>
               </div>
@@ -289,14 +393,14 @@ export default function About() {
 
             {/* ─── Skills ─── */}
             <motion.div
-              variants={containerVariants}
+              variants={staggerContainer}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: '-40px' }}
               className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10"
             >
-              {skillData.map((s, i) => (
-                <SkillCard key={s.category} {...s} index={i} />
+              {skillData.map((s) => (
+                <SkillCard key={s.category} {...s} />
               ))}
             </motion.div>
           </motion.div>
