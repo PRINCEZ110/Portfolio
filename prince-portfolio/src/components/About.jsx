@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 
 /* ─── Animated Counter ─── */
 function AnimatedCounter({ value, suffix = '', label }) {
@@ -9,7 +9,7 @@ function AnimatedCounter({ value, suffix = '', label }) {
 
   useEffect(() => {
     if (!inView) return;
-    const duration = 1500;
+    const duration = 1200;
     const start = performance.now();
     let frame;
 
@@ -25,23 +25,14 @@ function AnimatedCounter({ value, suffix = '', label }) {
   }, [inView, value]);
 
   return (
-    <div ref={ref} className="group cursor-default">
-      <span className="block text-5xl md:text-6xl font-josefin font-bold text-[#F5F5F2] transition-all duration-500 group-hover:scale-110 group-hover:[filter:drop-shadow(0_0_20px_rgba(84,30,36,0.3))]">
-        {typeof value === 'number' ? displayed : value}{suffix}
+    <div ref={ref} className="group">
+      <span className="block text-4xl md:text-5xl font-anton text-black leading-none tracking-tight transition-transform duration-300 group-hover:scale-105">
+        {displayed}{suffix}
       </span>
-      <span className="block text-[11px] tracking-[0.25em] uppercase text-[#9B9B9B]/70 mt-2 relative inline-block after:block after:h-px after:bg-[#541E24]/50 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">
+      <span className="block text-[10px] tracking-[0.2em] uppercase text-black/50 font-lato mt-1 relative after:block after:h-[2px] after:bg-black after:scale-x-0 after:origin-left after:transition-transform after:duration-300 group-hover:after:scale-x-100">
         {label}
       </span>
     </div>
-  );
-}
-
-/* ─── Infinite ─── */
-function InfinityValue() {
-  return (
-    <span className="block text-5xl md:text-6xl font-josefin font-bold text-[#541E24] transition-all duration-500 group-hover:scale-110 group-hover:[filter:drop-shadow(0_0_20px_rgba(84,30,36,0.3))]">
-      ∞
-    </span>
   );
 }
 
@@ -53,31 +44,24 @@ const skillData = [
   { category: 'Tools', items: ['Git', 'GitHub', 'MVC Architecture', 'BCrypt'] },
 ];
 
-const staggerContainer = {
+const staggerSkill = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
+  show: { transition: { staggerChildren: 0.1 } },
 };
 
 const skillReveal = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 15 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 };
 
 function SkillCard({ category, items }) {
   return (
-    <motion.div
-      variants={skillReveal}
-      className="group border-t border-white/10 pt-5 transition-all duration-500 hover:border-[#541E24]/40 hover:translate-y-[-2px]"
-    >
-      <span className="text-[10px] tracking-[0.25em] uppercase text-[#9B9B9B]/50 font-lato block mb-4 transition-colors duration-300 group-hover:text-[#541E24]/60">
-        {category}
-      </span>
-      <ul className="space-y-1.5">
+    <motion.div variants={skillReveal} className="border-t-2 border-black/10 pt-4 transition-all duration-300 hover:border-black/40">
+      <span className="text-[10px] tracking-[0.25em] uppercase text-black/40 font-lato block mb-3">{category}</span>
+      <ul className="space-y-1">
         {items.map((item) => (
           <li key={item}>
-            <span className="text-sm text-[#F5F5F2]/60 font-josefin tracking-wide transition-colors duration-300 hover:text-[#F5F5F2]">
-              {item}
-            </span>
+            <span className="text-sm text-black/70 font-lato tracking-wide transition-colors duration-200 hover:text-black">{item}</span>
           </li>
         ))}
       </ul>
@@ -85,307 +69,185 @@ function SkillCard({ category, items }) {
   );
 }
 
-/* ─── Letter Animation ─── */
-function AnimatedHeading({ text, className, as: Tag = 'h2' }) {
-  const letters = text.split('');
-
-  return (
-    <Tag className={className} style={{ fontSize: 'clamp(7rem, 10vw, 11rem)' }}>
-      {letters.map((char, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 80, rotateX: -20 }}
-          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] }}
-          className="inline-block"
-          style={{ letterSpacing: '-0.04em' }}
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </motion.span>
-      ))}
-    </Tag>
-  );
-}
-
-/* ─── Magnetic Button ─── */
-function MagneticButton({ children, className }) {
-  const ref = useRef(null);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-
-  const onMouseMove = useCallback((e) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = (e.clientX - cx) / 8;
-    const dy = (e.clientY - cy) / 8;
-    setPos({ x: dx, y: dy });
-  }, []);
-
-  const onMouseLeave = useCallback(() => setPos({ x: 0, y: 0 }), []);
-
+/* ─── Circular Badge ─── */
+function CircularBadge() {
   return (
     <motion.div
-      ref={ref}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-      className={className}
-      animate={{ x: pos.x, y: pos.y }}
-      transition={{ type: 'spring', stiffness: 150, damping: 15, mass: 0.1 }}
+      className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none"
     >
-      {children}
+      <motion.div
+        className="w-28 h-28 md:w-32 md:h-32 rounded-full border-2 border-black flex items-center justify-center cursor-pointer pointer-events-auto"
+        style={{ background: 'rgba(255,96,221,0.15)' }}
+        whileHover={{ scale: 1.12 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+      >
+        <span className="text-[10px] tracking-[0.25em] uppercase text-black font-anton leading-tight text-center">
+          ABOUT<br />ME
+        </span>
+      </motion.div>
     </motion.div>
   );
 }
 
-/* ─── Spotlight ─── */
-function useSpotlight() {
-  const ref = useRef(null);
-  const [spot, setSpot] = useState({ x: '50%', y: '50%', opacity: 0 });
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const onMove = (e) => {
-      const rect = el.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      setSpot({ x: `${x}%`, y: `${y}%`, opacity: 1 });
-    };
-
-    const onLeave = () => setSpot((s) => ({ ...s, opacity: 0 }));
-
-    el.addEventListener('mousemove', onMove);
-    el.addEventListener('mouseleave', onLeave);
-    return () => {
-      el.removeEventListener('mousemove', onMove);
-      el.removeEventListener('mouseleave', onLeave);
-    };
-  }, []);
-
-  return { ref, spot };
-}
-
-/* ─── Main Component ─── */
+/* ─── Main ─── */
 export default function About() {
-  const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  });
-
-  const imgParallax = useTransform(scrollYProgress, [0, 0.5, 1], [60, 0, -60]);
-  const contentParallax = useTransform(scrollYProgress, [0, 0.5, 1], [30, 0, -30]);
-  const bgGlow = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.2, 0.5, 0.5, 0.2]);
-
-  const { ref: spotlightRef, spot } = useSpotlight();
   const statsRef = useRef(null);
 
   return (
-    <section
-      ref={sectionRef}
-      id="about"
-      className="relative bg-[#0D0D0D] overflow-hidden"
-      style={{ minHeight: '100vh' }}
-    >
-      {/* Blueprint grid */}
+    <section id="about" className="relative bg-pink min-h-screen overflow-hidden">
+      {/* Halftone dot grid background */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(245,245,242,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(245,245,242,0.03) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-          opacity: 0.04,
+            'radial-gradient(circle, rgba(0,0,0,0.04) 1.5px, transparent 1.5px)',
+          backgroundSize: '12px 12px',
         }}
       />
 
-      {/* Grain texture */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E\")",
-          opacity: 0.5,
-        }}
-      />
+      <div className="max-w-[1600px] mx-auto px-8 md:px-12 lg:px-16 relative z-10 py-16 md:py-0 min-h-screen flex flex-col justify-center">
+        {/* Eyebrow label */}
+        <motion.span
+          initial={{ opacity: 0, y: -8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="text-[10px] tracking-[0.3em] uppercase text-black/50 font-lato block mb-10 md:mb-14"
+        >
+          About
+        </motion.span>
 
-      {/* Radial glow */}
-
-      <motion.div
-        className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{ opacity: bgGlow, background: 'radial-gradient(circle, rgba(84,30,36,0.06), transparent 70%)' }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 -left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{ opacity: bgGlow, background: 'radial-gradient(circle, rgba(84,30,36,0.04), transparent 70%)' }}
-      />
-
-      <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16 relative z-10 h-full">
-        <div className="grid md:grid-cols-2 min-h-screen items-center gap-12 md:gap-16 lg:gap-20 py-16 md:py-0">
+        <div className="grid md:grid-cols-[45%_55%] gap-12 md:gap-16 lg:gap-20 items-center">
           {/* ═══ LEFT — Image ═══ */}
           <motion.div
-            ref={spotlightRef}
-            style={{ y: imgParallax }}
-            initial={{ opacity: 0, x: -80 }}
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative aspect-[4/5] md:aspect-auto md:h-[85vh] max-h-[900px] w-full"
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="relative"
           >
-            {/* Spotlight */}
-            <motion.div
-              className="absolute inset-0 z-20 pointer-events-none rounded-[32px]"
-              style={{
-                background: `radial-gradient(600px circle at ${spot.x} ${spot.y}, rgba(84,30,36,0.08), transparent 60%)`,
-                opacity: spot.opacity,
-                transition: 'opacity 0.3s ease',
-              }}
-            />
-
-            {/* Geometric lines behind */}
-            <div className="absolute -top-12 -right-12 w-64 h-64 rounded-full border border-white/[0.03] pointer-events-none" />
-            <div className="absolute -bottom-8 -left-8 w-48 h-48 rounded-full bg-[#541E24]/[0.04] blur-3xl pointer-events-none" />
-
-            <div
-              className="relative h-full w-full overflow-hidden rounded-[32px] group cursor-none"
-              style={{ boxShadow: '0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,245,242,0.05)' }}
-            >
-              {/* Grain */}
+            <div className="relative overflow-hidden rounded-lg">
+              {/* Halftone duotone layers */}
               <div
-                className="absolute inset-0 z-10 pointer-events-none"
+                className="absolute inset-0 z-[2] pointer-events-none"
                 style={{
                   backgroundImage:
-                    "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E\")",
-                  opacity: 0.6,
+                    'radial-gradient(circle at 30% 50%, rgba(255,96,221,0.15) 2px, transparent 2px),' +
+                    'radial-gradient(circle at 70% 30%, rgba(0,0,0,0.08) 2.5px, transparent 2.5px)',
+                  backgroundSize: '16px 16px, 20px 20px',
+                  mixBlendMode: 'multiply',
+                }}
+              />
+              <div
+                className="absolute inset-0 z-[1] pointer-events-none"
+                style={{
+                  background: 'rgba(255,96,221,0.2)',
                   mixBlendMode: 'overlay',
                 }}
               />
 
-              {/* Dark overlay */}
-              <div className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-t from-black/40 via-transparent to-black/10" />
-
-              {/* Vignette */}
-              <div
-                className="absolute inset-0 z-[2] pointer-events-none"
+              <motion.img
+                src="./image2.jpg"
+                alt="Prince Shrestha"
+                className="w-full h-[420px] md:h-[560px] object-cover"
                 style={{
-                  background: 'radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.4) 100%)',
+                  filter: 'grayscale(100%) contrast(1.6) brightness(0.8)',
                 }}
               />
-
-              <motion.img
-                src="./image.png"
-                alt="Prince Shrestha"
-                className="h-full w-full object-cover transition-all duration-[0.8s] ease-out group-hover:scale-105 group-hover:brightness-110"
-                style={{ filter: 'grayscale(30%) sepia(10%) contrast(105%)' }}
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-              />
-
-              {/* ─── Floating ABOUT ME Button ─── */}
-              <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
-                <MagneticButton className="pointer-events-auto">
-                  <motion.div
-                    className="w-28 h-28 md:w-32 md:h-32 rounded-full border border-white/60 flex items-center justify-center backdrop-blur-md cursor-pointer group/btn"
-                    style={{ background: 'rgba(255,255,255,0.04)' }}
-                    whileHover={{ scale: 1.12, rotate: 5 }}
-                    transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                  >
-                    <span className="text-[10px] tracking-[0.25em] uppercase text-white/80 font-lato">
-                      ABOUT<br />ME
-                    </span>
-                  </motion.div>
-                </MagneticButton>
-              </div>
             </div>
+
+            {/* Circular badge */}
+            <CircularBadge />
           </motion.div>
 
           {/* ═══ RIGHT — Content ═══ */}
           <motion.div
-            style={{ y: contentParallax }}
-            initial={{ opacity: 0, x: 80 }}
+            initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col justify-center py-8"
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* ABOUT label */}
-            <motion.span
-              initial={{ opacity: 0, y: 10 }}
+            {/* PRINCE */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[10px] tracking-[0.3em] uppercase text-[#541E24]/80 font-lato block mb-8"
+              transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="font-anton text-black leading-[0.85] tracking-tight"
+              style={{ fontSize: 'clamp(5rem, 12vw, 11rem)' }}
             >
-              About
-            </motion.span>
+              PRINCE
+            </motion.h1>
 
-            {/* PRINCE heading */}
-            <AnimatedHeading
-              text="PRINCE"
-              className="font-josefin font-bold text-[#F5F5F2] leading-[0.85] mb-6"
-            />
-
-            {/* Subtitle + Badge */}
+            {/* Subtitle + badge */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-4 mb-10"
+              transition={{ duration: 0.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center gap-4 mt-4 mb-8"
             >
-              <span className="text-lg md:text-xl font-josefin font-light text-[#F5F5F2]/80 tracking-wide">
+              <span className="text-sm md:text-base tracking-[0.2em] uppercase text-black/80 font-anton">
                 Frontend Developer
               </span>
-              <span className="text-[9px] tracking-[0.2em] uppercase text-[#9B9B9B]/50 font-lato border border-white/10 px-3 py-1 rounded-full">
+              <span className="text-[9px] tracking-[0.15em] uppercase text-black/50 font-anton border-2 border-black/30 px-3 py-1 rounded-full">
                 NEPAL
               </span>
             </motion.div>
 
-            {/* Editorial Statement */}
+            {/* Bold subheading */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="text-lg md:text-xl font-lato text-[#F5F5F2]/90 leading-relaxed mb-8 tracking-wide"
-              style={{ maxWidth: '650px' }}
+              transition={{ duration: 0.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="text-lg md:text-xl text-black/90 font-lato font-bold leading-relaxed mb-5 max-w-[600px]"
             >
               Building premium digital experiences through thoughtful design, clean code, and meaningful interactions.
             </motion.p>
 
-            {/* Body Text */}
+            {/* Body paragraphs */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-4 mb-14"
-              style={{ maxWidth: '650px' }}
+              transition={{ duration: 0.4, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="space-y-3 mb-10 max-w-[600px]"
             >
-              <p className="text-[15px] md:text-base font-lato text-[#9B9B9B]/80 leading-relaxed">
+              <p className="text-sm md:text-[15px] text-black/60 font-lato leading-relaxed">
                 Hi, I'm Prince. I'm a frontend developer passionate about building elegant digital experiences using React, Tailwind CSS, JavaScript, and modern UI design.
               </p>
-              <p className="text-[15px] md:text-base font-lato text-[#9B9B9B]/80 leading-relaxed">
+              <p className="text-sm md:text-[15px] text-black/60 font-lato leading-relaxed">
                 Every project combines clean architecture, accessibility, performance, and refined visual design to create seamless user experiences.
               </p>
             </motion.div>
 
+            {/* Link */}
+            <motion.a
+              href="#work"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-black/70 font-anton border-b-2 border-black/20 pb-1 transition-all duration-300 hover:border-black hover:text-black"
+            >
+              View Work →
+            </motion.a>
+
             {/* ─── Statistics ─── */}
             <motion.div
               ref={statsRef}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="flex gap-14 md:gap-20 mb-14 pb-14 border-b border-white/10"
+              transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="flex gap-10 md:gap-16 mt-12 pt-10 border-t-2 border-black/10"
             >
               <AnimatedCounter value={3} suffix="+" label="Projects" />
               <AnimatedCounter value={3} suffix="+" label="Years Learning" />
-              <div className="group cursor-default">
-                <InfinityValue />
-                <span className="block text-[11px] tracking-[0.25em] uppercase text-[#9B9B9B]/70 mt-2 relative inline-block after:block after:h-px after:bg-[#541E24]/50 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">
+              <div className="group">
+                <span className="block text-4xl md:text-5xl font-anton text-black leading-none tracking-tight transition-transform duration-300 group-hover:scale-105">∞</span>
+                <span className="block text-[10px] tracking-[0.2em] uppercase text-black/50 font-lato mt-1 relative after:block after:h-[2px] after:bg-black after:scale-x-0 after:origin-left after:transition-transform after:duration-300 group-hover:after:scale-x-100">
                   Curiosity
                 </span>
               </div>
@@ -393,11 +255,11 @@ export default function About() {
 
             {/* ─── Skills ─── */}
             <motion.div
-              variants={staggerContainer}
+              variants={staggerSkill}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, margin: '-40px' }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10"
+              viewport={{ once: true, margin: '-30px' }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-8 mt-10"
             >
               {skillData.map((s) => (
                 <SkillCard key={s.category} {...s} />

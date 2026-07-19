@@ -9,6 +9,7 @@ export default {
         mono: ['"JetBrains Mono"', 'monospace'],
         josefin: ['"Josefin Sans"', 'sans-serif'],
         lato: ['"Lato"', 'sans-serif'],
+        anton: ['"Anton"', 'sans-serif'],
       },
       colors: {
         clay: '#F8F7E5',
@@ -31,6 +32,8 @@ export default {
         night: '#0D0D0D',
         ivory: '#F7F5F2',
         muteddark: '#B7B7B7',
+        pink: '#FF60DD',
+        black: '#0A0A0A',
       },
       maxWidth: {
         '8xl': '90rem',
