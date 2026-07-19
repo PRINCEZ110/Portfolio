@@ -25,7 +25,7 @@ function AnimatedCounter({ value, suffix = '', label }) {
   }, [inView, value]);
 
   return (
-    <div ref={ref} className="group text-center md:text-left">
+    <div ref={ref} className="group">
       <span className="block text-4xl md:text-5xl font-josefin font-bold text-ivory transition-transform duration-500 group-hover:scale-105">
         {typeof value === 'number' ? displayed : value}{suffix}
       </span>
@@ -36,7 +36,7 @@ function AnimatedCounter({ value, suffix = '', label }) {
   );
 }
 
-/* ─── Infinite Symbol (∞) ─── */
+/* ─── Infinite Symbol ─── */
 function InfinityValue() {
   return (
     <span className="block text-4xl md:text-5xl font-josefin font-bold text-wine transition-transform duration-500 group-hover:scale-105">
@@ -45,41 +45,70 @@ function InfinityValue() {
   );
 }
 
-/* ─── Skill Category ─── */
+/* ─── Skill Category Cards (carrierescene.ca style) ─── */
 const skillData = [
-  { category: 'Frontend', icon: '◇', items: ['React.js', 'HTML5', 'CSS3', 'JavaScript', 'Tailwind CSS'] },
-  { category: 'Backend', icon: '○', items: ['Java', 'JSP', 'Servlet', 'JDBC', 'MySQL'] },
-  { category: 'Design', icon: '▽', items: ['UI/UX Design', 'Responsive Design', 'Figma'] },
-  { category: 'Tools', icon: '□', items: ['Git', 'GitHub', 'MVC Architecture', 'BCrypt'] },
+  {
+    id: '01',
+    category: 'Frontend',
+    items: ['React.js', 'HTML5', 'CSS3', 'JavaScript', 'Tailwind CSS'],
+    extra: 0,
+  },
+  {
+    id: '02',
+    category: 'Backend',
+    items: ['Java', 'JSP', 'Servlet', 'JDBC', 'MySQL'],
+    extra: 0,
+  },
+  {
+    id: '03',
+    category: 'Design',
+    items: ['UI/UX Design', 'Responsive Design', 'Figma'],
+    extra: 0,
+  },
+  {
+    id: '04',
+    category: 'Tools',
+    items: ['Git', 'GitHub', 'MVC Architecture', 'BCrypt'],
+    extra: 0,
+  },
 ];
 
-const containerVariants = {
+const staggerContainer = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
+  show: { transition: { staggerChildren: 0.15 } },
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, x: -24 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+const cardReveal = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
 };
 
-function SkillCard({ category, icon, items, index }) {
+function SkillCard({ id, category, items, extra }) {
   return (
     <motion.div
-      variants={cardVariants}
-      className="group border-l border-white/10 pl-5 py-2 transition-all duration-500 hover:border-wine/40 hover:shadow-glow rounded-sm"
+      variants={cardReveal}
+      className="group relative border-t border-white/10 pt-6 transition-all duration-500 hover:border-wine/30"
     >
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-wine/60 text-xs font-light">{icon}</span>
-        <span className="text-[10px] tracking-[0.2em] uppercase text-muteddark/50 font-lato">{category}</span>
-      </div>
-      <ul className="space-y-2">
+      <span className="text-5xl md:text-6xl font-josefin font-bold text-white/5 transition-colors duration-500 group-hover:text-wine/15 leading-none block mb-2">
+        {id}
+      </span>
+      <h3 className="text-base md:text-lg font-josefin font-semibold text-ivory mb-4 tracking-wide">
+        {category}
+      </h3>
+      <ul className="space-y-1.5">
         {items.map((item) => (
-          <li key={item} className="text-sm text-ivory/70 font-josefin tracking-wide transition-colors duration-300 hover:text-ivory">
-            {item}
+          <li key={item}>
+            <span className="inline-block text-[11px] tracking-[0.12em] uppercase text-muteddark/50 font-lato border border-white/10 px-3 py-1 rounded-sm transition-all duration-300 hover:border-wine/30 hover:text-ivory/80">
+              {item}
+            </span>
           </li>
         ))}
       </ul>
+      <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <span className="text-[10px] tracking-[0.2em] uppercase text-wine/50 font-lato">
+          → {items.length} maîtrise
+        </span>
+      </div>
     </motion.div>
   );
 }
@@ -130,7 +159,6 @@ export default function About() {
   const bgGlowOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.2, 0.5, 0.5, 0.2]);
 
   const descriptionRef = useRef(null);
-  const descInView = useInView(descriptionRef, { once: true, margin: '-40px' });
 
   return (
     <section
@@ -138,13 +166,21 @@ export default function About() {
       id="about"
       className="relative px-6 md:px-12 lg:px-20 py-24 md:py-32 bg-night overflow-hidden"
     >
-      {/* Blueprint grid background */}
+      {/* Blueprint grid */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: `linear-gradient(rgba(247,245,242,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(247,245,242,0.03) 1px, transparent 1px)`,
           backgroundSize: '60px 60px',
           opacity: 0.05,
+        }}
+      />
+
+      {/* Grain texture overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none mix-blend-overlay"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E")`,
         }}
       />
 
@@ -174,7 +210,6 @@ export default function About() {
               About
             </motion.span>
 
-            {/* Vertical accent */}
             <div className="relative">
               <motion.div
                 initial={{ scaleY: 0 }}
@@ -203,9 +238,24 @@ export default function About() {
             >
               Web Designer<br />&amp; Frontend Developer
             </motion.p>
+
+            {/* Decorative large outlined number (carrierescene.ca style) */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="hidden md:block mt-16 select-none"
+            >
+              <span className="text-[12rem] font-josefin font-bold text-transparent leading-none"
+                style={{ WebkitTextStroke: '1px rgba(247,245,242,0.04)' }}
+              >
+                04
+              </span>
+            </motion.div>
           </motion.div>
 
-          {/* ═══ RIGHT COLUMN — Scrollable ═══ */}
+          {/* ═══ RIGHT COLUMN ═══ */}
           <motion.div style={{ y: imageParallax }}>
             {/* ─── Portrait ─── */}
             <motion.div
@@ -215,9 +265,7 @@ export default function About() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="relative mb-16 md:mb-20"
             >
-              {/* Geometric circle behind */}
               <div className="absolute -top-10 -right-10 w-48 h-48 md:w-64 md:h-64 rounded-full border border-white/5 pointer-events-none" />
-              {/* Blurred radial behind */}
               <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full bg-wine/5 blur-3xl pointer-events-none" />
 
               <div
@@ -226,7 +274,6 @@ export default function About() {
                   boxShadow: '0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(247,245,242,0.06)',
                 }}
               >
-                {/* Grain overlay */}
                 <div
                   className="absolute inset-0 z-10 pointer-events-none mix-blend-overlay"
                   style={{
@@ -257,7 +304,7 @@ export default function About() {
               ].map((text, i) => (
                 <motion.p
                   key={i}
-                  initial={descInView ? false : { opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.15 * i, ease: [0.16, 1, 0.3, 1] }}
@@ -279,7 +326,7 @@ export default function About() {
             >
               <AnimatedCounter value={3} suffix="+" label="Projects Shipped" />
               <AnimatedCounter value={3} suffix="+" label="Years Learning" />
-              <div className="group text-center md:text-left">
+              <div className="group">
                 <InfinityValue />
                 <span className="block text-[11px] tracking-[0.2em] uppercase text-muteddark/70 mt-1.5 relative inline-block after:block after:h-px after:bg-wine/40 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">
                   Curiosity
@@ -287,16 +334,16 @@ export default function About() {
               </div>
             </motion.div>
 
-            {/* ─── Skills ─── */}
+            {/* ─── Skills (carrierescene.ca /metiers style numbered cards) ─── */}
             <motion.div
-              variants={containerVariants}
+              variants={staggerContainer}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: '-40px' }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-12"
             >
-              {skillData.map((s, i) => (
-                <SkillCard key={s.category} {...s} index={i} />
+              {skillData.map((s) => (
+                <SkillCard key={s.id} {...s} />
               ))}
             </motion.div>
           </motion.div>
