@@ -77,7 +77,7 @@ function CircularBadge() {
     >
       <motion.div
         className="w-28 h-28 md:w-32 md:h-32 rounded-full border-2 border-black flex items-center justify-center cursor-pointer pointer-events-auto"
-        style={{ background: 'rgba(255,96,221,0.15)' }}
+        style={{ background: 'rgba(15,76,255,0.15)' }}
         whileHover={{ scale: 1.12 }}
         transition={{ type: 'spring', stiffness: 200, damping: 15 }}
       >
@@ -94,7 +94,7 @@ export default function About() {
   const statsRef = useRef(null);
 
   return (
-    <section id="about" className="relative bg-pink min-h-screen overflow-hidden">
+    <section id="about" className="relative bg-[#0f4cff] min-h-screen overflow-hidden">
       {/* Halftone dot grid background */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -124,34 +124,27 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
+            className="relative min-h-[400px] md:min-h-[600px]"
           >
-            <div className="relative overflow-hidden rounded-lg">
-              {/* Halftone duotone layers */}
+            <div className="relative overflow-hidden h-full" style={{ borderRadius: '0', border: '4px solid #000' }}>
+              {/* Manga screentone overlay */}
               <div
-                className="absolute inset-0 z-[2] pointer-events-none"
+                className="absolute inset-0 z-[3] pointer-events-none"
                 style={{
-                  backgroundImage:
-                    'radial-gradient(circle at 30% 50%, rgba(255,96,221,0.15) 2px, transparent 2px),' +
-                    'radial-gradient(circle at 70% 30%, rgba(0,0,0,0.08) 2.5px, transparent 2.5px)',
-                  backgroundSize: '16px 16px, 20px 20px',
                   mixBlendMode: 'multiply',
-                }}
-              />
-              <div
-                className="absolute inset-0 z-[1] pointer-events-none"
-                style={{
-                  background: 'rgba(255,96,221,0.2)',
-                  mixBlendMode: 'overlay',
+                  opacity: 0.3,
+                  backgroundImage: 'radial-gradient(circle, #000 40%, transparent 41%)',
+                  backgroundSize: '6px 6px',
+                  transform: 'rotate(35deg) scale(1.5)',
                 }}
               />
 
               <motion.img
-                src="./image2.jpg"
+                src="./image2.jpeg"
                 alt="Prince Shrestha"
-                className="w-full h-[420px] md:h-[560px] object-cover"
+                className="w-full h-full object-cover"
                 style={{
-                  filter: 'grayscale(100%) contrast(1.6) brightness(0.8)',
+                  filter: 'grayscale(1) contrast(1.6) brightness(1.05)',
                 }}
               />
             </div>
@@ -176,7 +169,11 @@ export default function About() {
               className="font-anton text-black leading-[0.85] tracking-tight"
               style={{ fontSize: 'clamp(5rem, 12vw, 11rem)' }}
             >
-              PRINCE
+              {"Developer".split('').map((char, i) => (
+                <span key={i} className="inline-block transition-colors duration-200 hover:text-[#0f4cff]">
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+              ))}
             </motion.h1>
 
             {/* Subtitle + badge */}
@@ -187,8 +184,12 @@ export default function About() {
               transition={{ duration: 0.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-center gap-4 mt-4 mb-8"
             >
-              <span className="text-sm md:text-base tracking-[0.2em] uppercase text-black/80 font-anton">
-                Frontend Developer
+              <span className="text-sm md:text-base tracking-[0.2em] uppercase font-anton">
+                {"Full-stack".split('').map((char, i) => (
+                  <span key={i} className="transition-colors duration-200 cursor-default hover:text-[#0f4cff] text-black/80">
+                    {char === ' ' ? '\u00A0' : char}
+                  </span>
+                ))}
               </span>
               <span className="text-[9px] tracking-[0.15em] uppercase text-black/50 font-anton border-2 border-black/30 px-3 py-1 rounded-full">
                 NEPAL
@@ -214,8 +215,8 @@ export default function About() {
               transition={{ duration: 0.4, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="space-y-3 mb-10 max-w-[600px]"
             >
-              <p className="text-sm md:text-[15px] text-black/60 font-lato leading-relaxed">
-                Hi, I'm Prince. I'm a frontend developer passionate about building elegant digital experiences using React, Tailwind CSS, JavaScript, and modern UI design.
+              <p className="text-sm md:text-[15px] text-black/60 font-lato leading-relaxed" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
+                Hi, I'm Prince. I'm a full-stack developer passionate about building elegant digital experiences using React, Tailwind CSS, JavaScript, and modern UI design.
               </p>
               <p className="text-sm md:text-[15px] text-black/60 font-lato leading-relaxed">
                 Every project combines clean architecture, accessibility, performance, and refined visual design to create seamless user experiences.
