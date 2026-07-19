@@ -30,7 +30,7 @@ export default function About() {
           className="flex items-center gap-3 mb-14"
         >
           <span className="w-8 h-px bg-gold" />
-          <span className="font-mono text-xs text-gold tracking-[0.15em] uppercase">About</span>
+          <span className="text-xs text-gold tracking-[0.15em] uppercase" style={{ fontFamily: "'Lato', sans-serif" }}>About</span>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-14 md:gap-20 items-start">
@@ -46,7 +46,7 @@ export default function About() {
               <span className="text-wine">Prince</span>
             </h2>
 
-            <div className="space-y-5 font-body text-gray leading-relaxed text-[15px] md:text-[16px]" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
+            <div className="space-y-5 font-body text-gray leading-relaxed text-[15px] md:text-[16px]" style={{ fontFamily: "'Lato', sans-serif" }}>
               <p>
                 I'm a web designer and developer, crafting refined, high-performance digital experiences with a strong focus on modern aesthetics, precision, and usability.
               </p>

@@ -26,7 +26,7 @@ export default function Hero() {
         alt="Profile"
         className="absolute right-4 md:right-12 lg:right-20 z-30 pointer-events-none select-none"
         style={{
-          height: 'clamp(18rem, 40vw, 36rem)',
+          height: 'clamp(22rem, 55vw, 40rem)',
           y: imgY,
           bottom: 0,
           objectFit: 'contain',

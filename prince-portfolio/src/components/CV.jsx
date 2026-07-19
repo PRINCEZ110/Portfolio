@@ -81,10 +81,10 @@ export default function CV() {
         {/* Header row */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <div>
-            <span className="font-mono text-xs text-steel tracking-widest uppercase">resume</span>
+            <span className="text-xs text-steel tracking-widest uppercase" style={{ fontFamily: "'Lato', sans-serif" }}>resume</span>
             <h2
               className="font-display font-bold text-slate mt-3 leading-tight"
-              style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}
+              style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontFamily: "'Josefin Sans', sans-serif" }}
             >
               Curriculum<br />
               <span className="text-[#541E24]">Vitae.</span>

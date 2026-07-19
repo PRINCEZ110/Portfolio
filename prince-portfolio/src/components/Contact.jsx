@@ -61,7 +61,7 @@ export default function Contact() {
           className="flex items-center gap-3 mb-14"
         >
           <span className="w-8 h-px bg-gold" />
-          <span className="font-mono text-xs text-gold tracking-[0.15em] uppercase">Contact</span>
+          <span className="text-xs text-gold tracking-[0.15em] uppercase" style={{ fontFamily: "'Lato', sans-serif" }}>Contact</span>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-14 md:gap-20 items-start">
@@ -72,12 +72,12 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h2 className="font-display font-bold text-slate leading-[1.05] mb-6" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)' }}>
+            <h2 className="font-display font-bold text-slate leading-[1.05] mb-6" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)', fontFamily: "'Josefin Sans', sans-serif" }}>
               Let's work<br />
               <span className="text-wine">together.</span>
             </h2>
 
-            <p className="font-body text-gray text-[15px] md:text-[16px] leading-relaxed max-w-md mb-10">
+            <p className="font-body text-gray text-[15px] md:text-[16px] leading-relaxed max-w-md mb-10" style={{ fontFamily: "'Lato', sans-serif" }}>
               I'm always open to new projects, collaborations, and interesting conversations.
             </p>
 
