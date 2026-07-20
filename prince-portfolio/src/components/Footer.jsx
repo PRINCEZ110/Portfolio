@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useAnimation } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useAnimation } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 
@@ -14,9 +14,9 @@ export default function Footer() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          controls.start("show"); // scroll DOWN → animate in
+          controls.start("show"); // scroll DOWN ΓåÆ animate in
         } else {
-          controls.start("hidden"); // scroll UP → animate out (reverse)
+          controls.start("hidden"); // scroll UP ΓåÆ animate out (reverse)
         }
       },
       { threshold: 0.2 }
@@ -187,7 +187,7 @@ export default function Footer() {
           </p>
 
           <p className="text-xs font-mono text-footertext/30">
-            © {year} Prince Shrestha
+            ┬⌐ {year} Prince Shrestha
           </p>
         </motion.div>
       </div>

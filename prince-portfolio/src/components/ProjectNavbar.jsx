@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { scrollToSection } from '../utils/scrollToSection';
 
 const links = [
   { label: 'home', href: '/' },
@@ -25,12 +26,7 @@ export default function ProjectNavbar() {
     if (href.startsWith('/#')) {
       const sectionId = href.substring(2);
       navigate('/');
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          const el = document.getElementById(sectionId);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 80);
-      });
+      requestAnimationFrame(() => scrollToSection(sectionId));
     } else {
       navigate(href);
     }
@@ -64,44 +60,48 @@ export default function ProjectNavbar() {
         </a>
       </div>
 
-      {/* Desktop nav */}
-      <nav className="hidden md:flex items-center gap-6">
-        {links.map((l) => (
-          <button
-            key={l.label}
-            onClick={() => handleNav(l.href)}
-            className="font-body text-sm tracking-wide text-wine hover:[text-shadow:0_0_12px_rgba(84,30,36,0.4)] transition-all duration-200"
-          >
-            {l.label}
-          </button>
-        ))}
-      </nav>
-
-      {/* Mobile hamburger */}
-      <button className="md:hidden text-slate" onClick={() => setOpen(!open)}>
-        <span className="font-mono text-xs">{open ? '[×]' : '[≡]'}</span>
-      </button>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 bg-white border-b border-border py-6 flex flex-col items-center gap-6 md:hidden shadow-soft"
-          >
+      {location.pathname !== '/projects' && (
+        <>
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-6">
             {links.map((l) => (
               <button
                 key={l.label}
                 onClick={() => handleNav(l.href)}
-                className="font-display text-xl text-slate hover:text-wine hover:[text-shadow:0_0_12px_rgba(84,30,36,0.4)] transition-all"
+                className="font-body text-sm tracking-wide text-wine hover:[text-shadow:0_0_12px_rgba(84,30,36,0.4)] transition-all duration-200"
               >
                 {l.label}
               </button>
             ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </nav>
+
+          {/* Mobile hamburger */}
+          <button className="md:hidden text-slate" onClick={() => setOpen(!open)}>
+            <span className="font-mono text-xs">{open ? '[×]' : '[≡]'}</span>
+          </button>
+
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="absolute top-full left-0 right-0 bg-white border-b border-border py-6 flex flex-col items-center gap-6 md:hidden shadow-soft"
+              >
+                {links.map((l) => (
+                  <button
+                    key={l.label}
+                    onClick={() => handleNav(l.href)}
+                    className="font-display text-xl text-slate hover:text-wine hover:[text-shadow:0_0_12px_rgba(84,30,36,0.4)] transition-all"
+                  >
+                    {l.label}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
+      )}
     </header>
   );
 }

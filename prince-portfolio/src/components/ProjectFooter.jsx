@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { scrollToSection } from '../utils/scrollToSection';
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -17,12 +18,7 @@ export default function ProjectFooter({ projectTitle }) {
     if (href.startsWith('/#')) {
       const sectionId = href.substring(2);
       navigate('/');
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          const el = document.getElementById(sectionId);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 80);
-      });
+      requestAnimationFrame(() => scrollToSection(sectionId));
     } else {
       navigate(href);
     }

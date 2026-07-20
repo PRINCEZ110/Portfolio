@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
 import { projects } from '../data/projects';
@@ -113,6 +113,24 @@ export default function Work() {
             <FeatureBlock key={p.id} project={p} index={i} browserPref={browserPref} />
           )
         )}
+
+        {/* ─── VIEW MORE ─── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-16 md:mt-20 text-center"
+        >
+          <Link
+            to="/projects"
+            className="inline-flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase px-8 py-4 rounded-xl border border-gold/30 text-gold hover:bg-gold/10 transition-all duration-300"
+            style={{ fontFamily: "'Josefin Sans', sans-serif" }}
+          >
+            <span>View More Projects</span>
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+          </Link>
+        </motion.div>
       </div>
     </section>
   );
@@ -436,155 +454,97 @@ function SplitBlock({ project, index, browserPref }) {
 
 
 function NagarSewaMockup({ variant = 'mac' }) {
+  const containerRef = useRef(null);
+  const [scale, setScale] = useState(1);
+  const IFRAME_W = 1440;
+  const IFRAME_H = 2800;
+  const VISIBLE_H = 480;
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const update = () => setScale(el.offsetWidth / IFRAME_W);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const scrollY = -(IFRAME_H - VISIBLE_H / scale);
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95, y: 30 }}
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ scale: 1.008 }}
-      className="origin-center cursor-pointer"
+      className="relative perspective-1000"
     >
-      <BrowserFrame url="nagar-sewa.gov/dashboard" variant={variant}>
-        <div className="mockup-root">
-        <div className="flex" style={{ minHeight: '320px' }}>
-          <motion.div
-            className="w-14 md:w-16 py-4 flex flex-col items-center gap-3"
-            style={{ background: '#121212', borderRight: '1px solid rgba(255,255,255,0.03)' }}
+      {/* Animated glow behind the window */}
+      <motion.div
+        className="absolute -inset-8 rounded-3xl pointer-events-none"
+        animate={{
+          background: [
+            'radial-gradient(ellipse at 30% 40%, rgba(179,156,79,0.08), transparent 60%)',
+            'radial-gradient(ellipse at 70% 60%, rgba(179,156,79,0.08), transparent 60%)',
+            'radial-gradient(ellipse at 30% 40%, rgba(179,156,79,0.08), transparent 60%)',
+          ],
+        }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ filter: 'blur(30px)' }}
+      />
+
+      {/* Live indicator badge */}
+      <motion.div
+        className="absolute -top-2 -right-2 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full"
+        style={{ background: 'rgba(179,156,79,0.1)', backdropFilter: 'blur(8px)', border: '1px solid rgba(179,156,79,0.15)' }}
+        initial={{ opacity: 0, scale: 0 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, delay: 0.8 }}
+      >
+        <motion.span
+          className="w-1.5 h-1.5 rounded-full"
+          style={{ background: '#C8FF00' }}
+          animate={{ opacity: [1, 0.3, 1], scale: [1, 0.8, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <span className="text-[7px] tracking-wider uppercase text-gold/70" style={{ fontFamily: "'Lato', sans-serif" }}>Live</span>
+      </motion.div>
+
+      <motion.div
+        whileHover={{ scale: 1.015, rotateY: 1.5, rotateX: -1.5 }}
+        transition={{ type: 'spring', stiffness: 120, damping: 30, mass: 0.8 }}
+        className="origin-center cursor-pointer"
+      >
+        <BrowserFrame url="nagar-sewa.netlify.app" variant={variant}>
+          <div
+            ref={containerRef}
+            className="overflow-hidden relative w-full"
+            style={{ height: `${VISIBLE_H}px` }}
           >
-            {[
-              <svg key="dash" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>,
-              <svg key="rep" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>,
-              <svg key="peop" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
-              <svg key="set" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>,
-              <svg key="fol" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" /></svg>,
-            ].map((icon, i) => (
+            <div style={{ transformOrigin: 'top left', transform: `scale(${scale})`, width: IFRAME_W }}>
               <motion.div
-                key={i}
-                className="w-8 h-8 rounded-lg flex items-center justify-center"
-                style={{ color: i === 0 ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.25)' }}
-                whileHover={{ color: 'rgba(179,156,79,0.8)', background: 'rgba(179,156,79,0.08)' }}
-                whileTap={{ scale: 0.9 }}
+                animate={{ y: [0, scrollY, 0] }}
+                transition={{
+                  duration: 16,
+                  ease: 'linear',
+                  repeat: Infinity,
+                }}
               >
-                {icon}
-              </motion.div>
-            ))}
-          </motion.div>
-          <div className="flex-1 p-4 md:p-5 space-y-4">
-            <div className="flex items-center gap-3">
-              <motion.div
-                className="flex-1 h-9 rounded-lg flex items-center px-3 text-[8px] font-mono cursor-text"
-                style={{ background: 'rgba(255,255,255,0.04)' }}
-                whileHover={{ background: 'rgba(255,255,255,0.06)' }}
-              >
-                <svg className="w-3 h-3 mr-2 text-white/15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-                <span className="text-white/20">Search reports, citizens, wards...</span>
-              </motion.div>
-              <motion.div
-                className="h-9 px-3 rounded-lg flex items-center justify-center text-[8px] font-mono font-medium cursor-pointer"
-                style={{ background: 'rgba(179,156,79,0.08)', color: 'rgba(179,156,79,0.6)' }}
-                whileHover={{ background: 'rgba(179,156,79,0.14)', scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                + New
+                <iframe
+                  src="https://nagar-sewa.netlify.app/#home"
+                  width={IFRAME_W}
+                  height={IFRAME_H}
+                  className="border-0"
+                  title="NagarSewa Live"
+                  loading="lazy"
+                />
               </motion.div>
             </div>
-
-            <div className="grid grid-cols-4 gap-2.5">
-              {[
-                { label: 'Active', value: '1,284', change: '+12%' },
-                { label: 'Resolved', value: '3,712', change: '+8%' },
-                { label: 'Pending', value: '456', change: '-3%' },
-                { label: 'Avg Time', value: '2.4h', change: '-15%' },
-              ].map((stat, i) => (
-                <motion.div
-                  key={i}
-                  className="p-3 rounded-xl cursor-default"
-                  style={{ background: 'rgba(255,255,255,0.02)' }}
-                  whileHover={{ background: 'rgba(255,255,255,0.04)', y: -2, scale: 1.005 }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 25, mass: 0.5 }}
-                >
-                  <div className="text-[7px] font-mono text-white/30 uppercase tracking-wider">{stat.label}</div>
-                  <div className="text-sm font-semibold text-white/80 mt-1">{stat.value}</div>
-                  <div className="text-[7px] font-mono mt-0.5" style={{ color: stat.change.startsWith('+') ? 'rgba(200,255,0,0.6)' : 'rgba(255,100,100,0.6)' }}>
-                    {stat.change}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="flex items-end gap-1 h-16 py-2 px-1 rounded-xl" style={{ background: 'rgba(255,255,255,0.01)' }}>
-              {[35, 55, 40, 70, 45, 60, 50, 80, 65, 75, 55, 85].map((h, i) => (
-                <motion.div
-                  key={i}
-                  className="flex-1 rounded-t-md cursor-pointer origin-bottom relative group"
-                  style={{
-                    height: `${h}%`,
-                    background: i >= 7 ? 'rgba(179,156,79,0.2)' : 'rgba(255,255,255,0.06)',
-                  }}
-                  whileHover={{ scaleY: 1.06, background: 'rgba(179,156,79,0.3)' }}
-                  layout
-                  transition={{ type: 'spring', stiffness: 200, damping: 25, mass: 0.5 }}
-                >
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 text-[5px] font-mono text-white/15 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-                    {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i]}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.div
-              className="rounded-xl overflow-hidden"
-              style={{ border: '1px solid rgba(255,255,255,0.03)' }}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.6 }}
-            >
-              <div className="grid grid-cols-5 gap-2 px-3 py-2.5" style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                {['Issue', 'Ward', 'Priority', 'Status', 'Date'].map((h) => (
-                  <div key={h} className="text-[7px] font-mono text-white/25 uppercase tracking-wider">{h}</div>
-                ))}
-              </div>
-              {[
-                ['Pothole on Main Rd', 'Ward 3', 'High', 'In Progress', 'Jun 14'],
-                ['Water pipe burst', 'Ward 7', 'Medium', 'Assigned', 'Jun 13'],
-                ['Street light outage', 'Ward 2', 'Low', 'Resolved', 'Jun 12'],
-                ['Illegal dumping site', 'Ward 5', 'High', 'In Progress', 'Jun 11'],
-              ].map((row, i) => (
-                <motion.div
-                  key={i}
-                  className="grid grid-cols-5 gap-2 px-3 py-2.5 cursor-pointer"
-                  style={{ borderBottom: i < 3 ? '1px solid rgba(255,255,255,0.015)' : 'none' }}
-                  whileHover={{ background: 'rgba(255,255,255,0.03)', x: 4 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <div className="text-[8px] font-mono text-white/55 truncate">{row[0]}</div>
-                  <div className="text-[8px] font-mono text-white/30">{row[1]}</div>
-                  <div>
-                    <span className="inline-block text-[6px] font-mono px-1.5 py-0.5 rounded" style={{
-                      background: row[2] === 'High' ? 'rgba(255,100,100,0.1)' : row[2] === 'Medium' ? 'rgba(255,200,0,0.1)' : 'rgba(200,255,0,0.1)',
-                      color: row[2] === 'High' ? 'rgba(255,100,100,0.7)' : row[2] === 'Medium' ? 'rgba(255,200,0,0.7)' : 'rgba(179,156,79,0.7)',
-                    }}>
-                      {row[2]}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="inline-block text-[6px] font-mono px-1.5 py-0.5 rounded" style={{
-                      background: row[3] === 'Resolved' ? 'rgba(179,156,79,0.08)' : 'rgba(255,255,255,0.04)',
-                      color: row[3] === 'Resolved' ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.4)',
-                    }}>
-                      {row[3]}
-                    </span>
-                  </div>
-                  <div className="text-[8px] font-mono text-white/20">{row[4]}</div>
-                </motion.div>
-              ))}
-            </motion.div>
           </div>
-        </div>
-        </div>
-      </BrowserFrame>
+        </BrowserFrame>
+      </motion.div>
     </motion.div>
   );
 }

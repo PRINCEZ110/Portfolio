@@ -33,7 +33,19 @@ function WinControls() {
   );
 }
 
-export default function BrowserFrame({ children, url, variant = 'mac' }) {
+function NavBtn({ onClick, disabled, children }) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className="p-1 rounded text-white/30 hover:text-white/60 hover:bg-white/5 transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+    >
+      {children}
+    </button>
+  );
+}
+
+export default function BrowserFrame({ children, url, variant = 'mac', showNav, onBack, onForward, onRefresh, canGoBack, canGoForward }) {
   const isMac = variant === 'mac';
 
   return (
@@ -73,21 +85,36 @@ export default function BrowserFrame({ children, url, variant = 'mac' }) {
           <>
             {/* Title bar */}
             <div
-              className="flex items-center h-[38px] px-[14px]"
+              className="flex items-center h-[38px] px-[14px] gap-2"
               style={{
                 background: 'linear-gradient(180deg, #2c2c2e 0%, #262628 100%)',
                 borderBottom: '1px solid rgba(0,0,0,0.4)',
               }}
             >
-              <MacControls />
+              <div className="flex items-center gap-0.5">
+                <MacControls />
+                {showNav && (
+                  <div className="flex items-center ml-3 gap-0.5">
+                    <NavBtn onClick={onBack} disabled={!canGoBack}>
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                    </NavBtn>
+                    <NavBtn onClick={onForward} disabled={!canGoForward}>
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                    </NavBtn>
+                    <NavBtn onClick={onRefresh}>
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 4 23 10 17 10" /><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" /></svg>
+                    </NavBtn>
+                  </div>
+                )}
+              </div>
 
               {/* URL bar - Safari style */}
               <div
                 className="flex items-center gap-2 mx-auto h-[22px] rounded-[6px] px-3"
                 style={{
                   background: 'rgba(0,0,0,0.35)',
-                  minWidth: '45%',
-                  maxWidth: '55%',
+                  minWidth: showNav ? '35%' : '45%',
+                  maxWidth: showNav ? '45%' : '55%',
                 }}
               >
                 <svg className="w-[10px] h-[10px] text-white/20 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -163,12 +190,25 @@ export default function BrowserFrame({ children, url, variant = 'mac' }) {
 
             {/* URL bar */}
             <div
-              className="flex items-center h-[36px] px-3 gap-2"
+              className="flex items-center h-[36px] px-3 gap-1"
               style={{
                 background: '#1a1a1a',
                 borderBottom: '1px solid rgba(0,0,0,0.3)',
               }}
             >
+              {showNav && (
+                <div className="flex items-center gap-0.5 mr-1">
+                  <NavBtn onClick={onBack} disabled={!canGoBack}>
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                  </NavBtn>
+                  <NavBtn onClick={onForward} disabled={!canGoForward}>
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                  </NavBtn>
+                  <NavBtn onClick={onRefresh}>
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 4 23 10 17 10" /><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" /></svg>
+                  </NavBtn>
+                </div>
+              )}
               <svg className="w-3 h-3 text-white/15 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 20a9 9 0 0 0 9-9 9 9 0 0 0-9-9 9 9 0 0 0-9 9 9 9 0 0 0 9 9z" />
                 <path d="M2 12h20" />

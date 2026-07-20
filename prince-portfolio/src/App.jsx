@@ -9,6 +9,8 @@ import CV from './components/CV';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ProjectDetail from './components/ProjectDetail';
+import AllProjects from './components/AllProjects';
+import NotFound from './components/NotFound';
 
 const techStack = [
   'React.js', 'Node.js', 'Tailwind CSS', 'PostgreSQL', 'Java', 'Figma',
@@ -17,7 +19,7 @@ const techStack = [
 
 export default function App() {
   const location = useLocation();
-  const isProjectPage = location.pathname.startsWith('/work/');
+  const isProjectPage = location.pathname.startsWith('/work/') || location.pathname === '/projects';
 
   return (
     <>
@@ -34,7 +36,9 @@ export default function App() {
               <Contact />
             </>
           } />
+          <Route path="/projects" element={<AllProjects />} />
           <Route path="/work/:projectId" element={<ProjectDetail />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       {!isProjectPage && <Footer />}

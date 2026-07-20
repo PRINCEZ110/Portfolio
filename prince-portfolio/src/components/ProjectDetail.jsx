@@ -173,10 +173,30 @@ export default function ProjectDetail() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-20"
           >
             <MockupComponent variant={browserPref} />
           </motion.div>
+
+          {project.id === 'nagarsewa' && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="flex justify-center mt-6 mb-20"
+            >
+              <a
+                href="https://nagar-sewa.netlify.app/#home"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase px-6 py-3 rounded-xl border border-gold/30 text-gold hover:bg-gold/10 transition-all duration-300"
+                style={{ fontFamily: "'Josefin Sans', sans-serif" }}
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
+                Visit Live Site
+              </a>
+            </motion.div>
+          )}
 
           {/* ─── HIGHLIGHTS ─── */}
           <motion.div
@@ -214,100 +234,27 @@ export default function ProjectDetail() {
 /* ─── DETAIL PAGE MOCKUPS (larger, more detailed) ─── */
 
 function NagarSewaDetailMockup({ variant = 'mac' }) {
+  const iframeRef = useRef(null);
+
+  const refresh = () => {
+    iframeRef.current.src = iframeRef.current.src;
+  };
+
   return (
-    <BrowserFrame url="nagar-sewa.gov/dashboard" variant={variant}>
-      <div className="flex" style={{ minHeight: '450px' }}>
-        <div className="w-14 md:w-16 py-5 flex flex-col items-center gap-3" style={{ background: '#121212', borderRight: '1px solid rgba(255,255,255,0.03)' }}>
-          {[
-            <svg key="d" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>,
-            <svg key="r" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>,
-            <svg key="p" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
-            <svg key="f" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" /></svg>,
-            <svg key="s" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>,
-            <svg key="c" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>,
-          ].map((icon, i) => (
-            <div key={i} className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ color: i === 0 ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.25)' }}>
-              {icon}
-            </div>
-          ))}
-        </div>
-        <div className="flex-1 p-5 md:p-6 space-y-5">
-          <div className="flex items-center gap-3">
-            <div className="flex-1 h-10 rounded-lg flex items-center gap-2 px-3" style={{ background: 'rgba(255,255,255,0.04)' }}>
-              <svg className="w-3 h-3 text-white/15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-              <span className="text-[9px] font-mono text-white/20">Search issues, reports, citizens...</span>
-            </div>
-            <div className="h-10 px-4 rounded-lg flex items-center text-[8px] font-mono font-medium" style={{ background: 'rgba(179,156,79,0.08)', color: 'rgba(179,156,79,0.6)' }}>
-              + New Report
-            </div>
-          </div>
-
-          <div className="grid grid-cols-4 gap-3">
-            {[
-              { label: 'Total Reports', value: '5,452', change: '+12.3%' },
-              { label: 'Resolved', value: '3,712', change: '+8.1%' },
-              { label: 'In Progress', value: '1,284', change: '+4.2%' },
-              { label: 'Avg Resolution', value: '2.4h', change: '-15.2%' },
-            ].map((s, i) => (
-              <div key={i} className="p-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                <div className="text-[7px] font-mono text-white/25 uppercase tracking-wider">{s.label}</div>
-                <div className="text-base font-bold text-white/80 mt-1">{s.value}</div>
-                <div className="text-[7px] font-mono mt-0.5" style={{ color: s.change.startsWith('+') ? 'rgba(179,156,79,0.6)' : 'rgba(255,100,100,0.6)' }}>
-                  {s.change} vs last month
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex items-end gap-1 h-20 py-3 px-2 rounded-xl" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            {[45, 60, 35, 75, 50, 65, 55, 85, 70, 90, 60, 80].map((h, i) => (
-              <div key={i} className="flex-1 rounded-t-md relative group" style={{
-                height: `${h}%`,
-                background: i >= 7 ? 'rgba(179,156,79,0.15)' : 'rgba(255,255,255,0.05)',
-              }}>
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-[6px] font-mono text-white/40 whitespace-nowrap">{h}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.03)' }}>
-            <div className="grid grid-cols-6 gap-2 px-4 py-3" style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-              {['Issue', 'Ward', 'Category', 'Priority', 'Status', 'Date'].map((h) => (
-                <div key={h} className="text-[7px] font-mono text-white/25 uppercase tracking-wider">{h}</div>
-              ))}
-            </div>
-            {[
-              ['Road pothole near school', 'Ward 3', 'Infrastructure', 'High', 'In Progress', 'Jun 14'],
-              ['Water pipeline leakage', 'Ward 7', 'Utilities', 'Medium', 'Assigned', 'Jun 13'],
-              ['Street light not working', 'Ward 2', 'Infrastructure', 'Low', 'Resolved', 'Jun 12'],
-              ['Illegal garbage dumping', 'Ward 5', 'Sanitation', 'High', 'In Progress', 'Jun 11'],
-              ['Park bench damaged', 'Ward 4', 'Recreation', 'Low', 'Pending', 'Jun 10'],
-            ].map((row, i) => (
-              <div key={i} className="grid grid-cols-6 gap-2 px-4 py-2.5" style={{ borderBottom: i < 4 ? '1px solid rgba(255,255,255,0.012)' : 'none' }}>
-                <div className="text-[8px] font-mono text-white/55 truncate">{row[0]}</div>
-                <div className="text-[8px] font-mono text-white/30">{row[1]}</div>
-                <div className="text-[8px] font-mono text-white/30">{row[2]}</div>
-                <div>
-                  <span className="inline-block text-[6px] font-mono px-1.5 py-0.5 rounded" style={{
-                    background: row[3] === 'High' ? 'rgba(255,80,80,0.1)' : row[3] === 'Medium' ? 'rgba(255,200,0,0.1)' : 'rgba(200,255,0,0.1)',
-                    color: row[3] === 'High' ? 'rgba(255,80,80,0.7)' : row[3] === 'Medium' ? 'rgba(255,200,0,0.7)' : 'rgba(179,156,79,0.7)',
-                  }}>
-                    {row[3]}
-                  </span>
-                </div>
-                <div>
-                  <span className="inline-block text-[6px] font-mono px-1.5 py-0.5 rounded" style={{
-                    background: row[4] === 'Resolved' ? 'rgba(179,156,79,0.08)' : row[4] === 'In Progress' ? 'rgba(100,200,255,0.08)' : 'rgba(255,255,255,0.04)',
-                    color: row[4] === 'Resolved' ? 'rgba(179,156,79,0.6)' : row[4] === 'In Progress' ? 'rgba(100,200,255,0.6)' : 'rgba(255,255,255,0.4)',
-                  }}>
-                    {row[4]}
-                  </span>
-                </div>
-                <div className="text-[8px] font-mono text-white/20">{row[5]}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+    <BrowserFrame
+      url="nagar-sewa.netlify.app"
+      variant={variant}
+      showNav
+      onRefresh={refresh}
+    >
+      <div className="relative w-full" style={{ height: '560px', overscrollBehavior: 'contain' }}>
+        <iframe
+          ref={iframeRef}
+          src="https://nagar-sewa.netlify.app/#home"
+          className="w-full h-full border-0"
+          title="NagarSewa Live"
+          loading="lazy"
+        />
       </div>
     </BrowserFrame>
   );
