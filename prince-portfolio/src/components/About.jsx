@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import {
   SiReact, SiJavascript, SiHtml5, SiCss, SiTailwindcss,
   SiOpenjdk, SiApache, SiMysql,
@@ -125,12 +125,13 @@ function SkillCard({ category, items }) {
             <motion.div
               key={item}
               variants={logoVariant}
+              whileHover={{ y: -4, scale: 1.05 }}
               className="relative flex flex-col items-center gap-1.5 p-2.5 rounded-lg bg-black/[0.02] border border-transparent transition-all duration-300 hover:bg-black/[0.04] hover:border-black/10 hover:shadow-sm"
             >
               <span className="relative">
                 <Icon
                   style={{ color }}
-                  className="text-xl md:text-2xl transition-all duration-300 group-hover:scale-110"
+                  className="text-xl md:text-2xl transition-all duration-300"
                 />
                 <motion.span
                   className="absolute -inset-2 rounded-full opacity-0 pointer-events-none"
@@ -159,7 +160,7 @@ function CircularBadge() {
       <motion.div
         className="w-28 h-28 md:w-32 md:h-32 rounded-full border-2 border-black flex items-center justify-center cursor-pointer pointer-events-auto"
         style={{ background: 'rgba(15,76,255,0.15)' }}
-        whileHover={{ scale: 1.12 }}
+        whileHover={{ scale: 1.12, rotate: -5 }}
         transition={{ type: 'spring', stiffness: 200, damping: 15 }}
       >
         <span className="text-[10px] tracking-[0.25em] uppercase text-black font-anton leading-tight text-center">
@@ -170,21 +171,111 @@ function CircularBadge() {
   );
 }
 
+/* ─── Particle Canvas ─── */
+function ParticleBackground() {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animId;
+    const particles = [];
+    let time = 0;
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const count = Math.min(25, Math.floor((canvas.width * canvas.height) / 30000));
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        r: Math.random() * 2 + 0.5,
+        o: Math.random() * 0.3 + 0.1,
+      });
+    }
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      time += 0.004;
+
+      for (const p of particles) {
+        p.x += p.vx + Math.sin(time + p.y * 0.01) * 0.08;
+        p.y += p.vy + Math.cos(time + p.x * 0.01) * 0.08;
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0,0,0,${p.o * (0.5 + Math.sin(time + p.x * 0.005) * 0.3)})`;
+        ctx.fill();
+      }
+
+      animId = requestAnimationFrame(draw);
+    };
+
+    animId = requestAnimationFrame(draw);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', resize);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 pointer-events-none"
+      style={{ zIndex: 1 }}
+    />
+  );
+}
+
 /* ─── Main ─── */
 export default function About() {
   const statsRef = useRef(null);
+  const sectionRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const imageParallax = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const bgParallax = useTransform(scrollYProgress, [0, 1], [0, -30]);
 
   return (
-    <section id="about" className="relative bg-[#0f4cff] min-h-screen overflow-hidden">
-      {/* Halftone dot grid background */}
-      <div
+    <section
+      ref={sectionRef}
+      id="about"
+      className="relative bg-[#0f4cff] min-h-screen overflow-hidden"
+    >
+      {/* Parallax halftone background */}
+      <motion.div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle, rgba(0,0,0,0.04) 1.5px, transparent 1.5px)',
-          backgroundSize: '12px 12px',
-        }}
-      />
+        style={{ y: bgParallax }}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle, rgba(0,0,0,0.04) 1.5px, transparent 1.5px)',
+            backgroundSize: '12px 12px',
+          }}
+        />
+      </motion.div>
+
+      {/* Floating particles */}
+      <ParticleBackground />
 
       <div className="max-w-[1600px] mx-auto px-8 md:px-12 lg:px-16 relative z-10 py-16 md:py-0 min-h-screen flex flex-col justify-center">
         {/* Eyebrow label */}
@@ -207,7 +298,10 @@ export default function About() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="relative min-h-[400px] md:min-h-[600px]"
           >
-            <div className="relative overflow-hidden h-full" style={{ borderRadius: '0', border: '4px solid #000' }}>
+            <motion.div
+              className="relative overflow-hidden h-full"
+              style={{ y: imageParallax, borderRadius: '0', border: '4px solid #000' }}
+            >
               {/* Manga screentone overlay */}
               <div
                 className="absolute inset-0 z-[3] pointer-events-none"
@@ -227,8 +321,10 @@ export default function About() {
                 style={{
                   filter: 'grayscale(1) contrast(1.6) brightness(1.05)',
                 }}
+                whileHover={{ scale: 1.03 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               />
-            </div>
+            </motion.div>
 
             {/* Circular badge */}
             <CircularBadge />
@@ -241,21 +337,39 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* PRINCE */}
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="font-anton text-black leading-[0.85] tracking-tight"
-              style={{ fontSize: 'clamp(5rem, 12vw, 11rem)' }}
-            >
-              {"Developer".split('').map((char, i) => (
-                <span key={i} className="inline-block transition-colors duration-200 hover:text-[#0f4cff]">
-                  {char === ' ' ? '\u00A0' : char}
-                </span>
-              ))}
-            </motion.h1>
+            {/* "Developer" heading with letter stagger */}
+            <div className="overflow-hidden">
+              <motion.h1
+                className="font-anton text-black leading-[0.85] tracking-tight"
+                style={{ fontSize: 'clamp(5rem, 12vw, 11rem)' }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                {"Developer".split('').map((char, i) => (
+                  <motion.span
+                    key={i}
+                    className="inline-block transition-colors duration-200 hover:text-[#0f4cff]"
+                    custom={i}
+                    variants={{
+                      hidden: { opacity: 0, y: 60, rotateX: -30 },
+                      visible: (i) => ({
+                        opacity: 1,
+                        y: 0,
+                        rotateX: 0,
+                        transition: {
+                          delay: i * 0.045,
+                          duration: 0.5,
+                          ease: [0.22, 1, 0.36, 1],
+                        },
+                      }),
+                    }}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </motion.span>
+                ))}
+              </motion.h1>
+            </div>
 
             {/* Subtitle + badge */}
             <motion.div
@@ -267,9 +381,16 @@ export default function About() {
             >
               <span className="text-sm md:text-base tracking-[0.2em] uppercase font-anton">
                 {"Full-stack".split('').map((char, i) => (
-                  <span key={i} className="transition-colors duration-200 cursor-default hover:text-[#0f4cff] text-black/80">
+                  <motion.span
+                    key={i}
+                    className="inline-block transition-colors duration-200 cursor-default hover:text-[#0f4cff] text-black/80"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + i * 0.03, duration: 0.3 }}
+                  >
                     {char === ' ' ? '\u00A0' : char}
-                  </span>
+                  </motion.span>
                 ))}
               </span>
               <span className="text-[9px] tracking-[0.15em] uppercase text-black/50 font-anton border-2 border-black/30 px-3 py-1 rounded-full">

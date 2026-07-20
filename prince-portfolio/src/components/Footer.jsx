@@ -183,7 +183,7 @@ export default function Footer() {
           className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4"
         >
           <p className="text-xs font-mono text-footertext/50 max-w-xl">
-          lets build something great together. currently seeking frontend roles, internships, and freelance projects. feel free to reach out for collaborations, coffee chats, or just to say hi! &#128075;
+          lets build something great together. currently seeking full-stack Developer roles, jobs, and freelance projects. feel free to reach out for collaborations, coffee chats, or just to say hi! &#128075;
           </p>
 
           <p className="text-xs font-mono text-footertext/30">
