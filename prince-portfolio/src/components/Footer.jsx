@@ -1,4 +1,4 @@
-﻿import { motion, useScroll, useTransform, useAnimation } from "framer-motion";
+﻿import { m, useScroll, useTransform, useAnimation } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 
@@ -70,7 +70,7 @@ export default function Footer() {
   };
 
   return (
-    <motion.footer
+    <m.footer
       ref={ref}
       animate={controls}
       initial="hidden"
@@ -78,63 +78,63 @@ export default function Footer() {
       className="relative overflow-hidden border-t border-white/5 bg-footer"
     >
       {/* glow */}
-      <motion.div
+      <m.div
         style={{ y }}
         className="absolute inset-0 opacity-20 pointer-events-none"
       >
         <div className="absolute left-1/2 top-0 h-[300px] w-[600px] -translate-x-1/2 bg-gold/10 blur-[120px]" />
-      </motion.div>
+      </m.div>
 
       <div className="max-w-9xl mx-auto px-6 md:px-12 lg:px-20 py-24 md:py-32 relative z-10">
 
         {/* NAME */}
-        <motion.h2
+        <m.h2
           variants={item}
           className="font-display text-[clamp(3.5rem,9vw,8rem)] font-bold leading-none tracking-tight text-footertext text-center"
         >
           Simple <span className="text-[#541E24]">Modern</span> Reliable
-        </motion.h2>
+        </m.h2>
 
         {/* divider */}
-        <motion.div
+        <m.div
           variants={item}
           className="my-12 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"
         />
 
         {/* GRID */}
-        <motion.div variants={container} className="grid md:grid-cols-3 gap-12">
+        <m.div variants={container} className="grid md:grid-cols-3 gap-12">
 
           {/* CONTACT */}
-          <motion.div variants={item}>
+          <m.div variants={item}>
             <p className="text-xs font-mono tracking-[0.35em] text-footertext/40 mb-5">
               CONTACT
             </p>
 
-            <motion.a
+            <m.a
               href="mailto:princezstha6110@gmail.com"
               whileHover={{ x: 6 }}
               transition={hoverSpring}
               className="group inline-flex items-center gap-2 text-lg text-footertext hover:text-gold"
             >
               princezstha6110@gmail.com
-              <motion.span
+              <m.span
                 whileHover={{ rotate: 45 }}
                 transition={hoverSpring}
               >
                 <ArrowUpRight size={18} />
-              </motion.span>
-            </motion.a>
-          </motion.div>
+              </m.span>
+            </m.a>
+          </m.div>
 
           {/* NAV */}
-          <motion.div variants={item}>
+          <m.div variants={item}>
             <p className="text-xs font-mono tracking-[0.35em] text-footertext/40 mb-5 text-center">
               NAVIGATION
             </p>
 
             <div className="flex flex-col items-center gap-4">
               {["Home", "Work", "About", "CV", "Contact"].map((link) => (
-                <motion.a
+                <m.a
                   key={link}
                   href={link === "Home" ? "#" : `#${link.toLowerCase()}`}
                   whileHover={{ x: 8 }}
@@ -143,13 +143,13 @@ export default function Footer() {
                 >
                   {link}
                   <span className="absolute left-0 -bottom-1 h-px w-0 bg-gold transition-all duration-500 group-hover:w-full" />
-                </motion.a>
+                </m.a>
               ))}
             </div>
-          </motion.div>
+          </m.div>
 
           {/* SOCIAL */}
-          <motion.div variants={item}>
+          <m.div variants={item}>
             <p className="text-xs font-mono tracking-[0.35em] text-footertext/40 mb-5 text-right">
               SOCIAL
             </p>
@@ -160,7 +160,7 @@ export default function Footer() {
                 { label: 'LinkedIn', href: 'https://www.linkedin.com/in/princez-shrestha-b12a0132b/' },
                 { label: 'Instagram', href: 'https://www.instagram.com/princezstha/?hl=en' },
               ].map((social) => (
-                <motion.a
+                <m.a
                   key={social.label}
                   href={social.href}
                   target="_blank"
@@ -171,14 +171,14 @@ export default function Footer() {
                 >
                   {social.label}
                   <span className="absolute left-0 -bottom-1 h-px w-0 bg-gold transition-all duration-500 group-hover:w-full" />
-                </motion.a>
+                </m.a>
               ))}
             </div>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
 
         {/* BOTTOM */}
-        <motion.div
+        <m.div
           variants={item}
           className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4"
         >
@@ -189,8 +189,8 @@ export default function Footer() {
           <p className="text-xs font-mono text-footertext/30">
             ┬⌐ {year} Prince Shrestha
           </p>
-        </motion.div>
+        </m.div>
       </div>
-    </motion.footer>
+    </m.footer>
   );
 }

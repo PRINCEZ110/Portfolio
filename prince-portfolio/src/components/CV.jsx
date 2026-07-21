@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 
 function BgCanvas() {
   const ref = useRef(null);
@@ -115,8 +115,8 @@ export default function CV() {
             { label: 'Experience', value: '3 Projects', sub: 'NagarSewa | TimeStar | SahakariNet' },
             { label: 'Seeking', value: 'Internship / Junior Dev', sub: 'Frontend | React.js | UI/UX' },
           ].map((item, i) => (
-            <motion.div
-              key={i}
+            <m.div
+              key={item.label}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -126,14 +126,14 @@ export default function CV() {
               <span className="font-mono text-[10px] text-steel tracking-widest uppercase">{item.label}</span>
               <p className="font-display font-semibold text-slate mt-2 text-base">{item.value}</p>
               <p className="font-body text-gray text-xs mt-1">{item.sub}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
         {/* Inline PDF viewer */}
         <AnimatePresence>
           {viewing && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
@@ -159,7 +159,7 @@ export default function CV() {
                   style={{ height: '80vh' }}
                 />
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
 

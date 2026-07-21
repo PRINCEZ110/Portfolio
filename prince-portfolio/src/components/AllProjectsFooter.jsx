@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 const socialLinks = [
@@ -39,7 +39,7 @@ export default function AllProjectsFooter() {
   }, []);
 
   return (
-    <motion.footer
+    <m.footer
       ref={ref}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -48,7 +48,7 @@ export default function AllProjectsFooter() {
       className="relative overflow-hidden bg-footer"
     >
       {/* Mouse-following glow */}
-      <motion.div
+      <m.div
         className="absolute pointer-events-none"
         style={{
           left: mousePos.x,
@@ -62,18 +62,18 @@ export default function AllProjectsFooter() {
       />
 
       {/* Scroll-driven glow */}
-      <motion.div
+      <m.div
         style={{ y: glowY }}
         className="absolute left-1/2 top-0 w-[500px] h-[500px] -translate-x-1/2 pointer-events-none"
       >
         <div className="w-full h-full bg-gold/5 blur-[150px] rounded-full" />
-      </motion.div>
+      </m.div>
 
       <div className="relative z-10 max-w-8xl mx-auto px-6 md:px-12 lg:px-20 py-20 md:py-28">
         {/* ─── TOP ROW ─── */}
         <div className="grid md:grid-cols-2 gap-12 md:gap-20 mb-16 md:mb-20">
           {/* LEFT */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -100,7 +100,7 @@ export default function AllProjectsFooter() {
               Available for full-stack roles, freelance projects, and collaborations.
               Reach out and let&apos;s make it happen.
             </p>
-            <motion.a
+            <m.a
               href="mailto:princezstha6110@gmail.com"
               whileHover={{ x: 4 }}
               transition={{ type: "spring", stiffness: 200, damping: 18 }}
@@ -111,11 +111,11 @@ export default function AllProjectsFooter() {
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M7 17l9.2-9.2M17 17V7H7" />
               </svg>
-            </motion.a>
-          </motion.div>
+            </m.a>
+          </m.div>
 
           {/* RIGHT */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -132,7 +132,7 @@ export default function AllProjectsFooter() {
               </span>
               <div className="flex gap-4">
                 {socialLinks.map((s) => (
-                  <motion.a
+                  <m.a
                     key={s.label}
                     href={s.href}
                     target="_blank"
@@ -149,15 +149,15 @@ export default function AllProjectsFooter() {
                     >
                       <path d={s.icon} />
                     </svg>
-                  </motion.a>
+                  </m.a>
                 ))}
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* ─── DIVIDER ─── */}
-        <motion.div
+        <m.div
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
@@ -166,7 +166,7 @@ export default function AllProjectsFooter() {
         />
 
         {/* ─── BOTTOM BAR ─── */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -199,8 +199,8 @@ export default function AllProjectsFooter() {
               <polyline points="5 12 12 5 19 12" />
             </svg>
           </button>
-        </motion.div>
+        </m.div>
       </div>
-    </motion.footer>
+    </m.footer>
   );
 }

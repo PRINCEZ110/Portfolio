@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { m, useScroll, useTransform, useSpring } from 'framer-motion';
 import { projects } from '../data/projects';
 import ProjectFooter from './ProjectFooter';
 import BrowserFrame from './BrowserFrame';
@@ -24,6 +24,11 @@ export default function ProjectDetail() {
   const ref = useRef(null);
   const [browserPref, setBrowserPref] = useState('mac');
 
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 60, damping: 25, mass: 0.5 });
+  const heroScale = useTransform(smoothProgress, [0, 0.3], [1, 0.95]);
+  const heroOpacity = useTransform(smoothProgress, [0, 0.3], [1, 0.6]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [projectId]);
@@ -39,11 +44,6 @@ export default function ProjectDetail() {
     );
   }
 
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 60, damping: 25, mass: 0.5 });
-  const heroScale = useTransform(smoothProgress, [0, 0.3], [1, 0.95]);
-  const heroOpacity = useTransform(smoothProgress, [0, 0.3], [1, 0.6]);
-
   const MockupComponent =
     project.id === 'nagarsewa' ? NagarSewaDetailMockup :
     project.id === 'timestar' ? TimeStarDetailMockup :
@@ -52,7 +52,7 @@ export default function ProjectDetail() {
   return (
     <div ref={ref} className="relative">
       {/* ─── HERO ─── */}
-      <motion.div
+      <m.div
         style={{ scale: heroScale, opacity: heroOpacity }}
         className="relative min-h-[60vh] md:min-h-[70vh] flex items-end px-6 md:px-12 lg:px-20 py-16 md:py-20 overflow-hidden bg-clay"
       >
@@ -64,14 +64,14 @@ export default function ProjectDetail() {
         }} />
 
         <div className="relative z-10 max-w-[1440px] w-full mx-auto">
-          <motion.div variants={stagger} initial="hidden" animate="visible">
-            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-4">
+          <m.div variants={stagger} initial="hidden" animate="visible">
+            <m.div variants={fadeUp} className="flex items-center gap-4 mb-4">
               <Link to="/#work" className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase hover:text-steel transition-colors">
                 ← Back to projects
               </Link>
-            </motion.div>
+            </m.div>
 
-            <motion.div variants={fadeUp} className="flex items-center gap-4 md:gap-6 mb-4">
+            <m.div variants={fadeUp} className="flex items-center gap-4 md:gap-6 mb-4">
               <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">{project.year}</span>
               {project.tags.map((tag) => (
                 <span key={tag} className="flex items-center gap-3">
@@ -79,30 +79,30 @@ export default function ProjectDetail() {
                   <span className="font-mono text-[10px] tracking-[0.15em] text-muted uppercase">{tag}</span>
                 </span>
               ))}
-            </motion.div>
+            </m.div>
 
-            <motion.h1
+            <m.h1
               variants={fadeUp}
                className="font-['Inter'] font-bold text-slate leading-[1.02] mb-4"
                style={{ fontSize: 'clamp(2.8rem, 8vw, 6rem)' }}
             >
               {project.title}
-            </motion.h1>
+            </m.h1>
 
-            <motion.p
+            <m.p
               variants={fadeUp}
                className="font-['Inter'] text-gray text-base md:text-lg max-w-xl leading-relaxed"
             >
               {project.subtitle}
-            </motion.p>
-          </motion.div>
+            </m.p>
+          </m.div>
         </div>
-      </motion.div>
+      </m.div>
 
       {/* ─── OVERVIEW ─── */}
       <div className="px-6 md:px-12 lg:px-20 py-16 md:py-20">
         <div className="max-w-8xl mx-auto">
-          <motion.div
+          <m.div
             variants={stagger}
             initial="hidden"
             whileInView="visible"
@@ -110,14 +110,14 @@ export default function ProjectDetail() {
             className="grid md:grid-cols-2 gap-16 md:gap-20 mb-20"
           >
             <div>
-              <motion.span variants={fadeUp} className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase block mb-4">
+              <m.span variants={fadeUp} className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase block mb-4">
                 About the Project
-              </motion.span>
-              <motion.p variants={fadeUp} className="font-['Inter'] text-gray text-sm md:text-base leading-[1.8] tracking-wide">
+              </m.span>
+              <m.p variants={fadeUp} className="font-['Inter'] text-gray text-sm md:text-base leading-[1.8] tracking-wide">
                 {project.description}
-              </motion.p>
+              </m.p>
             </div>
-            <motion.div variants={fadeUp}>
+            <m.div variants={fadeUp}>
               <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase block mb-4">
                 Project Details
               </span>
@@ -126,18 +126,18 @@ export default function ProjectDetail() {
                   { label: 'Role', value: project.role },
                   { label: 'Timeline', value: project.duration },
                   { label: 'Tech Stack', value: project.tech.join(', ') },
-                ].map((d, i) => (
-                  <div key={i} className="flex items-start gap-4 border-b border-border">
+                ].map((d) => (
+                  <div key={d.label} className="flex items-start gap-4 border-b border-border">
                     <span className="font-mono text-[10px] tracking-[0.1em] text-muted uppercase w-24 flex-shrink-0 py-3">{d.label}</span>
                     <span className="font-['Inter'] text-sm text-slate/70 py-3">{d.value}</span>
                   </div>
                 ))}
               </div>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
 
           {/* Browser toggle */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -165,20 +165,20 @@ export default function ProjectDetail() {
                 Windows
               </button>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* ─── LARGE MOCKUP ─── */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <MockupComponent variant={browserPref} />
-          </motion.div>
+          </m.div>
 
           {project.id === 'nagarsewa' && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -195,23 +195,23 @@ export default function ProjectDetail() {
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
                 Visit Live Site
               </a>
-            </motion.div>
+            </m.div>
           )}
 
           {/* ─── HIGHLIGHTS ─── */}
-          <motion.div
+          <m.div
             variants={stagger}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
           >
-            <motion.span variants={fadeUp} className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase block mb-6">
+            <m.span variants={fadeUp} className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase block mb-6">
               Key Features
-            </motion.span>
+            </m.span>
             <div className="grid md:grid-cols-2 gap-4">
-              {project.highlights.map((h, i) => (
-                <motion.div
-                  key={i}
+              {project.highlights.map((h) => (
+                <m.div
+                  key={h}
                   variants={fadeUp}
                   className="flex items-start gap-3 p-4 rounded-xl bg-white border border-border shadow-soft"
                 >
@@ -219,10 +219,10 @@ export default function ProjectDetail() {
                     <span className="text-[8px] text-steel">✓</span>
                   </span>
                   <span className="font-['Inter'] text-sm text-slate/70">{h}</span>
-                </motion.div>
+                </m.div>
               ))}
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
 
@@ -235,9 +235,12 @@ export default function ProjectDetail() {
 
 function NagarSewaDetailMockup({ variant = 'mac' }) {
   const iframeRef = useRef(null);
+  const [loaded, setLoaded] = useState(false);
+  const [key, setKey] = useState(0);
 
   const refresh = () => {
-    iframeRef.current.src = iframeRef.current.src;
+    setKey((k) => k + 1);
+    setLoaded(false);
   };
 
   return (
@@ -247,13 +250,23 @@ function NagarSewaDetailMockup({ variant = 'mac' }) {
       showNav
       onRefresh={refresh}
     >
-      <div className="relative w-full" style={{ height: '560px', overscrollBehavior: 'contain' }}>
+      <div className="relative w-full" style={{ height: 'clamp(280px, 50vw, 560px)', overscrollBehavior: 'contain' }}>
+        {!loaded && (
+          <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a] z-10">
+            <div className="text-center">
+              <div className="w-6 h-6 border-2 border-gold/30 border-t-gold rounded-full animate-spin mx-auto mb-2" />
+              <span className="text-[10px] font-mono text-white/30">Loading preview...</span>
+            </div>
+          </div>
+        )}
         <iframe
+          key={key}
           ref={iframeRef}
           src="https://nagar-sewa.netlify.app/#home"
           className="w-full h-full border-0"
           title="NagarSewa Live"
           loading="lazy"
+          onLoad={() => setLoaded(true)}
         />
       </div>
     </BrowserFrame>
@@ -263,9 +276,9 @@ function NagarSewaDetailMockup({ variant = 'mac' }) {
 function TimeStarDetailMockup({ variant = 'mac' }) {
   return (
     <BrowserFrame url="timestar.com/products/chronograph-edition-2100" variant={variant}>
-      <div className="flex" style={{ minHeight: '450px' }}>
-        <div className="w-1/2 flex flex-col items-center justify-center p-8 relative overflow-hidden" style={{ background: '#111' }}>
-          <motion.img
+      <div className="flex flex-col md:flex-row" style={{ minHeight: '450px' }}>
+        <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8 relative overflow-hidden" style={{ background: '#111' }}>
+          <m.img
             src="/watch.png"
             alt="Chronograph Edition 2100"
             className="w-40 h-40 md:w-48 md:h-48 object-contain drop-shadow-2xl"
@@ -288,7 +301,7 @@ function TimeStarDetailMockup({ variant = 'mac' }) {
             <span>5 Year Battery</span>
           </div>
         </div>
-        <div className="w-1/2 p-6 md:p-8 flex flex-col justify-center" style={{ background: '#0d0d0d' }}>
+        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center" style={{ background: '#0d0d0d' }}>
           <div className="text-[7px] font-mono text-white/20 uppercase tracking-[0.2em] mb-1">TimeStar Collection 2024</div>
           <div className="text-xl md:text-2xl font-semibold text-white/85 leading-tight mb-1">Chronograph Edition 2100</div>
           <div className="flex items-center gap-2 mb-3">
@@ -311,7 +324,7 @@ function TimeStarDetailMockup({ variant = 'mac' }) {
             ))}
           </div>
           <div className="flex gap-2">
-            <motion.div
+            <m.div
               className="flex-1 h-10 rounded-lg flex items-center justify-center text-[9px] font-mono font-medium tracking-wider cursor-pointer"
               style={{ background: 'rgba(111,142,153,0.08)', color: 'rgba(111,142,153,0.6)' }}
               whileHover={{ background: 'rgba(111,142,153,0.14)', scale: 1.015 }}
@@ -319,7 +332,7 @@ function TimeStarDetailMockup({ variant = 'mac' }) {
               transition={{ type: 'spring', stiffness: 200, damping: 25, mass: 0.5 }}
             >
               Add to Cart
-            </motion.div>
+            </m.div>
             <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.03)' }}>
               <svg className="w-4 h-4 text-white/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
@@ -343,7 +356,7 @@ function SahakariNetDetailMockup({ variant = 'mac' }) {
   return (
     <BrowserFrame url="sahakarinet.org/admin/dashboard" variant={variant}>
       <div className="flex" style={{ minHeight: '450px' }}>
-        <div className="w-14 md:w-16 py-5 flex flex-col items-center gap-2.5" style={{ background: '#121212', borderRight: '1px solid rgba(255,255,255,0.03)' }}>
+        <div className="hidden md:flex w-14 md:w-16 py-5 flex-col items-center gap-2.5" style={{ background: '#121212', borderRight: '1px solid rgba(255,255,255,0.03)' }}>
           {[
             <svg key="d" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>,
             <svg key="m" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
@@ -351,8 +364,8 @@ function SahakariNetDetailMockup({ variant = 'mac' }) {
             <svg key="doc" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>,
             <svg key="ch" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>,
             <svg key="st" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>,
-          ].map((icon, i) => (
-            <div key={i} className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ color: i === 1 ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.25)' }}>
+          ].map((icon, pos) => (
+            <div key={`sidebar-${pos}`} className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ color: pos === 1 ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.25)' }}>
               {icon}
             </div>
           ))}
@@ -374,14 +387,14 @@ function SahakariNetDetailMockup({ variant = 'mac' }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-3 mb-5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
             {[
               { label: 'Total Members', value: '248', sub: '+12 this month' },
               { label: 'Total Deposits', value: '$42,500', sub: 'Avg $171/member' },
               { label: 'Total Loans', value: '$17,500', sub: '12 active loans' },
               { label: 'Interest Earned', value: '$2,340', sub: 'This quarter' },
-            ].map((s, i) => (
-              <div key={i} className="p-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.015)' }}>
+            ].map((s) => (
+              <div key={s.label} className="p-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.015)' }}>
                 <div className="text-[7px] font-mono text-white/25 uppercase">{s.label}</div>
                 <div className="text-sm font-bold text-white/75 mt-0.5">{s.value}</div>
                 <div className="text-[6px] font-mono text-white/15 mt-0.5">{s.sub}</div>
@@ -390,7 +403,7 @@ function SahakariNetDetailMockup({ variant = 'mac' }) {
           </div>
 
           <div className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.03)' }}>
-            <div className="grid grid-cols-7 gap-1 px-4 py-3" style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+            <div className="hidden sm:grid grid-cols-7 gap-1 px-4 py-3" style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
               {['Name', 'ID', 'Deposit', 'Loan', 'Joined', 'Status', ''].map((h) => (
                 <div key={h} className="text-[7px] font-mono text-white/25 uppercase tracking-wider">{h}</div>
               ))}
@@ -402,7 +415,7 @@ function SahakariNetDetailMockup({ variant = 'mac' }) {
               ['Gita Rai', 'M-1027', '$6,800', '$2,500', 'Apr 2024', 'Active'],
               ['Krishna Thapa', 'M-1028', '$9,300', '$3,000', 'May 2024', 'Pending'],
             ].map((row, i) => (
-              <div key={i} className="grid grid-cols-7 gap-1 px-4 py-2.5" style={{ borderBottom: i < 4 ? '1px solid rgba(255,255,255,0.012)' : 'none' }}>
+              <div key={row[1]} className="grid grid-cols-2 sm:grid-cols-7 gap-1 px-4 py-2.5" style={{ borderBottom: i < 4 ? '1px solid rgba(255,255,255,0.012)' : 'none' }}>
                 <div className="text-[8px] font-mono text-white/55 truncate">{row[0]}</div>
                 <div className="text-[8px] font-mono text-white/25">{row[1]}</div>
                 <div className="text-[8px] font-mono text-white/45">{row[2]}</div>
@@ -427,8 +440,8 @@ function SahakariNetDetailMockup({ variant = 'mac' }) {
               <span style={{ color: 'rgba(179,156,79,0.4)' }}>● 12 new this month</span>
             </div>
             <div className="flex items-center gap-1">
-              {[1, 2, 3, '...', '8'].map((n, i) => (
-                <div key={i} className="w-7 h-7 rounded-md flex items-center justify-center text-[7px] font-mono" style={{
+              {[1, 2, 3, '...', '8'].map((n) => (
+                <div key={String(n)} className="w-7 h-7 rounded-md flex items-center justify-center text-[7px] font-mono" style={{
 background: n === 1 ? 'rgba(179,156,79,0.08)' : 'rgba(255,255,255,0.02)',
                     color: n === 1 ? 'rgba(179,156,79,0.5)' : 'rgba(255,255,255,0.25)',
                 }}>

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { scrollToSection } from '../utils/scrollToSection';
 
 const navLinks = [
@@ -32,7 +32,7 @@ export default function ProjectFooter({ projectTitle }) {
       <div className="max-w-8xl mx-auto px-6 md:px-12 lg:px-20 py-16 md:py-20">
 
         {/* CTA line */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -46,10 +46,10 @@ export default function ProjectFooter({ projectTitle }) {
             </button>
             .
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Nav links */}
-        <motion.nav
+        <m.nav
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -72,13 +72,13 @@ export default function ProjectFooter({ projectTitle }) {
           >
             ↑ Back to top
           </a>
-        </motion.nav>
+        </m.nav>
 
         {/* Divider */}
         <div className="h-px bg-gradient-to-r from-transparent via-white/5 to-transparent mb-6" />
 
         {/* Bottom bar */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -96,7 +96,7 @@ export default function ProjectFooter({ projectTitle }) {
           <span className="font-mono text-[9px] tracking-wider text-footertext/30">
             Crafted with precision
           </span>
-        </motion.div>
+        </m.div>
 
       </div>
     </footer>

@@ -232,7 +232,7 @@ export default function BrowserFrame({ children, url, variant = 'mac', showNav, 
         )}
 
         {/* Browser content */}
-        <div className="relative">
+        <div className="relative overflow-hidden">
           {children}
 
           {/* Screen reflection overlay */}

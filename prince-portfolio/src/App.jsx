@@ -1,4 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { LazyMotion, domAnimation } from 'framer-motion';
 import Navbar from './components/Navbar';
 import ProjectNavbar from './components/ProjectNavbar';
 import Hero from './components/Hero';
@@ -22,7 +23,7 @@ export default function App() {
   const isProjectPage = location.pathname.startsWith('/work/') || location.pathname === '/projects';
 
   return (
-    <>
+    <LazyMotion features={domAnimation}>
       {isProjectPage ? <ProjectNavbar /> : <Navbar />}
       <main>
         <Routes>
@@ -42,6 +43,6 @@ export default function App() {
         </Routes>
       </main>
       {!isProjectPage && <Footer />}
-    </>
+    </LazyMotion>
   );
 }

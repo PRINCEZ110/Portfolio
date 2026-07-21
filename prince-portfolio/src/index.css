@@ -45,3 +45,11 @@ body::before {
 .mockup-root * { font-family: 'Josefin Sans', sans-serif; }
 .mockup-root .lato { font-family: 'Lato', sans-serif; }
 
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+

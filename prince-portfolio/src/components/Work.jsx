@@ -257,7 +257,7 @@ function FeatureBlock({ project, index, browserPref }) {
         </motion.div>
 
         {/* Right: mockup */}
-        <Link to={`/work/${project.id}`} className="block w-full perspective-1000 group/card">
+        <Link to={`/work/${project.id}`} className="block w-full perspective-1000 group/card" style={{ minWidth: 0 }}>
           <motion.div
             style={{ scale: imgScale, y: imgY, rotateY: imgRotate }}
             className="w-full origin-center relative"
@@ -341,7 +341,7 @@ function SplitBlock({ project, index, browserPref }) {
     >
       <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
         {/* Left: mockup */}
-        <Link to={`/work/${project.id}`} className="block w-full perspective-1000 group/card">
+        <Link to={`/work/${project.id}`} className="block w-full perspective-1000 group/card" style={{ minWidth: 0 }}>
           <motion.div
             style={{ x: imgX, opacity: imgOpacity }}
             className="relative"
@@ -455,7 +455,7 @@ function SplitBlock({ project, index, browserPref }) {
 
 function NagarSewaMockup({ variant = 'mac' }) {
   const containerRef = useRef(null);
-  const [scale, setScale] = useState(1);
+  const [scale, setScale] = useState(0);
   const IFRAME_W = 1440;
   const IFRAME_H = 2800;
   const VISIBLE_H = 480;
@@ -463,60 +463,28 @@ function NagarSewaMockup({ variant = 'mac' }) {
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-    const update = () => setScale(el.offsetWidth / IFRAME_W);
+    const update = () => {
+      const w = el.offsetWidth;
+      setScale(w > 0 ? w / IFRAME_W : 0);
+    };
     update();
     const ro = new ResizeObserver(update);
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
 
-  const scrollY = -(IFRAME_H - VISIBLE_H / scale);
+  const visibleScale = scale || 0.001;
+  const scrollY = -(IFRAME_H - VISIBLE_H / visibleScale);
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95, y: 30 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      initial={{ opacity: 0, x: -30, rotateY: -4 }}
+      whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      className="relative perspective-1000"
+      transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ scale: 1.008 }}
+      className="origin-center cursor-pointer"
     >
-      {/* Animated glow behind the window */}
-      <motion.div
-        className="absolute -inset-8 rounded-3xl pointer-events-none"
-        animate={{
-          background: [
-            'radial-gradient(ellipse at 30% 40%, rgba(179,156,79,0.08), transparent 60%)',
-            'radial-gradient(ellipse at 70% 60%, rgba(179,156,79,0.08), transparent 60%)',
-            'radial-gradient(ellipse at 30% 40%, rgba(179,156,79,0.08), transparent 60%)',
-          ],
-        }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        style={{ filter: 'blur(30px)' }}
-      />
-
-      {/* Live indicator badge */}
-      <motion.div
-        className="absolute -top-2 -right-2 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full"
-        style={{ background: 'rgba(179,156,79,0.1)', backdropFilter: 'blur(8px)', border: '1px solid rgba(179,156,79,0.15)' }}
-        initial={{ opacity: 0, scale: 0 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: 0.8 }}
-      >
-        <motion.span
-          className="w-1.5 h-1.5 rounded-full"
-          style={{ background: '#C8FF00' }}
-          animate={{ opacity: [1, 0.3, 1], scale: [1, 0.8, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <span className="text-[7px] tracking-wider uppercase text-gold/70" style={{ fontFamily: "'Lato', sans-serif" }}>Live</span>
-      </motion.div>
-
-      <motion.div
-        whileHover={{ scale: 1.015, rotateY: 1.5, rotateX: -1.5 }}
-        transition={{ type: 'spring', stiffness: 120, damping: 30, mass: 0.8 }}
-        className="origin-center cursor-pointer"
-      >
         <BrowserFrame url="nagar-sewa.netlify.app" variant={variant}>
           <div
             ref={containerRef}
@@ -544,7 +512,6 @@ function NagarSewaMockup({ variant = 'mac' }) {
             </div>
           </div>
         </BrowserFrame>
-      </motion.div>
     </motion.div>
   );
 }
@@ -627,10 +594,10 @@ function TimeStarMockup({ variant = 'mac' }) {
 function SahakariNetMockup({ variant = 'mac' }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95, y: 30 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      initial={{ opacity: 0, x: -30, rotateY: -4 }}
+      whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ scale: 1.008 }}
       className="origin-center cursor-pointer"
     >

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 
 const interests = [
@@ -53,7 +53,7 @@ export default function Contact() {
     <section id="contact" className="px-6 md:px-12 lg:px-20 py-24 md:py-32 bg-[#F9F8F4]">
       <div className="max-w-8xl mx-auto">
         {/* Section label */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -62,11 +62,11 @@ export default function Contact() {
         >
           <span className="w-8 h-px bg-gold" />
           <span className="text-xs text-gold tracking-[0.15em] uppercase" style={{ fontFamily: "'Lato', sans-serif" }}>Contact</span>
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-2 gap-14 md:gap-20 items-start">
           {/* Left: heading + info */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -91,7 +91,7 @@ export default function Contact() {
                   <span className="font-mono text-[10px] text-muted tracking-[0.15em] uppercase block mb-0.5">Email</span>
                   <span className="font-body text-sm text-slate">princezstha6110@gmail.com</span>
                 </div>
-                <span className="text-gold opacity-0 group-hover:opacity-100 transition-opacity text-sm">→</span>
+                <span className="text-gold opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity text-sm">→</span>
               </a>
               <div className="flex items-center justify-between bg-white border border-[#E8E5D8] rounded-xl px-5 py-4">
                 <div>
@@ -115,24 +115,24 @@ export default function Contact() {
                   <a
                     key={item}
                     href={`mailto:princezstha6110@gmail.com?subject=${encodeURIComponent('RE: ' + item)}`}
-                    className="font-body text-xs text-slate/70 bg-white border border-[#E8E5D8] px-4 py-2 rounded-lg hover:border-gold/30 hover:text-gold transition-all duration-300 flex items-center gap-1.5 group"
+                    className="font-body text-xs text-slate/70 bg-white border border-[#E8E5D8] px-4 py-2 rounded-lg hover:border-gold/30 hover:text-gold active:border-gold/30 active:text-gold transition-all duration-300 flex items-center gap-1.5 group"
                   >
                     {item}
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px]">↗</span>
+                    <span className="opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity text-[10px]">↗</span>
                   </a>
                 ))}
               </div>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Right: form + socials */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           >
-            <motion.form
+            <m.form
               onSubmit={handleSubmit}
               {...fadeUp}
               className="bg-white border border-[#E8E5D8] rounded-xl p-6 md:p-8 space-y-5 mb-6"
@@ -187,10 +187,10 @@ export default function Contact() {
               {status === 'error' && (
                 <p className="font-body text-xs text-red-400 text-center">{errorMsg}</p>
               )}
-            </motion.form>
+            </m.form>
 
             {/* Socials */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -207,12 +207,12 @@ export default function Contact() {
                     className="flex items-center justify-between bg-white border border-[#E8E5D8] rounded-xl px-5 py-3.5 hover:border-gold/30 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 group"
                   >
                     <span className="font-body text-sm text-slate">{s.label}</span>
-                    <span className="text-muted group-hover:text-gold transition-colors text-sm">↗</span>
+                    <span className="text-muted group-hover:text-gold group-active:text-gold transition-colors text-sm">↗</span>
                   </a>
                 ))}
               </div>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         </div>
       </div>
     </section>

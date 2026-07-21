@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { m, useInView, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import {
   SiReact, SiJavascript, SiHtml5, SiCss, SiTailwindcss,
   SiOpenjdk, SiApache, SiMysql,
@@ -110,7 +110,7 @@ const logoVariant = {
 
 function SkillCard({ category, items }) {
   return (
-    <motion.div
+    <m.div
       variants={skillCardVariant}
       className="border-t border-black/10 pt-4 transition-all duration-400 group"
     >
@@ -122,7 +122,7 @@ function SkillCard({ category, items }) {
           const Icon = skillIcons[item];
           const color = skillColors[item];
           return (
-            <motion.div
+            <m.div
               key={item}
               variants={logoVariant}
               whileHover={{ y: -4, scale: 1.05 }}
@@ -133,7 +133,7 @@ function SkillCard({ category, items }) {
                   style={{ color }}
                   className="text-xl md:text-2xl transition-all duration-300"
                 />
-                <motion.span
+                <m.span
                   className="absolute -inset-2 rounded-full opacity-0 pointer-events-none"
                   style={{ background: `${color}15` }}
                   whileHover={{ opacity: 1, scale: 1.2 }}
@@ -143,34 +143,15 @@ function SkillCard({ category, items }) {
               <span className="text-[9px] text-black/60 font-lato tracking-tight whitespace-nowrap">
                 {item}
               </span>
-            </motion.div>
+            </m.div>
           );
         })}
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
 /* ─── Circular Badge ─── */
-function CircularBadge() {
-  return (
-    <motion.div
-      className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none"
-    >
-      <motion.div
-        className="w-28 h-28 md:w-32 md:h-32 rounded-full border-2 border-black flex items-center justify-center cursor-pointer pointer-events-auto"
-        style={{ background: 'rgba(15,76,255,0.15)' }}
-        whileHover={{ scale: 1.12, rotate: -5 }}
-        transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-      >
-        <span className="text-[10px] tracking-[0.25em] uppercase text-black font-anton leading-tight text-center">
-          ABOUT<br />ME
-        </span>
-      </motion.div>
-    </motion.div>
-  );
-}
-
 /* ─── Particle Canvas ─── */
 function ParticleBackground() {
   const canvasRef = useRef(null);
@@ -240,10 +221,14 @@ function ParticleBackground() {
   );
 }
 
+const developerChars = Array.from("Developer", (c, i) => ({ char: c, id: `dc-${i}` }));
+const fullstackChars = Array.from("Full-stack", (c, i) => ({ char: c, id: `fs-${i}` }));
+
 /* ─── Main ─── */
 export default function About() {
   const statsRef = useRef(null);
   const sectionRef = useRef(null);
+  const imageRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -253,6 +238,26 @@ export default function About() {
   const imageParallax = useTransform(scrollYProgress, [0, 1], [60, -60]);
   const bgParallax = useTransform(scrollYProgress, [0, 1], [0, -30]);
 
+  const mouseX = useMotionValue(0.5);
+  const mouseY = useMotionValue(0.5);
+
+  const rotateX = useSpring(useTransform(mouseY, [0, 1], [12, -12]), { stiffness: 200, damping: 30 });
+  const rotateY = useSpring(useTransform(mouseX, [0, 1], [-12, 12]), { stiffness: 200, damping: 30 });
+
+  function handleMouseMove(e) {
+    const rect = imageRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    mouseX.set(x);
+    mouseY.set(y);
+  }
+
+  function handleMouseLeave() {
+    mouseX.set(0.5);
+    mouseY.set(0.5);
+  }
+
   return (
     <section
       ref={sectionRef}
@@ -260,7 +265,7 @@ export default function About() {
       className="relative bg-[#0f4cff] min-h-screen overflow-hidden"
     >
       {/* Parallax halftone background */}
-      <motion.div
+      <m.div
         className="absolute inset-0 pointer-events-none"
         style={{ y: bgParallax }}
       >
@@ -272,14 +277,14 @@ export default function About() {
             backgroundSize: '12px 12px',
           }}
         />
-      </motion.div>
+      </m.div>
 
       {/* Floating particles */}
       <ParticleBackground />
 
       <div className="max-w-[1600px] mx-auto px-8 md:px-12 lg:px-16 relative z-10 py-16 md:py-0 min-h-screen flex flex-col justify-center">
         {/* Eyebrow label */}
-        <motion.span
+        <m.span
           initial={{ opacity: 0, y: -8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -287,51 +292,46 @@ export default function About() {
           className="text-[10px] tracking-[0.3em] uppercase text-black/50 font-lato block mb-10 md:mb-14"
         >
           About
-        </motion.span>
+        </m.span>
 
         <div className="grid md:grid-cols-[45%_55%] gap-12 md:gap-16 lg:gap-20 items-center">
-          {/* ═══ LEFT — Image ═══ */}
-          <motion.div
+          {/* ═══ LEFT — Image with 3D tilt ═══ */}
+          <m.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="relative min-h-[400px] md:min-h-[600px]"
+            className="relative min-h-[40vh] md:min-h-[600px]"
+            style={{ perspective: 1200 }}
           >
-            <motion.div
+            <m.div
+              ref={imageRef}
               className="relative overflow-hidden h-full"
-              style={{ y: imageParallax, borderRadius: '0', border: '4px solid #000' }}
+              style={{
+                y: imageParallax,
+                borderRadius: '0',
+                border: '4px solid #000',
+                rotateX,
+                rotateY,
+                transformStyle: 'preserve-3d',
+              }}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
-              {/* Manga screentone overlay */}
-              <div
-                className="absolute inset-0 z-[3] pointer-events-none"
-                style={{
-                  mixBlendMode: 'multiply',
-                  opacity: 0.3,
-                  backgroundImage: 'radial-gradient(circle, #000 40%, transparent 41%)',
-                  backgroundSize: '6px 6px',
-                  transform: 'rotate(35deg) scale(1.5)',
-                }}
-              />
-
-              <motion.img
-                src="./image2.jpeg"
+              <m.img
+                src="/AboutImage.jpg"
                 alt="Prince Shrestha"
                 className="w-full h-full object-cover"
-                style={{
-                  filter: 'grayscale(1) contrast(1.6) brightness(1.05)',
-                }}
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                style={{ filter: 'none' }}
               />
-            </motion.div>
+            </m.div>
 
-            {/* Circular badge */}
-            <CircularBadge />
-          </motion.div>
+          </m.div>
 
           {/* ═══ RIGHT — Content ═══ */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -339,18 +339,18 @@ export default function About() {
           >
             {/* "Developer" heading with letter stagger */}
             <div className="overflow-hidden">
-              <motion.h1
+              <m.h1
                 className="font-anton text-black leading-[0.85] tracking-tight"
                 style={{ fontSize: 'clamp(5rem, 12vw, 11rem)' }}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
               >
-                {"Developer".split('').map((char, i) => (
-                  <motion.span
-                    key={i}
+                {developerChars.map(({ char, id }, idx) => (
+                  <m.span
+                    key={id}
                     className="inline-block transition-colors duration-200 hover:text-[#0f4cff]"
-                    custom={i}
+                    custom={idx}
                     variants={{
                       hidden: { opacity: 0, y: 60, rotateX: -30 },
                       visible: (i) => ({
@@ -366,13 +366,13 @@ export default function About() {
                     }}
                   >
                     {char === ' ' ? '\u00A0' : char}
-                  </motion.span>
+                  </m.span>
                 ))}
-              </motion.h1>
+              </m.h1>
             </div>
 
             {/* Subtitle + badge */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -380,26 +380,26 @@ export default function About() {
               className="flex items-center gap-4 mt-4 mb-8"
             >
               <span className="text-sm md:text-base tracking-[0.2em] uppercase font-anton">
-                {"Full-stack".split('').map((char, i) => (
-                  <motion.span
-                    key={i}
+                {fullstackChars.map(({ char, id }, idx) => (
+                  <m.span
+                    key={id}
                     className="inline-block transition-colors duration-200 cursor-default hover:text-[#0f4cff] text-black/80"
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.3 + i * 0.03, duration: 0.3 }}
+                    transition={{ delay: 0.3 + idx * 0.03, duration: 0.3 }}
                   >
                     {char === ' ' ? '\u00A0' : char}
-                  </motion.span>
+                  </m.span>
                 ))}
               </span>
               <span className="text-[9px] tracking-[0.15em] uppercase text-black/50 font-anton border-2 border-black/30 px-3 py-1 rounded-full">
                 NEPAL
               </span>
-            </motion.div>
+            </m.div>
 
             {/* Bold subheading */}
-            <motion.p
+            <m.p
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -408,10 +408,10 @@ export default function About() {
               style={{ fontFamily: "'Josefin Sans', sans-serif" }}
             >
               Building premium digital experiences through thoughtful design, clean code, and meaningful interactions.
-            </motion.p>
+            </m.p>
 
             {/* Body paragraphs */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -424,10 +424,10 @@ export default function About() {
               <p className="text-sm md:text-[15px] text-black/60 font-lato leading-relaxed">
                 Every project combines clean architecture, accessibility, performance, and refined visual design to create seamless user experiences.
               </p>
-            </motion.div>
+            </m.div>
 
             {/* Link */}
-            <motion.a
+            <m.a
               href="#work"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -436,10 +436,10 @@ export default function About() {
               className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-black/70 font-anton border-b-2 border-black/20 pb-1 transition-all duration-300 hover:border-black hover:text-black"
             >
               View Work →
-            </motion.a>
+            </m.a>
 
             {/* ─── Statistics ─── */}
-            <motion.div
+            <m.div
               ref={statsRef}
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -455,10 +455,10 @@ export default function About() {
                   Curiosity
                 </span>
               </div>
-            </motion.div>
+            </m.div>
 
             {/* ─── Skills ─── */}
-            <motion.div
+            <m.div
               variants={staggerSkill}
               initial="hidden"
               whileInView="show"
@@ -468,8 +468,8 @@ export default function About() {
               {skillData.map((s) => (
                 <SkillCard key={s.category} {...s} />
               ))}
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         </div>
       </div>
     </section>
