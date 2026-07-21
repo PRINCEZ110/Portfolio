@@ -18,7 +18,7 @@ export default function Work() {
     <section id="work" className="relative px-6 md:px-12 lg:px-20 py-24 md:py-32 overflow-hidden bg-sand" ref={sectionRef}>
       {/* Scroll-driven background glow */}
       <motion.div
-        className="fixed top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{ opacity: bgOpacity, background: 'radial-gradient(circle, rgba(111,142,153,0.03), transparent 70%)' }}
       />
 
@@ -531,7 +531,7 @@ function TimeStarMockup({ variant = 'mac' }) {
         <div className="flex" style={{ minHeight: '320px' }}>
           <div className="w-1/2 flex flex-col items-center justify-center p-5 relative overflow-hidden" style={{ background: '#111' }}>
             <motion.img
-              src="/watch.png"
+              src="/watch.webp"
               alt="Chronograph Edition 2100"
               className="w-28 h-28 md:w-32 md:h-32 object-contain drop-shadow-2xl"
               whileHover={{ scale: 1.06, rotate: 2 }}

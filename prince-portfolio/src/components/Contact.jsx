@@ -146,7 +146,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   placeholder="Your name"
-                  className="w-full bg-[#F9F8F4] border border-[#E8E5D8] rounded-lg px-4 py-3 font-body text-sm text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border"
+                  className="w-full bg-[#F9F8F4] border border-[#E8E5D8] rounded-lg px-4 py-3 font-body text-base text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border"
                 />
               </div>
               <div>
@@ -157,7 +157,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   placeholder="your@email.com"
-                  className="w-full bg-[#F9F8F4] border border-[#E8E5D8] rounded-lg px-4 py-3 font-body text-sm text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border"
+                  className="w-full bg-[#F9F8F4] border border-[#E8E5D8] rounded-lg px-4 py-3 font-body text-base text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border"
                 />
               </div>
               <div>
@@ -168,7 +168,7 @@ export default function Contact() {
                   required
                   rows={5}
                   placeholder="Tell me about your project..."
-                  className="w-full bg-[#F9F8F4] border border-[#E8E5D8] rounded-lg px-4 py-3 font-body text-sm text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border resize-none"
+                  className="w-full bg-[#F9F8F4] border border-[#E8E5D8] rounded-lg px-4 py-3 font-body text-base text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border resize-none"
                 />
               </div>
 

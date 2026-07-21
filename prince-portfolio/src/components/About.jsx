@@ -321,10 +321,11 @@ export default function About() {
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
               <m.img
-                src="/AboutImage.jpg"
+                src="/AboutImage.webp"
                 alt="Prince Shrestha"
                 className="w-full h-full object-cover"
                 style={{ filter: 'none' }}
+                loading="lazy"
               />
             </m.div>
 

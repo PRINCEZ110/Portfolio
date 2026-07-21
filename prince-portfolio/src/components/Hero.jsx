@@ -122,7 +122,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="absolute z-40 flex items-center gap-4 bottom-[4rem] right-[2rem] md:bottom-[clamp(2rem,5vw,5rem)] md:right-[clamp(1rem,6vw,6rem)]"
+        className="absolute z-40 flex items-center gap-4 bottom-[2rem] right-[2rem] md:bottom-[clamp(2rem,5vw,5rem)] md:right-[clamp(1rem,6vw,6rem)]"
       >
         <a
           href="#work"
