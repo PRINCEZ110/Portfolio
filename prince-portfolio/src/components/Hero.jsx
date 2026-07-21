@@ -1,4 +1,4 @@
-import { m, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 
 const roles = ['Developer', 'Designer', 'Problem Solver'];
@@ -21,7 +21,7 @@ export default function Hero() {
   return (
     <section ref={sectionRef} className="min-h-screen flex flex-col justify-end px-6 md:px-12 lg:px-20 pb-16 pt-28 relative overflow-hidden bg-clay">
       {/* Profile image — scroll-revealed */}
-      <m.img
+      <motion.img
         src="./image.png"
         alt="Profile"
         className="absolute right-4 md:right-12 lg:right-20 z-30 pointer-events-none select-none"
@@ -59,7 +59,7 @@ export default function Hero() {
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-gold/10 to-transparent pointer-events-none" />
 
       {/* Status pill */}
-      <m.div
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
@@ -69,11 +69,11 @@ export default function Hero() {
         <span className="text-xs text-[#D4AF37] tracking-widest uppercase" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
           available for work 
         </span>
-      </m.div>
+      </motion.div>
 
       {/* Main headline */}
       <div className="relative z-10 max-w-8xl mx-auto w-full">
-        <m.h1
+        <motion.h1
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -81,58 +81,52 @@ export default function Hero() {
           style={{ fontSize: 'clamp(3.5rem, 9vw, 10rem)', fontFamily: "'Josefin Sans', sans-serif" }}
         >
           Web
-        </m.h1>
+        </motion.h1>
 
         <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-6">
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-display font-bold leading-[0.92] text-wine overflow-hidden"
             style={{ fontSize: 'clamp(3.5rem, 9vw, 10rem)', fontFamily: "'Josefin Sans', sans-serif" }}
           >
-            <AnimatePresence mode="wait">
-              <m.span
-                key={roleIdx}
-                initial={{ y: '100%' }}
-                animate={{ y: 0 }}
-                exit={{ y: '-100%' }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="block"
-              >
-                {roles[roleIdx]}
-              </m.span>
-            </AnimatePresence>
-          </m.div>
+            <motion.span
+              key={roleIdx}
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '-100%' }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="block"
+            >
+              {roles[roleIdx]}
+            </motion.span>
+          </motion.div>
         </div>
 
         {/* Bottom row */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
           className="mt-12 flex flex-col md:flex-row md:items-center md:justify-between gap-8"
         >
           <p className="font-body text-black max-w-md text-base leading-relaxed" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
-            I'm <span className="text-[#541E24]  font-medium">Prince</span>, a Full-stack developer building modern, responsive websites with clean, fast, user-focused design.
+            I'm <span className="text-[#541E24]  font-medium">Prince</span>, a Web designer & developer building modern, responsive websites with clean, fast, user-focused design.
             High-performance digital experiences for clients and businesses.</p>
-        </m.div>
+        </motion.div>
       </div>
 
       {/* Buttons floated over the photo */}
-      <m.div
+      <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="relative md:absolute z-40 flex items-center gap-4 mt-8 md:mt-0"
-        style={{
-          bottom: 'clamp(2rem, 5vw, 5rem)',
-          right: 'clamp(1rem, 6vw, 6rem)',
-        }}
+        className="absolute z-40 flex items-center gap-4 bottom-[4rem] right-[2rem] md:bottom-[clamp(2rem,5vw,5rem)] md:right-[clamp(1rem,6vw,6rem)]"
       >
         <a
           href="#work"
-          className="group font-display font-semibold text-slate bg-white/70 backdrop-blur-md border border-white/50 px-5 py-2.5 hover:bg-white hover:border-steel hover:text-steel active:bg-white active:border-steel active:text-steel transition-all duration-300 rounded-xl text-sm shadow-lg"
+          className="group font-display font-semibold text-slate bg-white/70 backdrop-blur-md border border-white/50 px-5 py-2.5 hover:bg-white hover:border-steel hover:text-steel transition-all duration-300 rounded-xl text-sm shadow-lg"
           style={{ fontFamily: "'Josefin Sans', sans-serif" }}
         >
           View Work
@@ -145,22 +139,22 @@ export default function Hero() {
         >
           Let's Talk
         </a>
-      </m.div>
+      </motion.div>
 
       {/* Scroll indicator */}
-      <m.div
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
         className="absolute bottom-8 right-12 hidden md:flex flex-col items-center gap-2"
       >
         <span className="font-mono text-[10px] text-muted tracking-widest uppercase rotate-90 origin-center translate-y-6">scroll</span>
-        <m.div
+        <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
           className="w-px h-12 bg-gradient-to-b from-steel/50 to-transparent"
         />
-      </m.div>
+      </motion.div>
     </section>
   );
 }
