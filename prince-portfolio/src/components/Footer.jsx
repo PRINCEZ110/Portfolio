@@ -91,8 +91,9 @@ export default function Footer() {
         <m.h2
           variants={item}
           className="font-display text-[clamp(3.5rem,9vw,8rem)] font-bold leading-none tracking-tight text-footertext text-center"
+          style={{ fontFamily: "'Josefin Sans', sans-serif" }}
         >
-          Simple <span className="text-[#541E24]">Modern</span> Reliable
+          Simple <span className="text-[#8B1A2B]">Modern</span> Reliable
         </m.h2>
 
         {/* divider */}
@@ -180,9 +181,9 @@ export default function Footer() {
         {/* BOTTOM */}
         <m.div
           variants={item}
-          className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4"
+          className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4" 
         >
-          <p className="text-xs font-mono text-footertext/50 max-w-xl">
+          <p className="text-xs font-mono text-footertext/50 max-w-xl" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
           lets build something great together. currently seeking full-stack Developer roles, jobs, and freelance projects. feel free to reach out for collaborations, coffee chats, or just to say hi! &#128075;
           </p>
 

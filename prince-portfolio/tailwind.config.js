@@ -23,7 +23,7 @@ export default {
         steel: '#6F8E99',
         orange: '#FF834F',
         cosmic: '#FF6B35',
-        wine: '#541E24',
+        wine: '#8B1A2B',
         brown: '#583328',
         dark: '#3A2417',
         lightgold: '#D4C8A0',

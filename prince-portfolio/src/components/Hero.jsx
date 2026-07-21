@@ -65,7 +65,7 @@ export default function Hero() {
         transition={{ delay: 0.2 }}
         className="flex items-center gap-2 mb-10"
       >
-        <span className="w-2 h-2 rounded-full bg-[#541E24] animate-pulse" />
+        <span className="w-2 h-2 rounded-full bg-[#8B1A2B] animate-pulse" />
         <span className="text-xs text-[#D4AF37] tracking-widest uppercase" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
           available for work 
         </span>
@@ -112,7 +112,7 @@ export default function Hero() {
           className="mt-12 flex flex-col md:flex-row md:items-center md:justify-between gap-8"
         >
           <p className="font-body text-black max-w-md text-base leading-relaxed" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
-            I'm <span className="text-[#541E24]  font-medium">Prince</span>, a Web designer & developer building modern, responsive websites with clean, fast, user-focused design.
+            I'm <span className="text-[#8B1A2B]  font-medium">Prince</span>, a Web designer & developer building modern, responsive websites with clean, fast, user-focused design.
             High-performance digital experiences for clients and businesses.</p>
         </motion.div>
       </div>

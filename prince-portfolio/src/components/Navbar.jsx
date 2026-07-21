@@ -50,7 +50,7 @@ export default function Navbar() {
         href="#"
         className="font-display font-semibold text-slate text-base tracking-tight"
       >
-        Prince<span className="text-wine [text-shadow:0_0_10px_rgba(84,30,36,0.3)]"> Shrestha</span>
+        Prince<span className="text-wine [text-shadow:0_0_8px_rgba(139,26,43,0.5),0_0_25px_rgba(139,26,43,0.25)]"> Shrestha</span>
       </a>
 
       {/* Desktop nav */}
@@ -61,8 +61,8 @@ export default function Navbar() {
             href={l.href}
             className={`font-body text-sm tracking-wide transition-all duration-300 ${
               active === l.label
-                ? 'text-wine [text-shadow:0_0_12px_rgba(84,30,36,0.4)]'
-                : 'text-wine hover:[text-shadow:0_0_12px_rgba(84,30,36,0.4)]'
+                ? 'text-wine [text-shadow:0_0_8px_rgba(139,26,43,0.7),0_0_30px_rgba(139,26,43,0.35),0_0_60px_rgba(139,26,43,0.15)]'
+                : 'text-wine hover:[text-shadow:0_0_6px_rgba(139,26,43,0.4),0_0_20px_rgba(139,26,43,0.15)]'
             }`}
           >
             {l.label}
@@ -112,8 +112,8 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className={`font-display text-xl transition-all ${
                     active === l.label
-                    ? 'text-wine [text-shadow:0_0_12px_rgba(84,30,36,0.4)]'
-                    : 'text-wine hover:[text-shadow:0_0_12px_rgba(84,30,36,0.4)]'
+                    ? 'text-wine [text-shadow:0_0_8px_rgba(139,26,43,0.7),0_0_30px_rgba(139,26,43,0.35),0_0_60px_rgba(139,26,43,0.15)]'
+                    : 'text-wine hover:[text-shadow:0_0_6px_rgba(139,26,43,0.4),0_0_20px_rgba(139,26,43,0.15)]'
                 }`}
               >
                 {l.label}

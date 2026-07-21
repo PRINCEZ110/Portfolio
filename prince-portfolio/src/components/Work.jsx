@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
 import { projects } from '../data/projects';
 import BrowserFrame from './BrowserFrame';
+import FloatTags from './FloatTags';
 
 export default function Work() {
   const sectionRef = useRef(null);
@@ -16,6 +17,9 @@ export default function Work() {
 
   return (
     <section id="work" className="relative px-6 md:px-12 lg:px-20 py-24 md:py-32 overflow-hidden bg-sand" ref={sectionRef}>
+      {/* FloatTags background */}
+      <FloatTags />
+
       {/* Scroll-driven background glow */}
       <motion.div
         className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"

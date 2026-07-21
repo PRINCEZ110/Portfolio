@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { m } from 'framer-motion';
 import { projectFolders } from '../data/windowsProjects';
+import FloatTags from './FloatTags';
 
 const categories = [
   { id: 'all', label: 'All', countKey: 'total' },
@@ -183,7 +184,8 @@ export default function AllProjects() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-sand">
+    <div className="min-h-screen bg-sand relative">
+      <FloatTags />
       <div className="max-w-8xl mx-auto px-6 md:px-12 lg:px-20 py-20 md:py-28">
         {/* Header */}
         <m.div

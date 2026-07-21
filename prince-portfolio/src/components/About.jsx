@@ -151,7 +151,6 @@ function SkillCard({ category, items }) {
   );
 }
 
-/* ─── Circular Badge ─── */
 /* ─── Particle Canvas ─── */
 function ParticleBackground() {
   const canvasRef = useRef(null);
@@ -262,7 +261,7 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative bg-[#0f4cff] min-h-screen overflow-hidden"
+      className="relative bg-[#0f4cff] overflow-hidden"
     >
       {/* Parallax halftone background */}
       <m.div
@@ -282,7 +281,7 @@ export default function About() {
       {/* Floating particles */}
       <ParticleBackground />
 
-      <div className="max-w-[1600px] mx-auto px-8 md:px-12 lg:px-16 relative z-10 py-16 md:py-0 min-h-screen flex flex-col justify-center">
+      <div className="max-w-[1600px] mx-auto px-8 md:px-12 lg:px-16 relative z-10 py-16 md:py-24 min-h-screen flex flex-col justify-center">
         {/* Eyebrow label */}
         <m.span
           initial={{ opacity: 0, y: -8 }}
@@ -405,8 +404,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="text-lg md:text-xl text-black/90 font-lato font-bold leading-relaxed mb-5 max-w-[600px]"
-              style={{ fontFamily: "'Josefin Sans', sans-serif" }}
+              className="text-lg md:text-xl text-black/90 font-josefin font-bold leading-relaxed mb-5 max-w-[600px]"
             >
               Building premium digital experiences through thoughtful design, clean code, and meaningful interactions.
             </m.p>
@@ -419,10 +417,10 @@ export default function About() {
               transition={{ duration: 0.4, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="space-y-3 mb-10 max-w-[600px]"
             >
-              <p className="text-sm md:text-[15px] text-black/60 font-lato leading-relaxed" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
+              <p className="text-sm md:text-[15px] text-black/60 font-josefin leading-relaxed">
                 Hi, I'm Prince. I'm a full-stack developer passionate about building elegant digital experiences using React, Tailwind CSS, JavaScript, and modern UI design.
               </p>
-              <p className="text-sm md:text-[15px] text-black/60 font-lato leading-relaxed">
+              <p className="text-sm md:text-[15px] text-black/60 font-josefin leading-relaxed">
                 Every project combines clean architecture, accessibility, performance, and refined visual design to create seamless user experiences.
               </p>
             </m.div>

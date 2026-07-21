@@ -4,6 +4,7 @@ import { m, useScroll, useTransform, useSpring } from 'framer-motion';
 import { projects } from '../data/projects';
 import ProjectFooter from './ProjectFooter';
 import BrowserFrame from './BrowserFrame';
+import FloatTags from './FloatTags';
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -51,6 +52,8 @@ export default function ProjectDetail() {
 
   return (
     <div ref={ref} className="relative">
+      <FloatTags />
+
       {/* ─── HERO ─── */}
       <m.div
         style={{ scale: heroScale, opacity: heroOpacity }}

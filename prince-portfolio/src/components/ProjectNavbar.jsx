@@ -49,14 +49,14 @@ export default function ProjectNavbar() {
       <div className="flex items-center gap-4">
         <button
           onClick={() => navigate('/')}
-          className="font-mono text-[11px] tracking-wider text-muted hover:text-wine hover:[text-shadow:0_0_12px_rgba(84,30,36,0.4)] transition-all flex items-center gap-1.5"
+          className="font-mono text-[11px] tracking-wider text-muted hover:text-wine hover:[text-shadow:0_0_6px_rgba(139,26,43,0.4),0_0_20px_rgba(139,26,43,0.15)] transition-all flex items-center gap-1.5"
         >
           <span className="text-sm">←</span>
           <span className="hidden sm:inline">Back</span>
         </button>
         <span className="w-px h-4 bg-border" />
         <a href="/" className="font-display font-semibold text-slate/80 text-sm tracking-tight">
-          Prince<span className="text-wine [text-shadow:0_0_10px_rgba(84,30,36,0.3)]"> Shrestha</span>
+          Prince<span className="text-wine [text-shadow:0_0_8px_rgba(139,26,43,0.5),0_0_25px_rgba(139,26,43,0.25)]"> Shrestha</span>
         </a>
       </div>
 
@@ -68,7 +68,7 @@ export default function ProjectNavbar() {
               <button
                 key={l.label}
                 onClick={() => handleNav(l.href)}
-                className="font-body text-sm tracking-wide text-wine hover:[text-shadow:0_0_12px_rgba(84,30,36,0.4)] transition-all duration-200"
+                className="font-body text-sm tracking-wide text-wine hover:[text-shadow:0_0_6px_rgba(139,26,43,0.4),0_0_20px_rgba(139,26,43,0.15)] transition-all duration-200"
               >
                 {l.label}
               </button>
@@ -105,7 +105,7 @@ export default function ProjectNavbar() {
                   <button
                     key={l.label}
                     onClick={() => handleNav(l.href)}
-                    className="font-display text-xl text-slate hover:text-wine hover:[text-shadow:0_0_12px_rgba(84,30,36,0.4)] transition-all"
+                    className="font-display text-xl text-slate hover:text-wine hover:[text-shadow:0_0_6px_rgba(139,26,43,0.4),0_0_20px_rgba(139,26,43,0.15)] transition-all"
                   >
                     {l.label}
                   </button>
