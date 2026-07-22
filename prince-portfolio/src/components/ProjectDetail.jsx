@@ -356,104 +356,40 @@ function TimeStarDetailMockup({ variant = 'mac' }) {
 }
 
 function SahakariNetDetailMockup({ variant = 'mac' }) {
+  const iframeRef = useRef(null);
+  const [loaded, setLoaded] = useState(false);
+  const [key, setKey] = useState(0);
+
+  const refresh = () => {
+    setKey((k) => k + 1);
+    setLoaded(false);
+  };
+
   return (
-    <BrowserFrame url="sahakari-net.onrender.com" variant={variant}>
-      <div className="flex" style={{ minHeight: '450px' }}>
-        <div className="hidden md:flex w-14 md:w-16 py-5 flex-col items-center gap-2.5" style={{ background: '#121212', borderRight: '1px solid rgba(255,255,255,0.03)' }}>
-          {[
-            <svg key="d" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>,
-            <svg key="m" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
-            <svg key="$" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><path d="M12 6v12" /><path d="M9 9h5a2 2 0 0 1 0 4H9" /><path d="M9 13h3a2 2 0 0 1 0 4H9" /></svg>,
-            <svg key="doc" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>,
-            <svg key="ch" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>,
-            <svg key="st" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>,
-          ].map((icon, pos) => (
-            <div key={`sidebar-${pos}`} className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ color: pos === 1 ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.25)' }}>
-              {icon}
-            </div>
-          ))}
-        </div>
-        <div className="flex-1 p-5 md:p-6">
-          <div className="flex items-center justify-between mb-5">
-            <div className="flex items-center gap-3">
-              <div className="text-[11px] font-mono text-white/70 font-semibold">Member Management</div>
-              <div className="text-[7px] font-mono text-white/20 bg-white/5 px-2 py-0.5 rounded-md">248 total</div>
-            </div>
-            <div className="flex gap-2">
-              <div className="px-3 h-8 rounded-lg flex items-center gap-1.5 text-[7px] font-mono" style={{ background: 'rgba(255,255,255,0.03)' }}>
-                <svg className="w-3 h-3 text-white/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
-                Export
-              </div>
-              <div className="px-3 h-8 rounded-lg flex items-center text-[7px] font-mono font-medium" style={{ background: 'rgba(179,156,79,0.08)', color: 'rgba(179,156,79,0.5)' }}>
-                + Add Member
-              </div>
+    <BrowserFrame
+      url="sahakari-net.onrender.com"
+      variant={variant}
+      showNav
+      onRefresh={refresh}
+    >
+      <div className="relative w-full" style={{ height: 'clamp(280px, 50vw, 560px)', overscrollBehavior: 'contain' }}>
+        {!loaded && (
+          <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a] z-10">
+            <div className="text-center">
+              <div className="w-6 h-6 border-2 border-gold/30 border-t-gold rounded-full animate-spin mx-auto mb-2" />
+              <span className="text-[10px] font-mono text-white/30">Loading preview...</span>
             </div>
           </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-            {[
-              { label: 'Total Members', value: '248', sub: '+12 this month' },
-              { label: 'Total Deposits', value: '$42,500', sub: 'Avg $171/member' },
-              { label: 'Total Loans', value: '$17,500', sub: '12 active loans' },
-              { label: 'Interest Earned', value: '$2,340', sub: 'This quarter' },
-            ].map((s) => (
-              <div key={s.label} className="p-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.015)' }}>
-                <div className="text-[7px] font-mono text-white/25 uppercase">{s.label}</div>
-                <div className="text-sm font-bold text-white/75 mt-0.5">{s.value}</div>
-                <div className="text-[6px] font-mono text-white/15 mt-0.5">{s.sub}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.03)' }}>
-            <div className="hidden sm:grid grid-cols-7 gap-1 px-4 py-3" style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-              {['Name', 'ID', 'Deposit', 'Loan', 'Joined', 'Status', ''].map((h) => (
-                <div key={h} className="text-[7px] font-mono text-white/25 uppercase tracking-wider">{h}</div>
-              ))}
-            </div>
-            {[
-              ['Ram Sharma', 'M-1024', '$12,500', '$0', 'Jan 2024', 'Active'],
-              ['Sita Poudel', 'M-1025', '$8,200', '$5,000', 'Mar 2024', 'Active'],
-              ['Hari Gurung', 'M-1026', '$15,000', '$10,000', 'Feb 2024', 'Pending'],
-              ['Gita Rai', 'M-1027', '$6,800', '$2,500', 'Apr 2024', 'Active'],
-              ['Krishna Thapa', 'M-1028', '$9,300', '$3,000', 'May 2024', 'Pending'],
-            ].map((row, i) => (
-              <div key={row[1]} className="grid grid-cols-2 sm:grid-cols-7 gap-1 px-4 py-2.5" style={{ borderBottom: i < 4 ? '1px solid rgba(255,255,255,0.012)' : 'none' }}>
-                <div className="text-[8px] font-mono text-white/55 truncate">{row[0]}</div>
-                <div className="text-[8px] font-mono text-white/25">{row[1]}</div>
-                <div className="text-[8px] font-mono text-white/45">{row[2]}</div>
-                <div className="text-[8px] font-mono text-white/45">{row[3]}</div>
-                <div className="text-[8px] font-mono text-white/20">{row[4]}</div>
-                <div>
-                  <span className="inline-block text-[6px] font-mono px-1.5 py-0.5 rounded" style={{
-                    background: row[5] === 'Active' ? 'rgba(179,156,79,0.08)' : 'rgba(255,255,255,0.03)',
-                    color: row[5] === 'Active' ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.3)',
-                  }}>
-                    {row[5]}
-                  </span>
-                </div>
-                <div className="text-[8px] text-white/15 text-right">⋮</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex items-center justify-between mt-4">
-            <div className="flex items-center gap-3 text-[7px] font-mono text-white/15">
-              <span>Showing 5 of 248</span>
-              <span style={{ color: 'rgba(179,156,79,0.4)' }}>● 12 new this month</span>
-            </div>
-            <div className="flex items-center gap-1">
-              {[1, 2, 3, '...', '8'].map((n) => (
-                <div key={String(n)} className="w-7 h-7 rounded-md flex items-center justify-center text-[7px] font-mono" style={{
-background: n === 1 ? 'rgba(179,156,79,0.08)' : 'rgba(255,255,255,0.02)',
-                    color: n === 1 ? 'rgba(179,156,79,0.5)' : 'rgba(255,255,255,0.25)',
-                }}>
-                  {n}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        )}
+        <iframe
+          key={key}
+          ref={iframeRef}
+          src="https://sahakari-net.onrender.com/index.jsp"
+          className="w-full h-full border-0"
+          title="SahakariNet Live"
+          loading="lazy"
+          onLoad={() => setLoaded(true)}
+        />
       </div>
     </BrowserFrame>
   );

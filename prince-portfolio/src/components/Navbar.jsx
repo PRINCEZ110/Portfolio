@@ -50,7 +50,7 @@ export default function Navbar() {
         href="#"
         className="font-display font-semibold text-slate text-base tracking-tight"
       >
-        Prince<span className="text-wine [text-shadow:0_0_8px_rgba(139,26,43,0.5),0_0_25px_rgba(139,26,43,0.25)]"> Shrestha</span>
+        Prince<span className="text-wine [text-shadow:0_0_8px_rgba(139,26,43,0.5),0_0_25px_rgba(139,26,43,0.25)]"> श्रेष्ठ</span>
       </a>
 
       {/* Desktop nav */}

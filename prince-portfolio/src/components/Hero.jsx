@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 const roles = ['Developer', 'Designer', 'Problem Solver'];
 
@@ -112,7 +113,7 @@ export default function Hero() {
           className="mt-12 flex flex-col md:flex-row md:items-center md:justify-between gap-8"
         >
           <p className="font-body text-black max-w-md text-base leading-relaxed" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
-            I'm <span className="text-[#8B1A2B]  font-medium">प्रिन्स</span>, a Web designer & developer building modern, responsive websites with clean, fast, user-focused design.
+            I'm <span className="text-[#8B1A2B]  font-medium">प्रिन्स</span>, a Full-Stack developer building modern, responsive websites with clean, fast, user-focused design.
             High-performance digital experiences for clients and businesses.</p>
         </motion.div>
       </div>
@@ -124,14 +125,14 @@ export default function Hero() {
         transition={{ delay: 0.8 }}
         className="absolute z-40 flex items-center gap-4 bottom-[2rem] right-[2rem] md:bottom-[clamp(2rem,5vw,5rem)] md:right-[clamp(1rem,6vw,6rem)]"
       >
-        <a
-          href="#work"
+        <Link
+          to="/projects"
           className="group font-display font-semibold text-slate bg-white/70 backdrop-blur-md border border-white/50 px-5 py-2.5 hover:bg-white hover:border-steel hover:text-steel transition-all duration-300 rounded-xl text-sm shadow-lg"
           style={{ fontFamily: "'Josefin Sans', sans-serif" }}
         >
           View Work
           <span className="group-hover:translate-x-1 transition-transform">→</span>
-        </a>
+        </Link>
         <a
           href="#contact"
           className="group font-display font-semibold text-white bg-slate/90 backdrop-blur-md px-5 py-2.5 hover:bg-gold transition-all duration-300 rounded-xl text-sm shadow-lg"
