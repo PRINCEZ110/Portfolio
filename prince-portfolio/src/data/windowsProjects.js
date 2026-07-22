@@ -60,6 +60,36 @@ FEATURES
 [x] Secure payments`,
   },
   {
+    id: 'sahakarinet',
+    name: 'SahakariNet',
+    description: 'Cooperative management system for digital financial operations',
+    modified: '2026-07-22',
+    size: '5.2 MB',
+    status: 'Completed',
+    tech: ['Java', 'JSP', 'Servlets', 'JDBC', 'MySQL', 'BCrypt', 'MVC'],
+    role: 'Full-Stack Developer',
+    duration: '5 months',
+    live: 'https://sahakari-net.onrender.com',
+    github: 'https://github.com/prince/sahakarinet',
+    category: 'Featured Projects',
+    readme: `SAHAKARINET
+===========
+A full-stack cooperative management system for Nepal's cooperatives.
+
+FEATURES
+- Member registration and management
+- Deposit and withdrawal tracking
+- Loan application and disbursement
+- Role-based access control
+- Automated interest calculation`,
+    features: `[x] Member management with approval workflow
+[x] Deposit and withdrawal tracking
+[x] Loan lifecycle management
+[x] Role-based access (Admin, Staff, Member)
+[x] Secure authentication with BCrypt
+[x] Real-time financial reporting`,
+  },
+  {
     id: 'nagarsewa',
     name: 'Nagar Sewa',
     description: 'E-Governance for citizen-government communication',

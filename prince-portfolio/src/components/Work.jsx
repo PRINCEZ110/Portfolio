@@ -596,6 +596,28 @@ function TimeStarMockup({ variant = 'mac' }) {
 }
 
 function SahakariNetMockup({ variant = 'mac' }) {
+  const containerRef = useRef(null);
+  const [scale, setScale] = useState(0);
+  const IFRAME_W = 1440;
+  const IFRAME_H = 2800;
+  const VISIBLE_H = 480;
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const update = () => {
+      const w = el.offsetWidth;
+      setScale(w > 0 ? w / IFRAME_W : 0);
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const visibleScale = scale || 0.001;
+  const scrollY = -(IFRAME_H - VISIBLE_H / visibleScale);
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -30, rotateY: -4 }}
@@ -605,138 +627,31 @@ function SahakariNetMockup({ variant = 'mac' }) {
       whileHover={{ scale: 1.008 }}
       className="origin-center cursor-pointer"
     >
-      <BrowserFrame url="sahakarinet.org/admin/members" variant={variant}>
-        <div className="mockup-root">
-        <div className="flex" style={{ minHeight: '320px' }}>
-          <motion.div
-            className="w-14 md:w-16 py-4 flex flex-col items-center gap-2.5"
-            style={{ background: '#121212', borderRight: '1px solid rgba(255,255,255,0.03)' }}
-          >
-            {[
-              <svg key="ov" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>,
-              <svg key="mb" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
-              <svg key="fn" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>,
-              <svg key="doc" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>,
-              <svg key="st" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>,
-            ].map((icon, i) => (
-              <motion.div
-                key={i}
-                className="w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer"
-                style={{ color: i === 1 ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.25)' }}
-                whileHover={{ color: 'rgba(179,156,79,0.8)', background: 'rgba(179,156,79,0.08)' }}
-                whileTap={{ scale: 0.9 }}
-              >
-                {icon}
-              </motion.div>
-            ))}
-          </motion.div>
-          <div className="flex-1 p-4 md:p-5">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="text-[10px] font-mono text-white/70 font-semibold">Members</div>
-                <div className="text-[7px] font-mono text-white/20 bg-white/5 px-2 py-0.5 rounded-md">248 total</div>
-                <div className="text-[7px] font-mono text-white/30">12 new this month</div>
-              </div>
-              <motion.div
-                className="px-3 h-7 rounded-lg flex items-center justify-center text-[7px] font-mono font-medium cursor-pointer"
-                style={{ background: 'rgba(179,156,79,0.08)', color: 'rgba(179,156,79,0.5)' }}
-                whileHover={{ background: 'rgba(179,156,79,0.14)', scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                + Add Member
-              </motion.div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2.5 mb-4">
-              {[
-                { label: 'Total Deposits', value: '$42,500' },
-                { label: 'Total Loans', value: '$17,500' },
-                { label: 'Active Accounts', value: '236' },
-              ].map((s, i) => (
-                <motion.div
-                  key={i}
-                  className="p-2.5 rounded-xl cursor-default"
-                  style={{ background: 'rgba(255,255,255,0.015)' }}
-                  whileHover={{ background: 'rgba(255,255,255,0.03)', y: -1.5 }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 25, mass: 0.5 }}
-                >
-                  <div className="text-[6px] font-mono text-white/25 uppercase">{s.label}</div>
-                  <div className="text-xs font-semibold text-white/70 mt-0.5">{s.value}</div>
-                </motion.div>
-              ))}
-            </div>
-
+      <BrowserFrame url="sahakari-net.onrender.com" variant={variant}>
+        <div
+          ref={containerRef}
+          className="overflow-hidden relative w-full"
+          style={{ height: `${VISIBLE_H}px` }}
+        >
+          <div style={{ transformOrigin: 'top left', transform: `scale(${scale})`, width: IFRAME_W }}>
             <motion.div
-              className="rounded-xl overflow-hidden"
-              style={{ border: '1px solid rgba(255,255,255,0.03)' }}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.6 }}
+              animate={{ y: [0, scrollY, 0] }}
+              transition={{
+                duration: 16,
+                ease: 'linear',
+                repeat: Infinity,
+              }}
             >
-              <div className="grid grid-cols-6 gap-1 px-3 py-2.5" style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                {['Name', 'ID', 'Deposit', 'Loan', 'Status', ''].map((h) => (
-                  <div key={h} className="text-[7px] font-mono text-white/25 uppercase tracking-wider">{h}</div>
-                ))}
-              </div>
-              {[
-                ['Ram Sharma', 'M-1024', '$12,500', '$0', 'Active'],
-                ['Sita Poudel', 'M-1025', '$8,200', '$5,000', 'Active'],
-                ['Hari Gurung', 'M-1026', '$15,000', '$10,000', 'Pending'],
-                ['Gita Rai', 'M-1027', '$6,800', '$2,500', 'Active'],
-                ['Krishna Thapa', 'M-1028', '$9,300', '$3,000', 'Pending'],
-              ].map((row, i) => (
-                <motion.div
-                  key={i}
-                  className="grid grid-cols-6 gap-1 px-3 py-2 cursor-pointer"
-                  style={{ borderBottom: '1px solid rgba(255,255,255,0.015)' }}
-                  whileHover={{ background: 'rgba(255,255,255,0.03)', x: 3 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <div className="text-[8px] font-mono text-white/55 truncate">{row[0]}</div>
-                  <div className="text-[8px] font-mono text-white/25">{row[1]}</div>
-                  <div className="text-[8px] font-mono text-white/45">{row[2]}</div>
-                  <div className="text-[8px] font-mono text-white/45">{row[3]}</div>
-                  <div>
-                    <span className="inline-block text-[6px] font-mono px-1.5 py-0.5 rounded" style={{
-                      background: row[4] === 'Active' ? 'rgba(179,156,79,0.08)' : 'rgba(255,255,255,0.03)',
-                      color: row[4] === 'Active' ? 'rgba(179,156,79,0.6)' : 'rgba(255,255,255,0.3)',
-                    }}>
-                      {row[4]}
-                    </span>
-                  </div>
-                  <div className="text-[8px] text-white/15 text-right">...</div>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            <motion.div
-              className="flex items-center justify-between mt-3"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: 0.8 }}
-            >
-              <div className="text-[7px] font-mono text-white/15">Showing 5 of 248 members</div>
-              <div className="flex items-center gap-1">
-                {[1, 2, 3, '...', 7].map((n, i) => (
-                  <motion.div
-                    key={i}
-                    className="w-6 h-6 rounded-md flex items-center justify-center text-[7px] font-mono cursor-pointer"
-                    style={{
-                      background: n === 1 ? 'rgba(179,156,79,0.08)' : 'rgba(255,255,255,0.02)',
-                      color: n === 1 ? 'rgba(179,156,79,0.5)' : 'rgba(255,255,255,0.25)',
-                    }}
-                    whileHover={{ background: 'rgba(179,156,79,0.12)', scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {n}
-                  </motion.div>
-                ))}
-              </div>
+              <iframe
+                src="https://sahakari-net.onrender.com/index.jsp"
+                width={IFRAME_W}
+                height={IFRAME_H}
+                className="border-0"
+                title="SahakariNet Live"
+                loading="lazy"
+              />
             </motion.div>
           </div>
-        </div>
         </div>
       </BrowserFrame>
     </motion.div>

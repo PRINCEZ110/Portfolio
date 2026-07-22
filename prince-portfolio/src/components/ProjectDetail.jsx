@@ -180,7 +180,7 @@ export default function ProjectDetail() {
             <MockupComponent variant={browserPref} />
           </m.div>
 
-          {project.id === 'nagarsewa' && (
+          {(project.id === 'nagarsewa' || project.id === 'sahakarinet') && (
             <m.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -189,7 +189,7 @@ export default function ProjectDetail() {
               className="flex justify-center mt-6 mb-20"
             >
               <a
-                href="https://nagar-sewa.netlify.app/#home"
+                href={project.id === 'sahakarinet' ? 'https://sahakari-net.onrender.com' : 'https://nagar-sewa.netlify.app/#home'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase px-6 py-3 rounded-xl border border-gold/30 text-gold hover:bg-gold/10 transition-all duration-300"
@@ -357,7 +357,7 @@ function TimeStarDetailMockup({ variant = 'mac' }) {
 
 function SahakariNetDetailMockup({ variant = 'mac' }) {
   return (
-    <BrowserFrame url="sahakarinet.org/admin/dashboard" variant={variant}>
+    <BrowserFrame url="sahakari-net.onrender.com" variant={variant}>
       <div className="flex" style={{ minHeight: '450px' }}>
         <div className="hidden md:flex w-14 md:w-16 py-5 flex-col items-center gap-2.5" style={{ background: '#121212', borderRight: '1px solid rgba(255,255,255,0.03)' }}>
           {[

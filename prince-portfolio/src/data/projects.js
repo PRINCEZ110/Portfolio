@@ -53,5 +53,6 @@ export const projects = [
     tech: ['Java', 'JSP', 'Servlets', 'JDBC', 'MySQL', 'BCrypt', 'MVC'],
     role: 'Full-Stack Developer',
     duration: '5 months',
+    live: 'https://sahakari-net.onrender.com',
   },
 ];
