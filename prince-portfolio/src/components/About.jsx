@@ -281,31 +281,31 @@ export default function About() {
       {/* Floating particles */}
       <ParticleBackground />
 
-      <div className="max-w-[1600px] mx-auto px-8 md:px-12 lg:px-16 relative z-10 py-16 md:py-24 min-h-screen flex flex-col justify-center">
+      <div className="max-w-[1600px] mx-auto px-8 md:px-12 lg:px-16 relative z-10 py-20 md:py-28">
         {/* Eyebrow label */}
         <m.span
           initial={{ opacity: 0, y: -8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="text-[10px] tracking-[0.3em] uppercase text-black/50 font-lato block mb-10 md:mb-14"
+          className="text-[10px] tracking-[0.3em] uppercase text-black/40 font-lato block mb-10 md:mb-14"
         >
           About
         </m.span>
 
-        <div className="grid md:grid-cols-[45%_55%] gap-12 md:gap-16 lg:gap-20 items-center">
+        <div className="grid md:grid-cols-[45%_55%] gap-12 md:gap-16 lg:gap-20 items-start">
           {/* ═══ LEFT — Image with 3D tilt ═══ */}
           <m.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="relative min-h-[40vh] md:min-h-[600px]"
+            className="relative md:sticky md:top-24"
             style={{ perspective: 1200 }}
           >
             <m.div
               ref={imageRef}
-              className="relative overflow-hidden h-full"
+              className="relative overflow-hidden"
               style={{
                 y: imageParallax,
                 borderRadius: '0',
@@ -322,12 +322,11 @@ export default function About() {
               <m.img
                 src="/AboutImage.webp"
                 alt="Prince Shrestha"
-                className="w-full h-full object-cover"
+                className="w-full h-auto object-cover"
                 style={{ filter: 'none' }}
                 loading="lazy"
               />
             </m.div>
-
           </m.div>
 
           {/* ═══ RIGHT — Content ═══ */}
@@ -341,7 +340,7 @@ export default function About() {
             <div className="overflow-hidden">
               <m.h1
                 className="font-anton text-black leading-[0.85] tracking-tight"
-                style={{ fontSize: 'clamp(5rem, 12vw, 11rem)' }}
+                style={{ fontSize: 'clamp(4rem, 10vw, 9rem)' }}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
@@ -377,13 +376,13 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-4 mt-4 mb-8"
+              className="flex items-center gap-4 mt-4 mb-6"
             >
-              <span className="text-sm md:text-base tracking-[0.2em] uppercase font-anton">
+              <span className="text-sm md:text-base tracking-[0.2em] uppercase font-josefin font-semibold text-black/70">
                 {fullstackChars.map(({ char, id }, idx) => (
                   <m.span
                     key={id}
-                    className="inline-block transition-colors duration-200 cursor-default hover:text-[#0f4cff] text-black/80"
+                    className="inline-block transition-colors duration-200 cursor-default hover:text-[#0f4cff]"
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -393,7 +392,7 @@ export default function About() {
                   </m.span>
                 ))}
               </span>
-              <span className="text-[9px] tracking-[0.15em] uppercase text-black/50 font-anton border-2 border-black/30 px-3 py-1 rounded-full">
+              <span className="text-[9px] tracking-[0.15em] uppercase text-black/40 font-josefin font-semibold border border-black/20 px-3 py-1 rounded-full">
                 NEPAL
               </span>
             </m.div>
@@ -404,7 +403,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="text-lg md:text-xl text-black/90 font-josefin font-bold leading-relaxed mb-5 max-w-[600px]"
+              className="text-base md:text-lg text-black/80 font-josefin font-bold leading-relaxed mb-5"
             >
               Building premium digital experiences through thoughtful design, clean code, and meaningful interactions.
             </m.p>
@@ -415,7 +414,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-3 mb-10 max-w-[600px]"
+              className="space-y-3 mb-8"
             >
               <p className="text-sm md:text-[15px] text-black/60 font-josefin leading-relaxed">
                 Hi, I'm Prince. I'm a full-stack developer passionate about building elegant digital experiences using React, Tailwind CSS, JavaScript, and modern UI design.
@@ -432,7 +431,7 @@ export default function About() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-black/70 font-anton border-b-2 border-black/20 pb-1 transition-all duration-300 hover:border-black hover:text-black"
+              className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-black/60 font-josefin font-semibold border-b border-black/20 pb-1 transition-all duration-300 hover:border-black hover:text-black"
             >
               View Work →
             </m.a>
@@ -444,15 +443,13 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="flex gap-10 md:gap-16 mt-12 pt-10 border-t-2 border-black/10"
+              className="flex gap-10 md:gap-16 mt-10 pt-8 border-t border-black/10"
             >
               <AnimatedCounter value={3} suffix="+" label="Projects" />
               <AnimatedCounter value={3} suffix="+" label="Years Learning" />
               <div className="group">
                 <span className="block text-4xl md:text-5xl font-anton text-black leading-none tracking-tight transition-transform duration-300 group-hover:scale-105">∞</span>
-                <span className="block text-[10px] tracking-[0.2em] uppercase text-black/50 font-lato mt-1 relative after:block after:h-[2px] after:bg-black after:scale-x-0 after:origin-left after:transition-transform after:duration-300 group-hover:after:scale-x-100">
-                  Curiosity
-                </span>
+                <span className="block text-[10px] tracking-[0.2em] uppercase text-black/40 font-lato mt-1">Curiosity</span>
               </div>
             </m.div>
 
@@ -462,7 +459,7 @@ export default function About() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: '-30px' }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-8 mt-10"
+              className="grid grid-cols-2 gap-x-6 gap-y-6 mt-10"
             >
               {skillData.map((s) => (
                 <SkillCard key={s.category} {...s} />
