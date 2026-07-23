@@ -299,7 +299,7 @@ function FeatureBlock({ project, index, browserPref }) {
         viewport={{ once: true }}
         transition={{ duration: 0.4, delay: 0.5 }}
       >
-          <span className="text-[10px] tracking-[0.2em] text-muted uppercase block mb-4" style={{ fontFamily: "'Lato', sans-serif" }}>
+          <span className="text-[10px] tracking-[0.2em] text-muted uppercase block mb-4 " style={{ fontFamily: "'Lato', sans-serif" }}>
             Key Highlights
         </span>
         <div className="flex flex-wrap gap-x-10 gap-y-2">
@@ -363,7 +363,7 @@ function SplitBlock({ project, index, browserPref }) {
             <motion.div
               className="absolute bottom-4 right-4 opacity-0 group-hover/card:opacity-100 transition-all duration-400 translate-y-2 group-hover/card:translate-y-0"
             >
-              <span className="text-[9px] tracking-wider text-gold bg-white/90 px-3 py-1.5 rounded-lg backdrop-blur-md border border-border shadow-soft" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
+              <span className="text-[9px] tracking-wider text-wine bg-white/90 px-3 py-1.5 rounded-lg backdrop-blur-md border border-border shadow-soft" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
                 Click to explore →
               </span>
             </motion.div>
@@ -435,7 +435,7 @@ function SplitBlock({ project, index, browserPref }) {
           >
             <Link
               to={`/work/${project.id}`}
-              className="relative inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-xl overflow-hidden group/btn transition-all duration-300 border border-gold/30 text-gold hover:bg-gold/10"
+              className="relative inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-xl overflow-hidden group/btn transition-all duration-300 border border-wine/30 text-wine hover:bg-wine/10"
             >
               <span className="relative z-10">View Project</span>
               <motion.span

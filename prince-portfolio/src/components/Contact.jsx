@@ -61,8 +61,8 @@ export default function Contact() {
           transition={{ duration: 0.5 }}
           className="flex items-center gap-3 mb-14"
         >
-          <span className="w-8 h-px bg-gold" />
-          <span className="text-xs text-gold tracking-[0.15em] uppercase" style={{ fontFamily: "'Lato', sans-serif" }}>Contact</span>
+          <span className="w-8 h-px bg-wine" />
+          <span className="text-xs text-wine tracking-[0.15em] uppercase" style={{ fontFamily: "'Lato', sans-serif" }}>Contact</span>
         </m.div>
 
         <div className="grid md:grid-cols-2 gap-14 md:gap-20 items-start">
@@ -86,21 +86,21 @@ export default function Contact() {
             <div className="space-y-3">
               <a
                 href="mailto:princezstha6110@gmail.com"
-                className="flex items-center justify-between bg-white border border-[#E8E5D8] rounded-xl px-5 py-4 hover:border-gold/30 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 group"
+                className="flex items-center justify-between bg-white border border-black rounded-xl px-5 py-4 hover:border-wine hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 group"
               >
                 <div>
                   <span className="font-mono text-[10px] text-muted tracking-[0.15em] uppercase block mb-0.5">Email</span>
                   <span className="font-body text-sm text-slate">princezstha6110@gmail.com</span>
                 </div>
-                <span className="text-gold opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity text-sm">→</span>
+                <span className="text-wine opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity text-sm">→</span>
               </a>
-              <div className="flex items-center justify-between bg-white border border-[#E8E5D8] rounded-xl px-5 py-4">
+              <div className="flex items-center justify-between bg-white border border-black rounded-xl px-5 py-4">
                 <div>
                   <span className="font-mono text-[10px] text-muted tracking-[0.15em] uppercase block mb-0.5">Phone</span>
                   <span className="font-body text-sm text-slate">+977-9825046110</span>
                 </div>
               </div>
-              <div className="flex items-center justify-between bg-white border border-[#E8E5D8] rounded-xl px-5 py-4">
+              <div className="flex items-center justify-between bg-white border border-black rounded-xl px-5 py-4">
                 <div>
                   <span className="font-mono text-[10px] text-muted tracking-[0.15em] uppercase block mb-0.5">Location</span>
                   <span className="font-body text-sm text-slate">Nepal, Itahari</span>
@@ -116,7 +116,7 @@ export default function Contact() {
                   <a
                     key={item}
                     href={`mailto:princezstha6110@gmail.com?subject=${encodeURIComponent('RE: ' + item)}`}
-                    className="font-body text-xs text-slate/70 bg-white border border-[#E8E5D8] px-4 py-2 rounded-lg hover:border-gold/30 hover:text-gold active:border-gold/30 active:text-gold transition-all duration-300 flex items-center gap-1.5 group"
+                    className="font-body text-xs text-slate/70 bg-white border border-black px-4 py-2 rounded-lg hover:border-wine hover:text-wine active:border-wine active:text-wine transition-all duration-300 flex items-center gap-1.5 group"
                   >
                     {item}
                     <span className="opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity text-[10px]">↗</span>
@@ -136,9 +136,9 @@ export default function Contact() {
             <m.form
               onSubmit={handleSubmit}
               {...fadeUp}
-              className="bg-white border border-[#E8E5D8] rounded-xl p-6 md:p-8 space-y-5 mb-6"
+              className="bg-white border border-black rounded-xl p-6 md:p-8 space-y-5 mb-6"
             >
-              <span className="font-mono text-[10px] text-gold tracking-[0.15em] uppercase block">Send a message</span>
+              <span className="font-mono text-[10px] text-black tracking-[0.15em] uppercase block">Send a message</span>
 
               <div>
                 <input
@@ -147,7 +147,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   placeholder="Your name"
-                  className="w-full bg-[#F9F8F4] border border-[#E8E5D8] rounded-lg px-4 py-3 font-body text-base text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border"
+                  className="w-full bg-[#F9F8F4] border border-black rounded-lg px-4 py-3 font-body text-base text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border"
                 />
               </div>
               <div>
@@ -158,7 +158,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   placeholder="your@email.com"
-                  className="w-full bg-[#F9F8F4] border border-[#E8E5D8] rounded-lg px-4 py-3 font-body text-base text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border"
+                  className="w-full bg-[#F9F8F4] border border-black rounded-lg px-4 py-3 font-body text-base text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border"
                 />
               </div>
               <div>
@@ -169,14 +169,14 @@ export default function Contact() {
                   required
                   rows={5}
                   placeholder="Tell me about your project..."
-                  className="w-full bg-[#F9F8F4] border border-[#E8E5D8] rounded-lg px-4 py-3 font-body text-base text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border resize-none"
+                  className="w-full bg-[#F9F8F4] border border-black rounded-lg px-4 py-3 font-body text-base text-slate focus:outline-none focus:border-gold/40 transition-all duration-300 placeholder:text-border resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={status === 'sending'}
-                className="w-full bg-slate text-white font-display font-semibold py-3.5 rounded-lg hover:bg-gold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm tracking-wide"
+                className="w-full bg-slate text-white font-display font-semibold py-3.5 rounded-lg hover:bg-wine transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm tracking-wide"
               >
                 {status === 'sending'
                   ? 'Sending...'
@@ -205,7 +205,7 @@ export default function Contact() {
                     href={s.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center justify-between bg-white border border-[#E8E5D8] rounded-xl px-5 py-3.5 hover:border-gold/30 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 group"
+                    className="flex items-center justify-between bg-white border border-black rounded-xl px-5 py-3.5 hover:border-wine hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 group"
                   >
                     <span className="font-body text-sm text-slate">{s.label}</span>
                     <span className="text-muted group-hover:text-gold group-active:text-gold transition-colors text-sm">↗</span>

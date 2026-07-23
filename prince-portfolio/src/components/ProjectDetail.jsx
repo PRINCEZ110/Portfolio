@@ -69,7 +69,7 @@ export default function ProjectDetail() {
         <div className="relative z-10 max-w-[1440px] w-full mx-auto">
           <m.div variants={stagger} initial="hidden" animate="visible">
             <m.div variants={fadeUp} className="flex items-center gap-4 mb-4">
-              <Link to="/#work" className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase hover:text-steel transition-colors">
+              <Link to="/#work" className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase hover:text-wine transition-colors">
                 ← Back to projects
               </Link>
             </m.div>
@@ -152,18 +152,18 @@ export default function ProjectDetail() {
               <button
                 onClick={() => setBrowserPref('mac')}
                 className={`px-3 py-1.5 font-mono text-[9px] tracking-wider uppercase transition-all duration-300 ${
-                  browserPref === 'mac' ? 'text-white' : 'text-muted hover:text-slate'
+                  browserPref === 'mac' ? 'text-white' : 'text-white hover:text-#8B1A2B'
                 }`}
-                style={{ background: browserPref === 'mac' ? '#B39C4F' : '#FFFFFF' }}
+                style={{ background: browserPref === 'mac' ? '#8B1A2B' : 'black' }}
               >
                 Mac
               </button>
               <button
                 onClick={() => setBrowserPref('windows')}
                 className={`px-3 py-1.5 font-mono text-[9px] tracking-wider uppercase transition-all duration-300 ${
-                  browserPref === 'windows' ? 'text-white' : 'text-muted hover:text-slate'
+                  browserPref === 'windows' ? 'text-white' : 'text-white hover:text-#8B1A2B'
                 }`}
-                style={{ background: browserPref === 'windows' ? '#B39C4F' : '#FFFFFF' }}
+                style={{ background: browserPref === 'windows' ? '#8B1A2B' : 'black' }}
               >
                 Windows
               </button>
@@ -192,7 +192,7 @@ export default function ProjectDetail() {
                 href={project.id === 'sahakarinet' ? 'https://sahakari-net.onrender.com' : 'https://nagar-sewa.netlify.app/#home'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase px-6 py-3 rounded-xl border border-gold/30 text-gold hover:bg-gold/10 transition-all duration-300"
+                className="inline-flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase px-6 py-3 rounded-xl border border-gold/30 text-wine hover:bg-gold/10 transition-all duration-300"
                 style={{ fontFamily: "'Josefin Sans', sans-serif" }}
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
@@ -216,7 +216,7 @@ export default function ProjectDetail() {
                 <m.div
                   key={h}
                   variants={fadeUp}
-                  className="flex items-start gap-3 p-4 rounded-xl bg-white border border-border shadow-soft"
+                  className="flex items-start gap-3 p-4 rounded-xl bg-white border border-black shadow-soft"
                 >
                     <span className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-steel/15">
                     <span className="text-[8px] text-steel">✓</span>
@@ -257,7 +257,7 @@ function NagarSewaDetailMockup({ variant = 'mac' }) {
         {!loaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a] z-10">
             <div className="text-center">
-              <div className="w-6 h-6 border-2 border-gold/30 border-t-gold rounded-full animate-spin mx-auto mb-2" />
+              <div className="w-6 h-6 border-2 border-gold/30 border-t-wine rounded-full animate-spin mx-auto mb-2" />
               <span className="text-[10px] font-mono text-white/30">Loading preview...</span>
             </div>
           </div>
@@ -376,7 +376,7 @@ function SahakariNetDetailMockup({ variant = 'mac' }) {
         {!loaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a] z-10">
             <div className="text-center">
-              <div className="w-6 h-6 border-2 border-gold/30 border-t-gold rounded-full animate-spin mx-auto mb-2" />
+              <div className="w-6 h-6 border-2 border-gold/30 border-t-wine rounded-full animate-spin mx-auto mb-2" />
               <span className="text-[10px] font-mono text-white/30">Loading preview...</span>
             </div>
           </div>

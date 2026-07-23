@@ -41,7 +41,7 @@ export default function ProjectFooter({ projectTitle }) {
         >
           <p className="font-['Inter'] text-footertext/60 text-sm md:text-base leading-relaxed max-w-lg mx-auto">
             Like this project?{' '}
-            <button onClick={() => handleNav('/#contact')} className="text-footertext hover:text-gold transition-colors underline underline-offset-4 decoration-white/10 hover:decoration-gold/50 bg-transparent border-none cursor-pointer font-['Inter'] text-sm md:text-base">
+            <button onClick={() => handleNav('/#contact')} className="text-footertext hover:text-wine transition-colors underline underline-offset-4 decoration-white/10 hover:decoration-wine/50 bg-transparent border-none cursor-pointer font-['Inter'] text-sm md:text-base">
               Let's work together
             </button>
             .
@@ -60,7 +60,7 @@ export default function ProjectFooter({ projectTitle }) {
             <button
               key={link.label}
               onClick={() => handleNav(link.href)}
-              className="font-mono text-[10px] tracking-[0.2em] text-footertext/40 uppercase hover:text-gold transition-colors duration-300 bg-transparent border-none cursor-pointer"
+              className="font-mono text-[10px] tracking-[0.2em] text-footertext/40 uppercase hover:text-wine transition-colors duration-300 bg-transparent border-none cursor-pointer"
             >
               {link.label}
             </button>
@@ -68,7 +68,7 @@ export default function ProjectFooter({ projectTitle }) {
           <a
             href="#"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className="font-mono text-[10px] tracking-[0.2em] text-footertext/20 uppercase hover:text-gold transition-colors duration-300"
+            className="font-mono text-[10px] tracking-[0.2em] text-footertext/20 uppercase hover:text-wine transition-colors duration-300"
           >
             ↑ Back to top
           </a>
