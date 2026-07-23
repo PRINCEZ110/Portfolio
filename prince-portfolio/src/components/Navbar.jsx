@@ -73,7 +73,7 @@ export default function Navbar() {
       {/* Hire button */}
       <a
         href="#contact"
-        className="hidden md:inline-flex items-center gap-2 bg-slate text-white text-sm font-display font-semibold px-5 py-2 hover:bg-gold transition-all duration-300"
+        className="hidden md:inline-flex items-center gap-2 bg-slate text-white text-sm font-display font-semibold px-5 py-2 hover:bg-[#8B1A2B] transition-all duration-300"
       >
         hire me
       </a>

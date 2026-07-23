@@ -83,18 +83,18 @@ export default function Work() {
               <button
                 onClick={() => setBrowserPref('mac')}
                 className={`px-3 py-1.5 text-[9px] tracking-wider uppercase transition-all duration-300 ${
-                  browserPref === 'mac' ? 'text-white' : 'text-muted hover:text-slate'
+                  browserPref === 'mac' ? 'text-white' : 'text-white hover:text-white'
                 }`}
-                style={{ background: browserPref === 'mac' ? '#B39C4F' : '#FFFFFF', fontFamily: "'Lato', sans-serif" }}
+                style={{ background: browserPref === 'mac' ? '#8B1A2B' : 'Black', fontFamily: "'Lato', sans-serif" }}
               >
                 Mac
               </button>
               <button
                 onClick={() => setBrowserPref('windows')}
                 className={`px-3 py-1.5 text-[9px] tracking-wider uppercase transition-all duration-300 ${
-                  browserPref === 'windows' ? 'text-white' : 'text-muted hover:text-slate'
+                  browserPref === 'windows' ? 'text-white' : 'text-white hover:text-white'
                 }`}
-                style={{ background: browserPref === 'windows' ? '#B39C4F' : '#FFFFFF', fontFamily: "'Lato', sans-serif" }}
+                style={{ background: browserPref === 'windows' ? '#8B1A2B' : 'Black', fontFamily: "'Lato', sans-serif" }}
               >
                 Windows
               </button>
@@ -128,7 +128,7 @@ export default function Work() {
         >
           <Link
             to="/projects"
-            className="inline-flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase px-8 py-4 rounded-xl border border-gold/30 text-gold hover:bg-gold/10 transition-all duration-300"
+            className="inline-flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase px-8 py-4 rounded-xl border border-wine/30 text-wine hover:bg-wine/10 transition-all duration-300"
             style={{ fontFamily: "'Josefin Sans', sans-serif" }}
           >
             <span>View More Projects</span>
@@ -239,7 +239,7 @@ function FeatureBlock({ project, index, browserPref }) {
           >
             <Link
               to={`/work/${project.id}`}
-                className="relative inline-flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-xl overflow-hidden group/btn transition-all duration-300 border border-gold/30 text-gold hover:bg-gold/10"
+                className="relative inline-flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-xl overflow-hidden group/btn transition-all duration-300 border border-wine/30 text-wine hover:bg-wine/10"
                 style={{ fontFamily: "'Josefin Sans', sans-serif" }}
               >
                 <span className="relative z-10">View Project</span>
@@ -253,7 +253,7 @@ function FeatureBlock({ project, index, browserPref }) {
 
           {/* Scroll progress indicator */}
           <motion.div
-            className="h-px w-0 mt-8 bg-gold/40"
+            className="h-px w-0 mt-8 bg-black/40"
             style={{
               width: useTransform(progress, [0, 1], ['0%', '40%']),
             }}
@@ -285,7 +285,7 @@ function FeatureBlock({ project, index, browserPref }) {
             <motion.div
               className="absolute bottom-4 right-4 opacity-0 group-hover/card:opacity-100 transition-all duration-400 translate-y-2 group-hover/card:translate-y-0"
             >
-              <span className="text-[9px] tracking-wider text-gold bg-white/90 px-3 py-1.5 rounded-lg backdrop-blur-md border border-border shadow-soft" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
+              <span className="text-[9px] tracking-wider text-wine bg-white/90 px-3 py-1.5 rounded-lg backdrop-blur-md border border-border shadow-soft" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
                 Click to explore →
               </span>
             </motion.div>

@@ -127,15 +127,14 @@ export default function Hero() {
       >
         <Link
           to="/projects"
-          className="group font-display font-semibold text-slate bg-white/70 backdrop-blur-md border border-white/50 px-5 py-2.5 hover:bg-white hover:border-steel hover:text-steel transition-all duration-300 rounded-xl text-sm shadow-lg"
+          className="group font-display font-semibold text-black bg-white/70 backdrop-blur-md border border-text-[#8B1A2B]/50 px-5 py-2.5 hover:text-[#8B1A2B] hover:text-[#8B1A2B] hover:text-[#8B1A2B] transition-all duration-300 rounded-xl text-sm shadow-lg"
           style={{ fontFamily: "'Josefin Sans', sans-serif" }}
         >
           View Work
-          <span className="group-hover:translate-x-1 transition-transform">→</span>
         </Link>
         <a
           href="#contact"
-          className="group font-display font-semibold text-white bg-slate/90 backdrop-blur-md px-5 py-2.5 hover:bg-gold transition-all duration-300 rounded-xl text-sm shadow-lg"
+          className="group font-display font-semibold text-white bg-black/90 backdrop-blur-md px-5 py-2.5 hover:bg-[#8B1A2B] transition-all duration-300 rounded-xl text-sm shadow-lg"
           style={{ fontFamily: "'Josefin Sans', sans-serif" }}
         >
           Let's Talk
