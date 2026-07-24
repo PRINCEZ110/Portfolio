@@ -285,9 +285,9 @@ function FeatureBlock({ project, index, browserPref }) {
             <motion.div
               className="absolute bottom-4 right-4 opacity-0 group-hover/card:opacity-100 transition-all duration-400 translate-y-2 group-hover/card:translate-y-0"
             >
-              <span className="text-[9px] tracking-wider text-wine bg-white/90 px-3 py-1.5 rounded-lg backdrop-blur-md border border-border shadow-soft" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
-                Click to explore →
-              </span>
+               <span className="text-[9px] tracking-wider text-wine bg-white/95 px-3 py-1.5 rounded-lg border border-border shadow-soft" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
+                 Click to explore →
+               </span>
             </motion.div>
           </motion.div>
         </Link>
@@ -363,9 +363,9 @@ function SplitBlock({ project, index, browserPref }) {
             <motion.div
               className="absolute bottom-4 right-4 opacity-0 group-hover/card:opacity-100 transition-all duration-400 translate-y-2 group-hover/card:translate-y-0"
             >
-              <span className="text-[9px] tracking-wider text-wine bg-white/90 px-3 py-1.5 rounded-lg backdrop-blur-md border border-border shadow-soft" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
-                Click to explore →
-              </span>
+               <span className="text-[9px] tracking-wider text-wine bg-white/95 px-3 py-1.5 rounded-lg border border-border shadow-soft" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
+                 Click to explore →
+               </span>
             </motion.div>
           </motion.div>
         </Link>

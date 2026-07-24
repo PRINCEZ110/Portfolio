@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { LazyMotion, domAnimation } from 'framer-motion';
 import Navbar from './components/Navbar';
@@ -9,9 +10,10 @@ import About from './components/About';
 import CV from './components/CV';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import ProjectDetail from './components/ProjectDetail';
-import AllProjects from './components/AllProjects';
 import NotFound from './components/NotFound';
+
+const ProjectDetail = lazy(() => import('./components/ProjectDetail'));
+const AllProjects = lazy(() => import('./components/AllProjects'));
 
 const techStack = [
   'React.js', 'Node.js', 'Tailwind CSS', 'PostgreSQL', 'Java', 'Figma',
@@ -26,21 +28,23 @@ export default function App() {
     <LazyMotion features={domAnimation}>
       {isProjectPage ? <ProjectNavbar /> : <Navbar />}
       <main>
-        <Routes>
-          <Route path="/" element={
-            <>
-              <Hero />
-              <Marquee items={techStack} />
-              <Work />
-              <About />
-              <CV />
-              <Contact />
-            </>
-          } />
-          <Route path="/projects" element={<AllProjects />} />
-          <Route path="/work/:projectId" element={<ProjectDetail />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<div className="min-h-screen bg-sand" />}>
+          <Routes>
+            <Route path="/" element={
+              <>
+                <Hero />
+                <Marquee items={techStack} />
+                <Work />
+                <About />
+                <CV />
+                <Contact />
+              </>
+            } />
+            <Route path="/projects" element={<AllProjects />} />
+            <Route path="/work/:projectId" element={<ProjectDetail />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </main>
       {!isProjectPage && <Footer />}
     </LazyMotion>

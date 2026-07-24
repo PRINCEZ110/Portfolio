@@ -1,6 +1,6 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { m } from 'framer-motion';
+import { m, useInView } from 'framer-motion';
 import { projectFolders } from '../data/windowsProjects';
 import FloatTags from './FloatTags';
 
@@ -304,6 +304,210 @@ export default function AllProjects() {
           </m.div>
         )}
       </div>
+
+      <NewariFooter />
     </div>
+  );
+}
+
+/* ─── WOVEN NEWARI TEXTILE FOOTER ─── */
+const weaveWords = [
+  'REACT', 'NODE', 'TAILWIND', 'TYPESCRIPT', 'NEXT',
+  'FIGMA', 'PRISMA', 'POSTGRES', 'DOCKER', 'GRAPHQL',
+  'PYTHON', 'JAVA', 'MYSQL', 'VITE', 'GIT',
+];
+
+function NewariFooter() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+  const year = new Date().getFullYear();
+
+  return (
+    <footer ref={ref} className="relative overflow-hidden bg-[#0a0908]">
+      {/* Woven background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(45deg, rgba(139,26,43,0.06) 25%, transparent 25%),
+            linear-gradient(-45deg, rgba(139,26,43,0.06) 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, rgba(139,26,43,0.06) 75%),
+            linear-gradient(-45deg, transparent 75%, rgba(139,26,43,0.06) 75%),
+            repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(179,156,79,0.03) 1px, rgba(179,156,79,0.03) 2px),
+            repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(179,156,79,0.03) 1px, rgba(179,156,79,0.03) 2px),
+            repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(139,26,43,0.04) 8px, rgba(139,26,43,0.04) 9px),
+            repeating-linear-gradient(90deg, transparent, transparent 8px, rgba(139,26,43,0.04) 8px, rgba(139,26,43,0.04) 9px)
+          `,
+          backgroundSize: '20px 20px, 20px 20px, 20px 20px, 20px 20px, 40px 40px, 40px 40px, 80px 80px, 80px 80px',
+        }} />
+      </div>
+
+      {/* Top trim */}
+      <div className="relative h-10 flex items-center justify-center border-b border-[#B39C4F]/8">
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#8B1A2B]/30 via-[#B39C4F]/40 to-[#8B1A2B]/30" />
+        <div className="flex items-center gap-1">
+          {[...Array(24)].map((_, i) => (
+            <span key={i} className={`inline-block ${i % 2 === 0 ? 'w-[3px] h-[3px]' : 'w-[2px] h-[5px]'} bg-[#B39C4F]/30`}
+              style={{ opacity: 0.2 + (i % 4) * 0.2 }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Marquee */}
+      <div className="relative overflow-hidden border-b border-[#B39C4F]/10 bg-[#0d0b0a]">
+        <m.div
+          animate={{ x: ['0%', '-50%'] }}
+          transition={{ duration: 60, ease: 'linear', repeat: Infinity }}
+          className="flex whitespace-nowrap py-3"
+        >
+          {[...Array(3)].map((_, idx) => (
+            <span key={idx} className="flex items-center gap-14 mx-6">
+              {weaveWords.map((word, i) => (
+                <span key={i} className="flex items-center gap-14">
+                  <span className="text-[11px] tracking-[0.25em] uppercase text-[#B39C4F] font-mono font-semibold">{word}</span>
+                  <span className="flex items-center gap-[3px]">
+                    <span className="w-[5px] h-[5px] bg-[#8B1A2B] rotate-45" />
+                    <span className="w-[5px] h-[5px] bg-[#B39C4F] rotate-45" />
+                    <span className="w-[5px] h-[5px] bg-[#8B1A2B] rotate-45" />
+                  </span>
+                </span>
+              ))}
+            </span>
+          ))}
+        </m.div>
+      </div>
+
+      {/* Main */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-20">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+          {/* LEFT: Woven panel */}
+          <m.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div
+              className="w-full aspect-[4/3] border border-[#B39C4F]/35 flex items-center justify-center"
+              style={{
+                backgroundImage: `
+                  repeating-conic-gradient(rgba(139,26,43,0.08) 0% 25%, transparent 0% 50%) 0 0 / 20px 20px,
+                  repeating-linear-gradient(45deg, rgba(179,156,79,0.06) 0, rgba(179,156,79,0.06) 1px, transparent 0, transparent 8px),
+                  repeating-linear-gradient(-45deg, rgba(179,156,79,0.06) 0, rgba(179,156,79,0.06) 1px, transparent 0, transparent 8px)
+                `,
+                backgroundBlendMode: 'overlay',
+              }}
+            >
+              <div className="text-center p-8">
+                <div className="inline-block mb-6">
+                  <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                    <rect x="1" y="1" width="78" height="78" stroke="#B39C4F" strokeWidth="0.8" strokeOpacity="0.6" />
+                    <rect x="6" y="6" width="68" height="68" stroke="#B39C4F" strokeWidth="0.5" strokeOpacity="0.35" />
+                    <circle cx="40" cy="40" r="28" stroke="#B39C4F" strokeWidth="0.5" strokeOpacity="0.25" />
+                    <circle cx="40" cy="40" r="18" stroke="#B39C4F" strokeWidth="0.5" strokeOpacity="0.2" />
+                  </svg>
+                </div>
+                <p className="text-[10px] font-mono tracking-[0.4em] text-[#B39C4F]/90 uppercase">Handcrafted Code</p>
+              </div>
+            </div>
+          </m.div>
+
+          {/* RIGHT: Footer content */}
+          <m.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="space-y-5">
+              <h2 className="text-[clamp(1.8rem,3.5vw,3.5rem)] font-bold leading-[1.0] tracking-tight" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
+                <span className="text-white/90">Project</span>
+                <br />
+                <span className="text-[#B39C4F]">Archive</span>
+                <span className="block text-xs font-mono text-[#B39C4F]/50 font-normal mt-2 tracking-[0.2em] uppercase">Collection © {new Date().getFullYear()}</span>
+              </h2>
+              <p className="text-xs font-mono text-[#B39C4F]/85 leading-relaxed max-w-sm">
+                A curated archive of work — each project built with intention, care, and clean code.
+              </p>
+
+              <div className="border-t border-[#B39C4F]/10 pt-4 flex flex-wrap gap-x-6 gap-y-2">
+                <a href="mailto:princezstha6110@gmail.com"
+                  className="text-[10px] font-mono tracking-[0.15em] text-[#B39C4F]/90 hover:text-[#B39C4F] transition-colors duration-300 border-b border-[#B39C4F]/30 hover:border-[#B39C4F]/50 pb-0.5">
+                  princezstha6110@gmail.com
+                </a>
+                <div className="flex items-center gap-3">
+                  {[
+                    { label: 'GitHub', href: 'https://github.com/PRINCEZ110' },
+                    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/princez-shrestha-b12a0132b/' },
+                    { label: 'Instagram', href: 'https://www.instagram.com/princezstha/?hl=en' },
+                  ].map((s) => (
+                    <a key={s.label} href={s.href} target="_blank" rel="noreferrer"
+                      className="text-[8px] font-mono tracking-[0.25em] uppercase text-[#B39C4F]/80 hover:text-[#B39C4F] transition-colors duration-300">
+                      {s.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 pt-1">
+                {['Home', 'Work', 'About', 'CV', 'Contact'].map((link) => (
+                  <a key={link}
+                    href={link === 'Home' ? '/' : link === 'Work' ? '/#work' : `/#${link.toLowerCase()}`}
+                    className="text-[8px] font-mono tracking-[0.25em] uppercase text-[#B39C4F]/70 hover:text-[#B39C4F] transition-colors duration-300">
+                    {link}
+                  </a>
+                ))}
+              </div>
+
+              <div className="inline-flex items-center gap-2 border border-[#B39C4F]/30 px-3 py-2 group hover:border-[#B39C4F]/50 transition-all duration-500">
+                <span className="text-[9px] text-[#B39C4F]/70">⟐</span>
+                <span className="text-[8px] font-mono tracking-[0.15em] text-[#B39C4F]/70 uppercase">Crafted in Nepal</span>
+              </div>
+            </div>
+          </m.div>
+        </div>
+      </div>
+
+      {/* Bottom marquee */}
+      <div className="relative overflow-hidden border-t border-[#B39C4F]/10 bg-[#0d0b0a]">
+        <m.div
+          animate={{ x: ['-50%', '0%'] }}
+          transition={{ duration: 60, ease: 'linear', repeat: Infinity }}
+          className="flex whitespace-nowrap py-3"
+        >
+          {[...Array(3)].map((_, idx) => (
+            <span key={idx} className="flex items-center gap-14 mx-6">
+              {weaveWords.map((word, i) => (
+                <span key={i} className="flex items-center gap-14">
+                  <span className="text-[11px] tracking-[0.25em] uppercase text-[#B39C4F] font-mono font-semibold">{word}</span>
+                  <span className="flex items-center gap-[3px]">
+                    <span className="w-[5px] h-[5px] bg-[#8B1A2B] rotate-45" />
+                    <span className="w-[5px] h-[5px] bg-[#B39C4F] rotate-45" />
+                    <span className="w-[5px] h-[5px] bg-[#8B1A2B] rotate-45" />
+                  </span>
+                </span>
+              ))}
+            </span>
+          ))}
+        </m.div>
+      </div>
+
+      {/* Bottom trim */}
+      <div className="relative h-10 flex items-center justify-center border-t border-[#B39C4F]/8">
+        <div className="flex items-center gap-1">
+          {[...Array(24)].map((_, i) => (
+            <span key={i} className={`inline-block ${i % 2 === 0 ? 'w-[3px] h-[3px]' : 'w-[2px] h-[5px]'} bg-[#B39C4F]/30`}
+              style={{ opacity: 0.2 + (i % 4) * 0.2 }}
+            />
+          ))}
+        </div>
+        <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-[#8B1A2B]/30 via-[#B39C4F]/40 to-[#8B1A2B]/30" />
+      </div>
+
+      {/* Copyright */}
+      <div className="py-3 text-center">
+        <p className="text-[10px] font-mono tracking-[0.15em] text-[#B39C4F]/85">
+          <span className="text-[#8B1A2B]">⟐</span> © {year} Prince Shrestha — Built with intention <span className="text-[#8B1A2B]">⟐</span>
+        </p>
+      </div>
+    </footer>
   );
 }

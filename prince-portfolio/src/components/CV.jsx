@@ -248,7 +248,7 @@ export default function CV() {
         <div className="flex gap-3 mt-10 font-mono text-[12px]">
           <button
             onClick={() => setViewing(v => !v)}
-            className="group flex items-center gap-2 border border-border/60 bg-white/60 px-5 py-3 text-slate hover:text-wine transition-all duration-300 backdrop-blur-sm"
+            className="group flex items-center gap-2 border border-border/60 bg-white/80 px-5 py-3 text-slate hover:text-wine transition-all duration-300"
           >
             <svg className={`w-4 h-4 transition-transform ${viewing ? 'rotate-90' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               {viewing ? <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></> : <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></>}

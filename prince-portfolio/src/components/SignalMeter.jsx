@@ -10,6 +10,7 @@ export default function SignalMeter() {
     let raf;
     let bars = [];
     let w, h;
+    const isActive = { current: true };
 
     const init = () => {
       const parent = cvs.parentElement;
@@ -30,6 +31,7 @@ export default function SignalMeter() {
     };
 
     const draw = () => {
+      if (!isActive.current) { raf = null; return; }
       ctx.clearRect(0, 0, w, h);
 
       // Label
@@ -91,11 +93,34 @@ export default function SignalMeter() {
       raf = requestAnimationFrame(draw);
     };
 
+    const start = () => {
+      if (isActive.current && !raf) raf = requestAnimationFrame(draw);
+    };
+
+    const stop = () => {
+      cancelAnimationFrame(raf);
+      raf = null;
+    };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      isActive.current = entry.isIntersecting;
+      if (entry.isIntersecting) start(); else stop();
+    });
+    observer.observe(cvs);
+
+    const onVisibility = () => {
+      isActive.current = !document.hidden;
+      if (!document.hidden) start(); else stop();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
     init();
-    draw();
+    start();
     window.addEventListener('resize', init);
     return () => {
-      cancelAnimationFrame(raf);
+      stop();
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', init);
     };
   }, []);

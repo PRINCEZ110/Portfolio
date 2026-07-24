@@ -281,8 +281,8 @@ function TimeStarDetailMockup({ variant = 'mac' }) {
     <BrowserFrame url="timestar.com/products/chronograph-edition-2100" variant={variant}>
       <div className="flex flex-col md:flex-row" style={{ minHeight: '450px' }}>
         <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8 relative overflow-hidden" style={{ background: '#111' }}>
-          <m.img
-            src="/watch.png"
+            <m.img
+              src="/watch.webp"
             alt="Chronograph Edition 2100"
             className="w-40 h-40 md:w-48 md:h-48 object-contain drop-shadow-2xl"
             whileHover={{ scale: 1.06, rotate: 2 }}

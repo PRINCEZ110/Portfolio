@@ -24,6 +24,7 @@ export default function FloatTags() {
     let raf;
     let particles = [];
     let w, h;
+    const isActive = { current: true };
 
     const init = () => {
       const parent = cvs.parentElement;
@@ -49,6 +50,7 @@ export default function FloatTags() {
     };
 
     const draw = () => {
+      if (!isActive.current) { raf = null; return; }
       ctx.clearRect(0, 0, w, h);
       const mx = mouse.current.x;
       const my = mouse.current.y;
@@ -83,18 +85,41 @@ export default function FloatTags() {
       raf = requestAnimationFrame(draw);
     };
 
+    const start = () => {
+      if (isActive.current && !raf) raf = requestAnimationFrame(draw);
+    };
+
+    const stop = () => {
+      cancelAnimationFrame(raf);
+      raf = null;
+    };
+
     const onMove = (e) => {
       const r = cvs.getBoundingClientRect();
       mouse.current.x = (e.clientX - r.left) / w;
       mouse.current.y = (e.clientY - r.top) / h;
     };
 
+    const observer = new IntersectionObserver(([entry]) => {
+      isActive.current = entry.isIntersecting;
+      if (entry.isIntersecting) start(); else stop();
+    });
+    observer.observe(cvs);
+
+    const onVisibility = () => {
+      isActive.current = !document.hidden;
+      if (!document.hidden) start(); else stop();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
     init();
-    draw();
+    start();
     window.addEventListener('resize', init);
     document.addEventListener('mousemove', onMove);
     return () => {
-      cancelAnimationFrame(raf);
+      stop();
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', init);
       document.removeEventListener('mousemove', onMove);
     };

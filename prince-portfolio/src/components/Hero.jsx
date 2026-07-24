@@ -22,22 +22,22 @@ export default function Hero() {
   return (
     <section ref={sectionRef} className="min-h-screen flex flex-col justify-end px-6 md:px-12 lg:px-20 pb-16 pt-28 relative overflow-hidden bg-clay">
       {/* Profile image — scroll-revealed */}
-      <motion.img
-        src="./image.png"
-        alt="Profile"
-        className="absolute right-4 md:right-12 lg:right-20 z-30 pointer-events-none select-none"
-        style={{
-          height: 'clamp(22rem, 55vw, 40rem)',
-          y: imgY,
-          bottom: 0,
-          objectFit: 'contain',
-          objectPosition: 'center bottom',
-          filter: 'drop-shadow(0 25px 25px rgba(0,0,0,0.15))',
-        }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.4 }}
-      />
+        <motion.img
+          src="/image.png"
+          alt="Profile"
+          className="absolute right-4 md:right-12 lg:right-20 z-30 pointer-events-none select-none"
+          style={{
+            height: 'clamp(22rem, 55vw, 40rem)',
+            y: imgY,
+            bottom: 0,
+            objectFit: 'contain',
+            objectPosition: 'center bottom',
+            filter: 'drop-shadow(0 25px 25px rgba(0,0,0,0.15))',
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        />
 
       {/* Background grid */}
       <div
@@ -127,14 +127,14 @@ export default function Hero() {
       >
         <Link
           to="/projects"
-          className="group font-display font-semibold text-black bg-white/70 backdrop-blur-md border border-text-[#8B1A2B]/50 px-5 py-2.5 hover:text-[#8B1A2B] hover:text-[#8B1A2B] hover:text-[#8B1A2B] transition-all duration-300 rounded-xl text-sm shadow-lg"
+          className="group font-display font-semibold text-black bg-white/80 border border-text-[#8B1A2B]/50 px-5 py-2.5 hover:text-[#8B1A2B] hover:text-[#8B1A2B] hover:text-[#8B1A2B] transition-all duration-300 rounded-xl text-sm shadow-lg"
           style={{ fontFamily: "'Josefin Sans', sans-serif" }}
         >
           View Work
         </Link>
         <a
           href="#contact"
-          className="group font-display font-semibold text-white bg-black/90 backdrop-blur-md px-5 py-2.5 hover:bg-[#8B1A2B] transition-all duration-300 rounded-xl text-sm shadow-lg"
+          className="group font-display font-semibold text-white bg-black/95 px-5 py-2.5 hover:bg-[#8B1A2B] transition-all duration-300 rounded-xl text-sm shadow-lg"
           style={{ fontFamily: "'Josefin Sans', sans-serif" }}
         >
           Let's Talk

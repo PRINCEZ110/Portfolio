@@ -162,6 +162,7 @@ function ParticleBackground() {
     let animId;
     const particles = [];
     let time = 0;
+    const isActive = { current: true };
 
     const resize = () => {
       canvas.width = canvas.offsetWidth;
@@ -183,6 +184,7 @@ function ParticleBackground() {
     }
 
     const draw = () => {
+      if (!isActive.current) { animId = null; return; }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       time += 0.004;
 
@@ -203,10 +205,33 @@ function ParticleBackground() {
       animId = requestAnimationFrame(draw);
     };
 
-    animId = requestAnimationFrame(draw);
+    const start = () => {
+      if (isActive.current && !animId) animId = requestAnimationFrame(draw);
+    };
+
+    const stop = () => {
+      cancelAnimationFrame(animId);
+      animId = null;
+    };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      isActive.current = entry.isIntersecting;
+      if (entry.isIntersecting) start(); else stop();
+    });
+    observer.observe(canvas);
+
+    const onVisibility = () => {
+      isActive.current = !document.hidden;
+      if (!document.hidden) start(); else stop();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    start();
 
     return () => {
-      cancelAnimationFrame(animId);
+      stop();
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', resize);
     };
   }, []);
@@ -320,7 +345,7 @@ export default function About() {
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
               <m.img
-                src="/AboutImage.webp"
+                src="/Aboutimage.jpg"
                 alt="Prince Shrestha"
                 className="w-full h-auto object-cover"
                 style={{ filter: 'none' }}
