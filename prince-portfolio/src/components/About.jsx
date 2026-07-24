@@ -1,13 +1,130 @@
 import { useState, useEffect, useRef } from 'react';
 import { m, useInView, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
-import {
-  SiReact, SiJavascript, SiHtml5, SiCss, SiTailwindcss,
+import { SiReact, SiJavascript, SiHtml5, SiCss, SiTailwindcss,
   SiOpenjdk, SiApache, SiMysql,
-  SiFigma, SiGit, SiGithub,
-} from 'react-icons/si';
-import {
-  Database, Palette, Monitor, Shield, Server,
-} from 'lucide-react';
+  SiFigma, SiGit, SiGithub } from 'react-icons/si';
+import { Database, Palette, Monitor, Shield, Server } from 'lucide-react';
+
+const starV = (delay) => ({
+  hidden: { opacity: 0, rotate: 0, scale: 0 },
+  visible: {
+    opacity: 0.2,
+    rotate: 360,
+    scale: 1,
+    transition: { duration: 5, repeat: Infinity, ease: 'linear', delay }
+  }
+});
+
+const starRevV = (delay) => ({
+  hidden: { opacity: 0, rotate: 0, scale: 0 },
+  visible: {
+    opacity: 0.2,
+    rotate: -360,
+    scale: 1,
+    transition: { duration: 6, repeat: Infinity, ease: 'linear', delay }
+  }
+});
+
+const bobV = (delay) => ({
+  hidden: { opacity: 0, y: 0 },
+  visible: {
+    opacity: 0.2,
+    y: [0, -20, 0],
+    transition: { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay }
+  }
+});
+
+const scaleV = (delay) => ({
+  hidden: { opacity: 0, scale: 0.2 },
+  visible: {
+    opacity: 0.15,
+    scale: [0.2, 1.2, 0.2],
+    transition: { duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay }
+  }
+});
+
+const stars = [
+  { fs: 28, t: '6%', l: '5%', d: 0, rev: false, bp: 'md' },
+  { fs: 22, t: '10%', r: '12%', d: 0.25, rev: true, bp: 'md' },
+  { fs: 30, t: '22%', l: '50%', d: 0.5, rev: false, bp: 'md' },
+  { fs: 18, t: '18%', r: '4%', d: 0.75, rev: true, bp: 'md' },
+  { fs: 24, t: '35%', l: '8%', d: 1, rev: false, bp: 'md' },
+  { fs: 26, t: '38%', r: '10%', d: 1.25, rev: true, bp: 'md' },
+  { fs: 32, t: '50%', l: '3%', d: 1.5, rev: true, bp: 'lg' },
+  { fs: 20, t: '52%', l: '55%', d: 1.75, rev: false, bp: 'lg' },
+  { fs: 28, t: '68%', r: '6%', d: 2, rev: false, bp: 'lg' },
+  { fs: 18, t: '75%', l: '12%', d: 2.25, rev: true, bp: 'lg' },
+  { fs: 24, t: '88%', r: '15%', d: 2.5, rev: false, bp: 'lg' },
+  { fs: 20, t: '92%', l: '45%', d: 2.75, rev: true, bp: 'lg' },
+];
+
+const bobs = [
+  { s: 12, t: '5%', r: '25%', d: 0 },
+  { s: 10, t: '12%', l: '3%', d: 0.2 },
+  { s: 8, t: '20%', l: '40%', d: 0.5 },
+  { s: 12, t: '28%', r: '20%', d: 0.75 },
+  { s: 8, t: '42%', l: '15%', d: 1 },
+  { s: 10, t: '48%', r: '3%', d: 1.25 },
+  { s: 12, t: '58%', l: '50%', d: 1.5 },
+  { s: 8, t: '65%', r: '25%', d: 1.75 },
+  { s: 10, t: '78%', l: '5%', d: 2 },
+  { s: 8, t: '85%', r: '35%', d: 2.25 },
+  { s: 12, t: '95%', l: '20%', d: 2.5 },
+];
+
+const squares = [
+  { w: 20, h: 20, rot: 45, t: '2%', l: '30%', d: 0.1, fill: false, bp: 'md' },
+  { w: 16, h: 16, rot: 0, t: '15%', l: '60%', d: 0.4, fill: false, bp: 'md' },
+  { w: 12, h: 12, rot: 12, t: '25%', r: '8%', d: 0.7, fill: true, bp: 'md' },
+  { w: 16, h: 16, rot: 0, t: '32%', l: '45%', d: 1, fill: false, bp: 'md' },
+  { w: 20, h: 20, rot: 22, t: '45%', r: '15%', d: 1.3, fill: false, bp: 'md' },
+  { w: 12, h: 12, rot: 0, t: '55%', l: '5%', d: 1.6, fill: true, bp: 'md' },
+  { w: 16, h: 16, rot: 35, t: '62%', r: '50%', d: 1.9, fill: false, bp: 'lg' },
+  { w: 20, h: 20, rot: 0, t: '72%', r: '5%', d: 2.2, fill: false, bp: 'lg' },
+  { w: 12, h: 12, rot: 15, t: '82%', l: '35%', d: 2.5, fill: true, bp: 'lg' },
+  { w: 16, h: 16, rot: 0, t: '90%', l: '55%', d: 2.8, fill: false, bp: 'lg' },
+];
+
+const black = '#000000';
+
+function DecorativeElements() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none" style={{ zIndex: 1 }}>
+      {stars.map((s, i) => {
+        const V = s.rev ? starRevV : starV;
+        const hide = s.bp === 'lg' ? 'hidden lg:block' : 'hidden md:block';
+        return (
+          <m.div key={`s${i}`} custom={s.d} variants={V(s.d)} initial="hidden" animate="visible"
+            className={`absolute pointer-events-none ${hide}`}
+            style={{ color: black, fontSize: s.fs, top: s.t, left: s.l, right: s.r, lineHeight: 1 }}>★</m.div>
+        );
+      })}
+      {bobs.map((b, i) => (
+        <m.div key={`b${i}`} custom={b.d} variants={bobV(b.d)} initial="hidden" animate="visible"
+          className="absolute pointer-events-none hidden md:block"
+          style={{ top: b.t, left: b.l, right: b.r }}>
+          <div style={{ width: b.s, height: b.s, borderRadius: '50%', backgroundColor: 'rgba(0,0,0,0.2)' }} />
+        </m.div>
+      ))}
+      {squares.map((sq, i) => {
+        const hide = sq.bp === 'lg' ? 'hidden lg:block' : 'hidden md:block';
+        return (
+          <m.div key={`sq${i}`} custom={sq.d} variants={scaleV(sq.d)} initial="hidden" animate="visible"
+            className={`absolute pointer-events-none ${hide}`}
+            style={{ top: sq.t, left: sq.l, right: sq.r }}>
+            <div style={{
+              width: sq.w, height: sq.h,
+              border: sq.fill ? 'none' : '1px solid rgba(0,0,0,0.2)',
+              backgroundColor: sq.fill ? 'rgba(0,0,0,0.1)' : 'transparent',
+              transform: `rotate(${sq.rot}deg)`,
+              borderRadius: sq.fill ? 2 : 0,
+            }} />
+          </m.div>
+        );
+      })}
+    </div>
+  );
+}
 
 /* ─── Animated Counter ─── */
 function AnimatedCounter({ value, suffix = '', label }) {
@@ -34,10 +151,10 @@ function AnimatedCounter({ value, suffix = '', label }) {
 
   return (
     <div ref={ref} className="group">
-      <span className="block text-4xl md:text-5xl font-anton text-black leading-none tracking-tight transition-transform duration-300 group-hover:scale-105">
+      <span className="block text-4xl md:text-5xl font-anton text-ivory leading-none tracking-tight transition-transform duration-300 group-hover:scale-105">
         {displayed}{suffix}
       </span>
-      <span className="block text-[10px] tracking-[0.2em] uppercase text-black/50 font-lato mt-1 relative after:block after:h-[2px] after:bg-black after:scale-x-0 after:origin-left after:transition-transform after:duration-300 group-hover:after:scale-x-100">
+      <span className="block text-[10px] tracking-[0.2em] uppercase text-ivory/70 font-lato mt-1 relative after:block after:h-[2px] after:bg-ivory after:scale-x-0 after:origin-left after:transition-transform after:duration-300 group-hover:after:scale-x-100">
         {label}
       </span>
     </div>
@@ -112,9 +229,9 @@ function SkillCard({ category, items }) {
   return (
     <m.div
       variants={skillCardVariant}
-      className="border-t border-black/10 pt-4 transition-all duration-400 group"
+      className="border-t border-ivory/20 pt-4 transition-all duration-400 group"
     >
-      <span className="text-[10px] tracking-[0.25em] uppercase text-black/40 font-lato block mb-4">
+      <span className="text-[10px] tracking-[0.25em] uppercase text-ivory/60 font-lato block mb-4">
         {category}
       </span>
       <div className="flex flex-wrap gap-3">
@@ -126,7 +243,7 @@ function SkillCard({ category, items }) {
               key={item}
               variants={logoVariant}
               whileHover={{ y: -4, scale: 1.05 }}
-              className="relative flex flex-col items-center gap-1.5 p-2.5 rounded-lg bg-black/[0.02] border border-transparent transition-all duration-300 hover:bg-black/[0.04] hover:border-black/10 hover:shadow-sm"
+              className="relative flex flex-col items-center gap-1.5 p-2.5 rounded-lg bg-ivory/[0.06] border border-transparent transition-all duration-300 hover:bg-ivory/[0.1] hover:border-ivory/20 hover:shadow-sm"
             >
               <span className="relative">
                 <Icon
@@ -140,7 +257,7 @@ function SkillCard({ category, items }) {
                   transition={{ duration: 0.3 }}
                 />
               </span>
-              <span className="text-[9px] text-black/60 font-lato tracking-tight whitespace-nowrap">
+              <span className="text-[9px] text-ivory/70 font-lato tracking-tight whitespace-nowrap">
                 {item}
               </span>
             </m.div>
@@ -151,99 +268,7 @@ function SkillCard({ category, items }) {
   );
 }
 
-/* ─── Particle Canvas ─── */
-function ParticleBackground() {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let animId;
-    const particles = [];
-    let time = 0;
-    const isActive = { current: true };
-
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    const count = Math.min(25, Math.floor((canvas.width * canvas.height) / 30000));
-    for (let i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        r: Math.random() * 2 + 0.5,
-        o: Math.random() * 0.3 + 0.1,
-      });
-    }
-
-    const draw = () => {
-      if (!isActive.current) { animId = null; return; }
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      time += 0.004;
-
-      for (const p of particles) {
-        p.x += p.vx + Math.sin(time + p.y * 0.01) * 0.08;
-        p.y += p.vy + Math.cos(time + p.x * 0.01) * 0.08;
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,0,0,${p.o * (0.5 + Math.sin(time + p.x * 0.005) * 0.3)})`;
-        ctx.fill();
-      }
-
-      animId = requestAnimationFrame(draw);
-    };
-
-    const start = () => {
-      if (isActive.current && !animId) animId = requestAnimationFrame(draw);
-    };
-
-    const stop = () => {
-      cancelAnimationFrame(animId);
-      animId = null;
-    };
-
-    const observer = new IntersectionObserver(([entry]) => {
-      isActive.current = entry.isIntersecting;
-      if (entry.isIntersecting) start(); else stop();
-    });
-    observer.observe(canvas);
-
-    const onVisibility = () => {
-      isActive.current = !document.hidden;
-      if (!document.hidden) start(); else stop();
-    };
-    document.addEventListener('visibilitychange', onVisibility);
-
-    start();
-
-    return () => {
-      stop();
-      observer.disconnect();
-      document.removeEventListener('visibilitychange', onVisibility);
-      window.removeEventListener('resize', resize);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 pointer-events-none"
-      style={{ zIndex: 1 }}
-    />
-  );
-}
+/* ─── Decorative Background ─── */
 
 const developerChars = Array.from("Developer", (c, i) => ({ char: c, id: `dc-${i}` }));
 const fullstackChars = Array.from("Full-stack", (c, i) => ({ char: c, id: `fs-${i}` }));
@@ -260,7 +285,6 @@ export default function About() {
   });
 
   const imageParallax = useTransform(scrollYProgress, [0, 1], [60, -60]);
-  const bgParallax = useTransform(scrollYProgress, [0, 1], [0, -30]);
 
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
@@ -286,25 +310,9 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative bg-[#0f4cff] overflow-hidden"
+      className="relative bg-[#75846A] overflow-hidden"
     >
-      {/* Parallax halftone background */}
-      <m.div
-        className="absolute inset-0 pointer-events-none"
-        style={{ y: bgParallax }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle, rgba(0,0,0,0.04) 1.5px, transparent 1.5px)',
-            backgroundSize: '12px 12px',
-          }}
-        />
-      </m.div>
-
-      {/* Floating particles */}
-      <ParticleBackground />
+      <DecorativeElements />
 
       <div className="max-w-[1600px] mx-auto px-8 md:px-12 lg:px-16 relative z-10 py-20 md:py-28">
         {/* Eyebrow label */}
@@ -313,7 +321,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="text-[10px] tracking-[0.3em] uppercase text-black/40 font-lato block mb-10 md:mb-14"
+          className="text-[10px] tracking-[0.3em] uppercase text-ivory/70 font-lato block mb-10 md:mb-14"
         >
           About
         </m.span>
@@ -334,7 +342,7 @@ export default function About() {
               style={{
                 y: imageParallax,
                 borderRadius: '0',
-                border: '4px solid #000',
+                border: '4px solid rgba(247,245,242,0.3)',
                 rotateX,
                 rotateY,
                 transformStyle: 'preserve-3d',
@@ -364,7 +372,7 @@ export default function About() {
             {/* "Developer" heading with letter stagger */}
             <div className="overflow-hidden">
               <m.h1
-                className="font-anton text-black leading-[0.85] tracking-tight"
+                className="font-anton text-ivory leading-[0.85] tracking-tight"
                 style={{ fontSize: 'clamp(4rem, 10vw, 9rem)' }}
                 initial="hidden"
                 whileInView="visible"
@@ -373,7 +381,7 @@ export default function About() {
                 {developerChars.map(({ char, id }, idx) => (
                   <m.span
                     key={id}
-                    className="inline-block transition-colors duration-200 hover:text-[#0f4cff]"
+                    className="inline-block transition-colors duration-200 hover:text-gold"
                     custom={idx}
                     variants={{
                       hidden: { opacity: 0, y: 60, rotateX: -30 },
@@ -403,11 +411,11 @@ export default function About() {
               transition={{ duration: 0.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-center gap-4 mt-4 mb-6"
             >
-              <span className="text-sm md:text-base tracking-[0.2em] uppercase font-josefin font-semibold text-black/70">
+              <span className="text-sm md:text-base tracking-[0.2em] uppercase font-josefin font-semibold text-ivory/90">
                 {fullstackChars.map(({ char, id }, idx) => (
                   <m.span
                     key={id}
-                    className="inline-block transition-colors duration-200 cursor-default hover:text-[#0f4cff]"
+                    className="inline-block transition-colors duration-200 cursor-default hover:text-gold"
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -417,7 +425,7 @@ export default function About() {
                   </m.span>
                 ))}
               </span>
-              <span className="text-[9px] tracking-[0.15em] uppercase text-black/40 font-josefin font-semibold border border-black/20 px-3 py-1 rounded-full">
+              <span className="text-[9px] tracking-[0.15em] uppercase text-ivory/70 font-josefin font-semibold border border-ivory/30 px-3 py-1 rounded-full">
                 NEPAL
               </span>
             </m.div>
@@ -428,7 +436,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="text-base md:text-lg text-black/80 font-josefin font-bold leading-relaxed mb-5"
+              className="text-base md:text-lg text-ivory/90 font-josefin font-bold leading-relaxed mb-5"
             >
               Building premium digital experiences through thoughtful design, clean code, and meaningful interactions.
             </m.p>
@@ -441,10 +449,10 @@ export default function About() {
               transition={{ duration: 0.4, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="space-y-3 mb-8"
             >
-              <p className="text-sm md:text-[15px] text-black/60 font-josefin leading-relaxed">
+              <p className="text-sm md:text-[15px] text-ivory/80 font-josefin leading-relaxed">
                 Hi, I'm Prince. I'm a full-stack developer passionate about building elegant digital experiences using React, Tailwind CSS, JavaScript, and modern UI design.
               </p>
-              <p className="text-sm md:text-[15px] text-black/60 font-josefin leading-relaxed">
+              <p className="text-sm md:text-[15px] text-ivory/80 font-josefin leading-relaxed">
                 Every project combines clean architecture, accessibility, performance, and refined visual design to create seamless user experiences.
               </p>
             </m.div>
@@ -456,7 +464,7 @@ export default function About() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-black/60 font-josefin font-semibold border-b border-black/20 pb-1 transition-all duration-300 hover:border-black hover:text-black"
+              className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-ivory/80 font-josefin font-semibold border-b border-ivory/30 pb-1 transition-all duration-300 hover:border-ivory hover:text-ivory"
             >
               View Work →
             </m.a>
@@ -468,13 +476,13 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="flex gap-10 md:gap-16 mt-10 pt-8 border-t border-black/10"
+              className="flex gap-10 md:gap-16 mt-10 pt-8 border-t border-ivory/20"
             >
               <AnimatedCounter value={3} suffix="+" label="Projects" />
               <AnimatedCounter value={3} suffix="+" label="Years Learning" />
               <div className="group">
-                <span className="block text-4xl md:text-5xl font-anton text-black leading-none tracking-tight transition-transform duration-300 group-hover:scale-105">∞</span>
-                <span className="block text-[10px] tracking-[0.2em] uppercase text-black/40 font-lato mt-1">Curiosity</span>
+                <span className="block text-4xl md:text-5xl font-anton text-ivory leading-none tracking-tight transition-transform duration-300 group-hover:scale-105">∞</span>
+                <span className="block text-[10px] tracking-[0.2em] uppercase text-ivory/60 font-lato mt-1">Curiosity</span>
               </div>
             </m.div>
 
