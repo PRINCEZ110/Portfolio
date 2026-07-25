@@ -256,8 +256,8 @@ export default function CV() {
             <span>{viewing ? 'CLOSE' : 'VIEW PDF'}</span>
           </button>
           <a
-            href="/Prince_Shrestha_CV.pdf"
-            download="Prince_Shrestha_CV.pdf"
+            href="/Prince Shrestha_Resume.pdf"
+            download="Prince Shrestha_Resume.pdf"
             className="flex items-center gap-2 bg-slate text-white px-5 py-3 hover:bg-wine transition-all duration-300"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -283,10 +283,10 @@ export default function CV() {
                 className="border border-border rounded-xl overflow-hidden bg-white shadow-card"
               >
                 <div className="bg-[#F4F1E6] px-5 py-4 flex items-center justify-between border-b border-border font-mono text-xs text-slate/70">
-                  <span className="tracking-wide">Prince_Shrestha_CV.pdf</span>
-                  <a href="/Prince_Shrestha_CV.pdf" target="_blank" rel="noreferrer" className="text-steel hover:text-wine transition-colors">OPEN →</a>
+                  <span className="tracking-wide">Prince Shrestha_Resume.pdf</span>
+                  <a href="/Prince Shrestha_Resume.pdf" target="_blank" rel="noreferrer" className="text-steel hover:text-wine transition-colors">OPEN →</a>
                 </div>
-                <iframe src="/Prince_Shrestha_CV.pdf" title="CV" className="w-full" style={{ height: '85vh' }} />
+                <iframe src="/Prince Shrestha_Resume.pdf" title="CV" className="w-full" style={{ height: '85vh' }} />
               </m.div>
             </m.div>
           )}
