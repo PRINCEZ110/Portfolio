@@ -1,6 +1,6 @@
 # Prince · Web Developer Portfolio
 
-Personal portfolio built with React + Vite + Tailwind CSS. Design inspired by BrewDistrict24 (warm earthy palette) and Quin (card-based layout).
+Personal portfolio built with React + Vite + Tailwind CSS. Design (warm earthy palette) and Quin (card-based layout).
 
 ## Tech Stack
 - **React.js** + **Vite**
