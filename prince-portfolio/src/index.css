@@ -36,11 +36,10 @@ body::before {
   opacity: 0.15;
 }
 
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #F8F7E5; }
+::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
 
 ::selection { background: #6F8E99; color: #FFFFFF; }
-::-webkit-scrollbar-thumb { background: #B39C4F; border-radius: 2px; }
 
 .mockup-root * { font-family: 'Josefin Sans', sans-serif; }
 .mockup-root .lato { font-family: 'Lato', sans-serif; }

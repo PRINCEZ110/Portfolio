@@ -159,9 +159,9 @@ export default function CV() {
                 className="font-bold leading-[1.05] tracking-tight"
                 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontFamily: "'Josefin Sans', sans-serif" }}
               >
-                <span className="text-slate">Curriculum</span>
+                <span className="text-slate">Experience</span>
                 <br />
-                <span className="text-wine">Vitae.</span>
+                <span className="text-wine">Background</span>
               </m.h2>
             </div>
           </div>

@@ -128,7 +128,7 @@ export default function Work() {
         >
           <Link
             to="/projects"
-            className="inline-flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase px-8 py-4 rounded-xl border border-wine/30 text-wine hover:bg-wine/10 transition-all duration-300"
+            className="inline-flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase px-8 py-4 rounded-xl border border-wine/30 text-wine bg-sand hover:bg-wine/10 transition-all duration-300"
             style={{ fontFamily: "'Josefin Sans', sans-serif" }}
           >
             <span>View More Projects</span>
@@ -239,7 +239,7 @@ function FeatureBlock({ project, index, browserPref }) {
           >
             <Link
               to={`/work/${project.id}`}
-                className="relative inline-flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-xl overflow-hidden group/btn transition-all duration-300 border border-wine/30 text-wine hover:bg-wine/10"
+                className="relative inline-flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-xl overflow-hidden group/btn transition-all duration-300 border border-wine/30 text-wine bg-sand hover:bg-wine/10"
                 style={{ fontFamily: "'Josefin Sans', sans-serif" }}
               >
                 <span className="relative z-10">View Project</span>
@@ -435,7 +435,7 @@ function SplitBlock({ project, index, browserPref }) {
           >
             <Link
               to={`/work/${project.id}`}
-              className="relative inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-xl overflow-hidden group/btn transition-all duration-300 border border-wine/30 text-wine hover:bg-wine/10"
+              className="relative inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] uppercase px-5 py-3 rounded-xl overflow-hidden group/btn transition-all duration-300 border border-wine/30 text-wine bg-sand hover:bg-wine/10"
             >
               <span className="relative z-10">View Project</span>
               <motion.span

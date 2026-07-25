@@ -425,9 +425,7 @@ export default function About() {
                   </m.span>
                 ))}
               </span>
-              <span className="text-[9px] tracking-[0.15em] uppercase text-ivory/70 font-josefin font-semibold border border-ivory/30 px-3 py-1 rounded-full">
-                NEPAL
-              </span>
+             
             </m.div>
 
             {/* Bold subheading */}
