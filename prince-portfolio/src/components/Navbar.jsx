@@ -42,7 +42,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 lg:px-20 py-5 flex items-center justify-between transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 lg:px-20 py-3 flex items-center justify-between transition-all duration-300 ${
         scrolled ? 'bg-clay/92 backdrop-blur-md border-b border-border' : ''
       }`}
     >
@@ -54,7 +54,7 @@ export default function Navbar() {
       </a>
 
       {/* Desktop nav */}
-      <nav className="hidden md:flex gap-8">
+      <nav className="hidden md:flex gap-6">
         {links.map((l) => (
           <a
             key={l.label}
@@ -73,7 +73,7 @@ export default function Navbar() {
       {/* Hire button */}
       <a
         href="#contact"
-        className="hidden md:inline-flex items-center gap-2 bg-slate text-white text-sm font-display font-semibold px-5 py-2.5 rounded-xl hover:bg-[#8B1A2B] transition-all duration-300"
+        className="hidden md:inline-flex items-center gap-1.5 bg-slate text-white text-sm font-display font-semibold px-3.5 py-1.5 rounded-xl hover:bg-[#8B1A2B] transition-all duration-300"
       >
         hire me
       </a>

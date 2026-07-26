@@ -115,7 +115,7 @@ export default function Footer() {
               href="mailto:princezstha6110@gmail.com"
               whileHover={{ x: 6 }}
               transition={hoverSpring}
-              className="group inline-flex items-center gap-2 text-lg text-footertext hover:text-gold"
+              className="group inline-flex items-center gap-2 text-lg text-footertext hover:text-wine"
             >
               princezstha6110@gmail.com
               <m.span
@@ -140,10 +140,10 @@ export default function Footer() {
                   href={link === "Home" ? "#" : `#${link.toLowerCase()}`}
                   whileHover={{ x: 8 }}
                   transition={hoverSpring}
-                  className="group text-footertext hover:text-gold relative"
-                >
-                  {link}
-                  <span className="absolute left-0 -bottom-1 h-px w-0 bg-gold transition-all duration-500 group-hover:w-full" />
+className="group text-footertext hover:text-wine relative"
+                  >
+                    {link}
+                    <span className="absolute left-0 -bottom-1 h-px w-0 bg-wine transition-all duration-500 group-hover:w-full" />
                 </m.a>
               ))}
             </div>
@@ -168,10 +168,10 @@ export default function Footer() {
                   rel="noreferrer"
                   whileHover={{ x: 8 }}
                   transition={hoverSpring}
-                  className="group text-footertext hover:text-gold relative"
-                >
-                  {social.label}
-                  <span className="absolute left-0 -bottom-1 h-px w-0 bg-gold transition-all duration-500 group-hover:w-full" />
+className="group text-footertext hover:text-wine relative"
+                  >
+                    {social.label}
+                    <span className="absolute left-0 -bottom-1 h-px w-0 bg-wine transition-all duration-500 group-hover:w-full" />
                 </m.a>
               ))}
             </div>
@@ -188,7 +188,7 @@ export default function Footer() {
           </p>
 
           <p className="text-xs font-mono text-footertext/30">
-            ┬⌐ {year} Prince Shrestha
+             © {year} Prince Shrestha
           </p>
         </m.div>
       </div>

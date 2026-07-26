@@ -41,7 +41,7 @@ export default function ProjectNavbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 lg:px-20 py-4 flex items-center justify-between transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 lg:px-20 py-2.5 flex items-center justify-between transition-all duration-300 ${
         scrolled ? 'bg-clay/92 backdrop-blur-md border-b border-border' : 'bg-transparent'
       }`}
     >
@@ -63,7 +63,7 @@ export default function ProjectNavbar() {
       {location.pathname !== '/projects' && (
         <>
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-5">
             {links.map((l) => (
               <button
                 key={l.label}
