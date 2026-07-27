@@ -42,15 +42,16 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 lg:px-20 py-3 flex items-center justify-between transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 lg:px-30 py-3 flex items-center justify-between transition-all duration-300 ${
         scrolled ? 'bg-clay/92 backdrop-blur-md border-b border-border' : ''
       }`}
     >
       <a
         href="#"
         className="font-display font-semibold text-slate text-base tracking-tight"
+        style={{ fontFamily: "'Josefin Sans', sans-serif" }}
       >
-        Prince<span className="text-wine [text-shadow:0_0_8px_rgba(139,26,43,0.5),0_0_25px_rgba(139,26,43,0.25)]"> श्रेष्ठ</span>
+        Prince<span  className="text-wine [text-shadow:0_0_8px_rgba(139,26,43,0.5),0_0_25px_rgba(139,26,43,0.25)]"> श्रेष्ठ</span>
       </a>
 
       {/* Desktop nav */}
@@ -74,8 +75,9 @@ export default function Navbar() {
       <a
         href="#contact"
         className="hidden md:inline-flex items-center gap-1.5 bg-slate text-white text-sm font-display font-semibold px-3.5 py-1.5 rounded-xl hover:bg-[#8B1A2B] transition-all duration-300"
+        style={{ fontFamily: "'Josefin Sans', sans-serif" }}
       >
-        hire me
+        Hire me
       </a>
 
       {/* Mobile hamburger */}
@@ -123,8 +125,9 @@ export default function Navbar() {
             <a
               href="#contact"
               className="bg-slate text-white font-display font-bold px-8 py-3 rounded-xl hover:bg-gold transition-all duration-300"
+              style={{ fontFamily: "'Josefin Sans', sans-serif" }}
             >
-              hire me
+              Hire me
             </a>
           </m.div>
         )}

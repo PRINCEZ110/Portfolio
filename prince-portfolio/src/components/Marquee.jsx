@@ -8,8 +8,12 @@ export default function Marquee({ items, speed = 18 }) {
       >
         {doubled.map((item, i) => (
           <span key={`${item}-${i}`} className="flex items-center gap-10">
-            <span className="font-mono text-xs text-[#8B1A2B] tracking-widest uppercase">{item}</span>
-            <span className="text-[#D4AF37]/60 text-lg">✦</span>
+            <span className="font-mono text-xs text-[#8B1A2B] tracking-widest uppercase" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
+              {item}
+            </span>
+            <span className="text-[#D4AF37]/60 text-lg">
+              <img src="https://pixelarticons.com/svg/skull.svg" alt="Skull Icon" className="w-6 h-6"  />
+            </span>
           </span>
         ))}
       </div>
