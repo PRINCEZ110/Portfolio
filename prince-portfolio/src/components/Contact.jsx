@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { m } from 'framer-motion';
 import emailjs from '@emailjs/browser';
+import { FaGithub, FaLinkedinIn, FaInstagram, FaReact } from 'react-icons/fa';
+import { LuCode, LuPalette, LuBookOpen, LuGitFork } from 'react-icons/lu';
 
 const interests = [
-  'React Development',
-  'Full-Stack Projects',
-  'UI/UX Design',
-  'Academic Collaboration',
-  'Open Source',
+  { label: 'React Development', icon: FaReact },
+  { label: 'Full-Stack Projects', icon: LuCode },
+  { label: 'UI/UX Design', icon: LuPalette },
+  { label: 'Academic Collaboration', icon: LuBookOpen },
+  { label: 'Open Source', icon: LuGitFork },
 ];
 
 const socials = [
-  { label: 'GitHub', href: 'https://github.com/PRINCEZ110' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/princez-shrestha-b12a0132b/' },
-  { label: 'Instagram', href: 'https://www.instagram.com/princezstha/?hl=en' },
+  { label: 'GitHub', href: 'https://github.com/PRINCEZ110', icon: FaGithub },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/princez-shrestha-b12a0132b/', icon: FaLinkedinIn },
+  { label: 'Instagram', href: 'https://www.instagram.com/princezstha/?hl=en', icon: FaInstagram },
 ];
 
 const fadeUp = {
@@ -112,13 +114,14 @@ export default function Contact() {
             <div className="mt-10">
               <span className="font-mono text-[10px] text-muted tracking-[0.15em] uppercase block mb-4">I'm interested in</span>
               <div className="flex flex-wrap gap-2.5">
-                {interests.map(item => (
+                {interests.map(({ label, icon: Icon }) => (
                   <a
-                    key={item}
-                    href={`mailto:princezstha6110@gmail.com?subject=${encodeURIComponent('RE: ' + item)}`}
+                    key={label}
+                    href={`mailto:princezstha6110@gmail.com?subject=${encodeURIComponent('RE: ' + label)}`}
                     className="font-body text-xs text-slate/70 bg-white border border-black px-4 py-2 rounded-lg hover:border-wine hover:text-wine active:border-wine active:text-wine transition-all duration-300 flex items-center gap-1.5 group"
                   >
-                    {item}
+                    <Icon className="text-sm" />
+                    {label}
                     <span className="opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity text-[10px]">↗</span>
                   </a>
                 ))}
@@ -197,18 +200,18 @@ export default function Contact() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <span className="font-mono text-[10px] text-muted tracking-[0.15em] uppercase block mb-3">Socials</span>
-              <div className="space-y-2.5">
+              <span className="font-mono text-[10px] text-muted tracking-[0.15em] uppercase block mb-4">Socials</span>
+              <div className="grid grid-cols-3 gap-3">
                 {socials.map(s => (
                   <a
                     key={s.label}
                     href={s.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center justify-between bg-white border border-black rounded-xl px-5 py-3.5 hover:border-wine hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 group"
+                    className="flex flex-col items-center gap-2.5 bg-white border border-black rounded-xl px-3 py-5 hover:border-wine hover:bg-wine/5 hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(128,0,32,0.08)] transition-all duration-300 group"
                   >
-                    <span className="font-body text-sm text-slate">{s.label}</span>
-                    <span className="text-muted group-hover:text-gold group-active:text-gold transition-colors text-sm">↗</span>
+                    <s.icon className="text-2xl text-slate group-hover:text-wine transition-colors" />
+                    <span className="font-body text-[11px] text-slate/70 group-hover:text-wine tracking-wide transition-colors">{s.label}</span>
                   </a>
                 ))}
               </div>
