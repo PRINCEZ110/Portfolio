@@ -1,6 +1,7 @@
 ﻿import { m, useScroll, useTransform, useAnimation } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { FaGithub, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -157,9 +158,9 @@ className="group text-footertext hover:text-wine relative"
 
             <div className="flex flex-col items-end gap-4">
               {[
-                { label: 'GitHub', href: 'https://github.com/PRINCEZ110' },
-                { label: 'LinkedIn', href: 'https://www.linkedin.com/in/princez-shrestha-b12a0132b/' },
-                { label: 'Instagram', href: 'https://www.instagram.com/princezstha/?hl=en' },
+                { label: 'GitHub', href: 'https://github.com/PRINCEZ110', icon: FaGithub },
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/in/princez-shrestha-b12a0132b/', icon: FaLinkedinIn },
+                { label: 'Instagram', href: 'https://www.instagram.com/princezstha/?hl=en', icon: FaInstagram },
               ].map((social) => (
                 <m.a
                   key={social.label}
@@ -168,8 +169,9 @@ className="group text-footertext hover:text-wine relative"
                   rel="noreferrer"
                   whileHover={{ x: 8 }}
                   transition={hoverSpring}
-className="group text-footertext hover:text-wine relative"
+className="group inline-flex items-center gap-2.5 text-footertext hover:text-wine relative"
                   >
+                    <social.icon className="w-4 h-4 text-footertext/50 group-hover:text-wine transition-colors duration-300" />
                     {social.label}
                     <span className="absolute left-0 -bottom-1 h-px w-0 bg-wine transition-all duration-500 group-hover:w-full" />
                 </m.a>
