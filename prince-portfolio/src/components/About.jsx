@@ -169,12 +169,134 @@ const ticker = [
   'NOW HIRING: ONE TEAM — REQUIRES CURIOSITY, COFFEE PROVIDED',
 ];
 
+/* ─── Animated ink background ─── */
+const starV = (delay) => ({
+  hidden: { opacity: 0, rotate: 0, scale: 0 },
+  visible: {
+    opacity: 0.2,
+    rotate: 360,
+    scale: 1,
+    transition: { duration: 5, repeat: Infinity, ease: 'linear', delay }
+  }
+});
+
+const starRevV = (delay) => ({
+  hidden: { opacity: 0, rotate: 0, scale: 0 },
+  visible: {
+    opacity: 0.2,
+    rotate: -360,
+    scale: 1,
+    transition: { duration: 6, repeat: Infinity, ease: 'linear', delay }
+  }
+});
+
+const bobV = (delay) => ({
+  hidden: { opacity: 0, y: 0 },
+  visible: {
+    opacity: 0.2,
+    y: [0, -20, 0],
+    transition: { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay }
+  }
+});
+
+const scaleV = (delay) => ({
+  hidden: { opacity: 0, scale: 0.2 },
+  visible: {
+    opacity: 0.15,
+    scale: [0.2, 1.2, 0.2],
+    transition: { duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay }
+  }
+});
+
+const stars = [
+  { fs: 28, t: '6%', l: '5%', d: 0, rev: false, bp: 'md' },
+  { fs: 22, t: '10%', r: '12%', d: 0.25, rev: true, bp: 'md' },
+  { fs: 30, t: '22%', l: '50%', d: 0.5, rev: false, bp: 'md' },
+  { fs: 18, t: '18%', r: '4%', d: 0.75, rev: true, bp: 'md' },
+  { fs: 24, t: '35%', l: '8%', d: 1, rev: false, bp: 'md' },
+  { fs: 26, t: '38%', r: '10%', d: 1.25, rev: true, bp: 'md' },
+  { fs: 32, t: '50%', l: '3%', d: 1.5, rev: true, bp: 'lg' },
+  { fs: 20, t: '52%', l: '55%', d: 1.75, rev: false, bp: 'lg' },
+  { fs: 28, t: '68%', r: '6%', d: 2, rev: false, bp: 'lg' },
+  { fs: 18, t: '75%', l: '12%', d: 2.25, rev: true, bp: 'lg' },
+  { fs: 24, t: '88%', r: '15%', d: 2.5, rev: false, bp: 'lg' },
+  { fs: 20, t: '92%', l: '45%', d: 2.75, rev: true, bp: 'lg' },
+];
+
+const bobs = [
+  { s: 12, t: '5%', r: '25%', d: 0 },
+  { s: 10, t: '12%', l: '3%', d: 0.2 },
+  { s: 8, t: '20%', l: '40%', d: 0.5 },
+  { s: 12, t: '28%', r: '20%', d: 0.75 },
+  { s: 8, t: '42%', l: '15%', d: 1 },
+  { s: 10, t: '48%', r: '3%', d: 1.25 },
+  { s: 12, t: '58%', l: '50%', d: 1.5 },
+  { s: 8, t: '65%', r: '25%', d: 1.75 },
+  { s: 10, t: '78%', l: '5%', d: 2 },
+  { s: 8, t: '85%', r: '35%', d: 2.25 },
+  { s: 12, t: '95%', l: '20%', d: 2.5 },
+];
+
+const squares = [
+  { w: 20, h: 20, rot: 45, t: '2%', l: '30%', d: 0.1, fill: false, bp: 'md' },
+  { w: 16, h: 16, rot: 0, t: '15%', l: '60%', d: 0.4, fill: false, bp: 'md' },
+  { w: 12, h: 12, rot: 12, t: '25%', r: '8%', d: 0.7, fill: true, bp: 'md' },
+  { w: 16, h: 16, rot: 0, t: '32%', l: '45%', d: 1, fill: false, bp: 'md' },
+  { w: 20, h: 20, rot: 22, t: '45%', r: '15%', d: 1.3, fill: false, bp: 'md' },
+  { w: 12, h: 12, rot: 0, t: '55%', l: '5%', d: 1.6, fill: true, bp: 'md' },
+  { w: 16, h: 16, rot: 35, t: '62%', r: '50%', d: 1.9, fill: false, bp: 'lg' },
+  { w: 20, h: 20, rot: 0, t: '72%', r: '5%', d: 2.2, fill: false, bp: 'lg' },
+  { w: 12, h: 12, rot: 15, t: '82%', l: '35%', d: 2.5, fill: true, bp: 'lg' },
+  { w: 16, h: 16, rot: 0, t: '90%', l: '55%', d: 2.8, fill: false, bp: 'lg' },
+];
+
+const black = '#000000';
+
+function DecorativeElements() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none" style={{ zIndex: 1 }}>
+      {stars.map((s, i) => {
+        const V = s.rev ? starRevV : starV;
+        const hide = s.bp === 'lg' ? 'hidden lg:block' : 'hidden md:block';
+        return (
+          <m.div key={`s${i}`} custom={s.d} variants={V(s.d)} initial="hidden" animate="visible"
+            className={`absolute pointer-events-none ${hide}`}
+            style={{ color: black, fontSize: s.fs, top: s.t, left: s.l, right: s.r, lineHeight: 1 }}>★</m.div>
+        );
+      })}
+      {bobs.map((b, i) => (
+        <m.div key={`b${i}`} custom={b.d} variants={bobV(b.d)} initial="hidden" animate="visible"
+          className="absolute pointer-events-none hidden md:block"
+          style={{ top: b.t, left: b.l, right: b.r }}>
+          <div style={{ width: b.s, height: b.s, borderRadius: '50%', backgroundColor: 'rgba(0,0,0,0.2)' }} />
+        </m.div>
+      ))}
+      {squares.map((sq, i) => {
+        const hide = sq.bp === 'lg' ? 'hidden lg:block' : 'hidden md:block';
+        return (
+          <m.div key={`sq${i}`} custom={sq.d} variants={scaleV(sq.d)} initial="hidden" animate="visible"
+            className={`absolute pointer-events-none ${hide}`}
+            style={{ top: sq.t, left: sq.l, right: sq.r }}>
+            <div style={{
+              width: sq.w, height: sq.h,
+              border: sq.fill ? 'none' : '1px solid rgba(0,0,0,0.2)',
+              backgroundColor: sq.fill ? 'rgba(0,0,0,0.1)' : 'transparent',
+              transform: `rotate(${sq.rot}deg)`,
+              borderRadius: sq.fill ? 2 : 0,
+            }} />
+          </m.div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function About() {
   const [viewing, setViewing] = useState(false);
 
   return (
     <section id="about" className="px-6 md:px-12 lg:px-20 py-24 md:py-32 relative overflow-hidden bg-clay">
-      <div className="max-w-8xl mx-auto">
+      <div className="max-w-9xl mx-auto">
         {/* Label */}
         <m.div
           initial={{ opacity: 0, y: 10 }}
@@ -184,7 +306,7 @@ export default function About() {
           className="flex items-center gap-3 mb-10"
         >
           <span className="w-8 h-px bg-gold" />
-          <span className="text-xs text-gold tracking-[0.15em] uppercase font-mono">About · Resume</span>
+          <span className="text-xs text-gold tracking-[0.15em] uppercase font-mono">About x Resume</span>
           <span className="flex-1 h-px bg-gradient-to-r from-gold/20 to-transparent" />
         </m.div>
 
@@ -194,8 +316,10 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="np-paper border-[3px] border-slate shadow-card-hover"
+          className="np-paper border-[3px] border-slate shadow-card-hover relative overflow-hidden"
         >
+          <DecorativeElements />
+          <div className="relative z-10">
           {/* Dateline strip */}
           <div className="flex items-center justify-between gap-2 px-4 md:px-6 py-2 border-b-2 border-slate font-mono text-[10px] md:text-[11px] text-slate/70 uppercase tracking-wider">
             <span>प्रिन्स पत्रिका · The Prince Patrika</span>
@@ -221,7 +345,7 @@ export default function About() {
               The Prince Patrika
             </p>
             <p className="mt-1.5 font-mono text-[10px] md:text-[11px] text-wine tracking-widest uppercase">
-              ✦ आइतबार · Sunday, August 03, 2026 · काठमाडौं ✦
+              ✦ आइतबार · Sunday, August 03, 2026 · नेपाली ✦
             </p>
           </div>
 
@@ -259,7 +383,7 @@ export default function About() {
               </span>
             </m.h1>
             <p className="mt-3 font-mono text-[10px] md:text-xs text-slate/60 uppercase tracking-widest">
-              Full-Stack Developer · Open for full-stack roles · React.js · UI — काठमाडौं बाट प्रत्यक्ष प्रसारण
+              Full-Stack Developer · Open for full-stack roles · React.js · UI — नेपाली बाट प्रत्यक्ष प्रसारण
             </p>
           </div>
 
@@ -279,7 +403,7 @@ export default function About() {
                   />
                 </div>
                 <figcaption className="mt-2 px-2 pt-2 pb-1 border-t border-slate/40 font-mono text-[9px] uppercase tracking-widest text-slate/60 text-center">
-                  फोटो: कार्यालय अभिलेख · The living editor, काठमाडौं office
+                  फोटो: कार्यालय अभिलेख · The living editor, नेपाली office
                 </figcaption>
               </figure>
 
@@ -306,7 +430,7 @@ export default function About() {
               <ColHeading>प्रोफ़ाइल · Profile</ColHeading>
 
               <p className="font-mono text-[10px] text-slate/50 uppercase tracking-widest mb-4">
-                Report by the Patrika Desk — काठमाडौं, Nepal
+                Report by the Patrika Desk — नेपाल, Nepal
               </p>
 
               <p className="np-dropcap text-[13px] text-slate/80 leading-relaxed">
@@ -515,7 +639,7 @@ export default function About() {
                   <div className="flex items-end justify-between mt-2">
                     <div>
                       <p className="font-bold text-slate text-2xl leading-none" style={{ fontFamily: "'Eczar', serif" }}>29°C</p>
-                      <p className="font-josefin text-[11px] text-slate/70 mt-1">Kathmandu — धूप (Sunny)</p>
+                      <p className="font-josefin text-[11px] text-slate/70 mt-1">Itahari — धूप (Sunny)</p>
                     </div>
                     <p className="font-mono text-[10px] text-slate/50 uppercase text-right leading-relaxed">
                       Job market:<br /><span className="text-wine">Warm & hiring</span>
@@ -542,9 +666,10 @@ export default function About() {
             </div>
             <div className="px-4 md:px-6 py-3 flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] md:text-[11px] text-slate/60 uppercase tracking-widest">
               <span>वर्गीकृत · Classifieds</span>
-              <span className="hidden md:inline">Printed with care in Kathmandu</span>
+              <span className="hidden md:inline">Printed with care in Nepal</span>
               <span>Price रु ५ · Daily</span>
             </div>
+          </div>
           </div>
         </m.div>
 
@@ -571,7 +696,7 @@ export default function About() {
         </div>
 
         <p className="mt-4 font-mono text-[10px] text-slate/40 uppercase tracking-widest text-center">
-          Editor-in-chief: Prince Shrestha · Printed daily · काठमाडौं
+          Editor-in-chief: Prince Shrestha · Printed daily · नेपाल
         </p>
 
         <AnimatePresence>

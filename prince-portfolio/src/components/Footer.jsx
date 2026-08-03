@@ -94,7 +94,7 @@ export default function Footer() {
           className="font-display text-[clamp(3.5rem,9vw,8rem)] font-bold leading-none tracking-tight text-footertext text-center"
           style={{ fontFamily: "'Josefin Sans', sans-serif" }}
         >
-          Simple <span className="text-[#8B1A2B]">Modern</span> Reliable
+          Creative <span className="text-[#8B1A2B]">Modern</span> Reliable
         </m.h2>
 
         {/* divider */}
