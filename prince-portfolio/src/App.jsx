@@ -7,7 +7,6 @@ import Hero from './components/Hero';
 import Marquee from './components/Marquee';
 import Work from './components/Work';
 import About from './components/About';
-import CV from './components/CV';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import NotFound from './components/NotFound';
@@ -36,7 +35,6 @@ export default function App() {
                 <Marquee items={techStack} />
                 <Work />
                 <About />
-                <CV />
                 <Contact />
               </>
             } />

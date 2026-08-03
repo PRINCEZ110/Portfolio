@@ -4,7 +4,6 @@ import { m, AnimatePresence } from 'framer-motion';
 const links = [
   { label: 'work', href: '#work' },
   { label: 'about', href: '#about' },
-  { label: 'cv', href: '#cv' },
   { label: 'contact', href: '#contact' },
 ];
 
