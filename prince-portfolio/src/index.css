@@ -143,6 +143,35 @@ body::before {
   .np-cols-2, .np-cols-3 { columns: 1; }
 }
 
+/* ── Rising Developer broadsheet extras ─────────────── */
+
+.np-stamp {
+  display: inline-block;
+  padding: 6px 10px;
+  border: 2px solid var(--color-maroon);
+  border-radius: 9999px;
+  transform: rotate(-9deg);
+  color: var(--color-maroon);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.photo-dots::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Ccircle cx='1' cy='1' r='0.6' fill='%23201a12' fill-opacity='0.35'/%3E%3C/svg%3E");
+  background-size: 6px 6px;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.np-col-rule { column-rule: 1px solid var(--color-rule); }
+
 a:focus-visible, button:focus-visible {
   outline: 2px solid var(--color-maroon);
   outline-offset: 2px;

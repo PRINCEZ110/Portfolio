@@ -6,154 +6,185 @@ import { AnimatePresence, m } from 'framer-motion';
    ──────────────────────────────────────────────── */
 function TopMeta() {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 pt-4 pb-2 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.25em] text-inksoft border-b border-rule/60">
-      <span>Regd. No. 364-B · Itahari</span>
-      <span className="hidden sm:inline text-maroon font-bold">सत्यं · सुन्दरम् · कोडम्</span>
-      <span>Est. 1965 · माघ २२</span>
+    <div className="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 pt-4 pb-2 font-mono text-[9px] md:text-[10.5px] tracking-[0.2em] text-inksoft">
+      <span>Registered No. PS/2026/GH</span>
+      <span className="hidden sm:inline">Portfolio Edition — Not For Circulation</span>
     </div>
   );
 }
 
 /* ────────────────────────────────────────────────
-   2 · Ears — left stat / masthead / right stat
+   2 · EarBox — mono stat column
+   ──────────────────────────────────────────────── */
+function EarBox({ title, rows }) {
+  return (
+    <div className="border border-ink bg-white/15 px-3 py-2 font-mono text-[9.5px] leading-relaxed text-inksoft">
+      <h4 className="mb-1.5 border-b border-rule/70 pb-1 text-[10.5px] font-bold tracking-[0.08em] text-ink">
+        {title}
+      </h4>
+      {rows.map(([k, v]) => (
+        <div key={k} className="flex items-center justify-between gap-1.5">
+          <span>{k}</span>
+          <span className="font-bold text-ink">{v}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+const rates = [
+  ['Freelance', 'On enquiry'],
+  ['Internship', 'Open'],
+  ['Full-time', 'Open'],
+  ['Reply Time', '< 24 hrs'],
+];
+
+const status = [
+  ['Location', 'Ktm, Nepal'],
+  ['Currently', 'Building'],
+  ['Mood', 'Focused'],
+  ['Open to', 'Roles'],
+];
+
+/* ────────────────────────────────────────────────
+   3 · Ears — dispatch rates / masthead / status
    ──────────────────────────────────────────────── */
 function Ears() {
-  const rates = [
-    ['Frontend', 'React · Tailwind'],
-    ['Backend', 'Java · JSP · MySQL'],
-    ['Design', 'Figma · UI/UX'],
-  ];
-
   return (
-    <header className="grid grid-cols-1 860:grid-cols-[1fr_2fr_1fr] gap-5 md:gap-6 px-4 md:px-8 pt-6 pb-6 border-b-[3px] border-ink">
-      <div className="border-2 border-ink/80 bg-paperdark/25 p-4">
-        <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-inksoft text-center border-b border-rule/60 pb-1.5 mb-3">
-          Dispatch Rates
-        </p>
-        <ul className="space-y-2 font-pserif text-[13px]">
-          {rates.map(([k, v]) => (
-            <li key={k} className="flex items-center justify-between gap-3">
-              <span className="text-inksoft">{k}</span>
-              <span className="font-semibold text-ink text-right">{v}</span>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-3 font-mono text-[9px] uppercase tracking-widest text-brass/80 text-center">
-          Rates speculative · output shipped
-        </p>
-      </div>
+    <header className="grid grid-cols-1 860:grid-cols-[210px_1fr_230px] gap-5 md:gap-6 px-4 md:px-8 pt-5 pb-6">
+      <EarBox title="Dispatch Rates" rows={rates} />
 
       <div className="text-center self-center 860:px-2">
-        <p className="font-deva text-xs md:text-sm tracking-[0.45em] text-inksoft mb-2">सत्यं · सुन्दरम् · कोडम्</p>
-        <h1
-          className="np-masthead font-playfair italic font-black text-ink leading-[0.95]"
-          style={{ fontSize: 'clamp(2.6rem, 8vw, 5.6rem)' }}
-        >
-          The Prince Patrika
-        </h1>
-        <p className="mt-2 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.45em] text-maroon">
-          Vol. I — The Independent Weekly of Code
+        <p className="font-deva text-[13px] font-bold tracking-[0.06em] text-maroon mb-0.5">
+          उदाउँदो डेभलपर
         </p>
-        <p className="mt-2 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-inksoft">
-          Published from Kathmandu · एडिटर प्रिन्स
+        <h1
+          className="font-playfair italic font-black text-ink leading-none"
+          style={{ fontSize: 'clamp(2.5rem, 7vw, 4.6rem)' }}
+        >
+          The Rising Developer
+        </h1>
+        <p className="mt-2 flex items-center justify-center gap-3.5 font-mono text-[9px] tracking-[0.18em] uppercase text-inksoft">
+          <span>PRO CODICE PUBLICO</span>
+          <span className="h-1 w-1 rounded-full bg-maroon" />
+          <span>Itahari · NEPAL</span>
+        </p>
+        <p className="mt-1.5 font-playfair text-[17px] font-bold tracking-[0.04em] text-ink">
+          Prince Shrestha
+          <span className="block font-pserif text-[11.5px] font-normal italic text-inksoft">
+            Foremost Frontend Chronicle — every commit, every morning
+          </span>
         </p>
       </div>
 
-      <div className="border-2 border-ink/80 bg-paperdark/25 p-4 text-center">
-        <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-inksoft border-b border-rule/60 pb-1.5 mb-3">
-          Status Today
-        </p>
-        <p className="font-playfair italic font-bold text-3xl md:text-4xl text-maroon">OPEN</p>
-        <p className="mt-2 font-pserif text-[13px] text-ink">Open for full-stack &amp; frontend roles</p>
-        <p className="font-mono text-[10px] text-brass mt-2">React · Node · Tailwind · MySQL</p>
-      </div>
+      <EarBox title="Status Today" rows={status} />
     </header>
   );
 }
 
 /* ────────────────────────────────────────────────
-   3 · BylineBar — vol/date/price under heavy+thin rules
+   4 · BylineBar — vol/date/price under heavy rules
    ──────────────────────────────────────────────── */
 function BylineBar() {
   return (
-    <div className="px-4 md:px-8 pt-6">
-      <div className="border-t-[3px] border-ink" />
-      <div className="border-t border-ink/70" />
-      <div className="flex flex-wrap items-center justify-between gap-2 py-2.5 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-inksoft">
-        <span className="text-ink">Vol. 1 · No. 1 — Kathmandu / Itahari</span>
-        <span className="hidden sm:inline">Sat. 03 August 1965 · आजको समाचार</span>
-        <span className="text-maroon font-bold">Price: रु ५</span>
+    <div className="px-4 md:px-8">
+      <div className="h-[3px] bg-ink" />
+      <div className="h-px bg-ink mt-[3px]" />
+      <div className="flex flex-wrap items-center justify-between gap-2 py-2.5 font-mono text-[9px] md:text-[10px] tracking-[0.03em] text-inksoft">
+        <span>
+          <b className="text-ink">Vol. I</b> · No. 1
+        </span>
+        <span>
+          Nepali, Shrawan 20, 2083 — <b className="text-ink">Tuesday</b>
+        </span>
+        <span>August 4, 2026</span>
+        <span>[ Portfolio — Price: Your Attention ]</span>
       </div>
+      <div className="h-px bg-ink" />
     </div>
   );
 }
 
 /* ────────────────────────────────────────────────
-   4 · HeadlineLede — kicker, headline, deck, two columns + photo
+   5 · HeadlineLede — kicker, headline, deck, columns + photo
    ──────────────────────────────────────────────── */
 function HeadlineLede() {
   return (
-    <section className="px-4 md:px-8 mt-2">
-      <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-maroon mb-3">
-        व्यक्तित्व · The Personality Page
+    <section className="px-4 md:px-8 mt-6">
+      <p className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-maroon mb-1.5">
+        Skills &amp; Background
       </p>
       <h2
-        className="font-playfair font-black uppercase leading-[0.95] text-ink"
-        style={{ fontSize: 'clamp(2.1rem, 5.5vw, 4.4rem)' }}
+        className="font-playfair font-black text-ink leading-[1.05]"
+        style={{ fontSize: 'clamp(1.7rem, 3.4vw, 2.6rem)' }}
       >
-        Full-Stack Editor Prints the Future
+        Steady Growth In Full-Stack Craft
       </h2>
-      <p className="mt-3 font-playfair italic text-inksoft text-lg md:text-xl">
-        A Kathmandu-trained developer turns algorithms, wireframes, and midnight coffee into shipped products.
+      <p className="mt-1 font-playfair text-base md:text-lg font-semibold italic text-inksoft">
+        React Ecosystem Anchors The Stack — Component Architecture A Vital Link
       </p>
 
-      <div className="mt-6 grid grid-cols-1 860:grid-cols-2 gap-6 md:gap-8">
-        <div className="border-t-2 border-ink/80 pt-4">
-          <div className="np-cols-2 broad-text font-pserif text-[14px] leading-relaxed text-ink/90">
-            <p className="np-dropcap">
-              Hi, I&rsquo;m Prince — a full-stack developer building elegant digital experiences with React, Tailwind
-              CSS, JavaScript, and thoughtful UI design. Every page I ship is set in clean architecture and printed in
-              responsive layouts, from the first wireframe to the final deploy.
-            </p>
-            <p>
-              My daily routine is an editorial desk: receiving the brief in the morning, setting the headline by noon,
-              and rolling the presses at night. Accessibility, performance, and refined visual design are the house
-              style — whether the output is a landing page or a full-stack application.
-            </p>
-          </div>
-
-          <p className="mt-4 font-mono text-[9px] uppercase tracking-[0.25em] text-brass">
-            Photographed with a Rolleiflex — press archive
+      <div className="mt-4 grid grid-cols-1 860:grid-cols-[1.5fr_1fr] gap-6 md:gap-8">
+        <div className="np-cols-2 np-col-rule broad-text font-pserif text-[14.5px] leading-[1.62] text-ink/90">
+          <p className="font-mono text-[9.5px] uppercase tracking-[0.05em] text-inksoft mb-2.5">
+            By Our Correspondent
+          </p>
+          <p className="np-dropcap">
+            Nepali, Aug. 4 — A young developer out of Itahari, now reading Computer Science under a partnership
+            programme with London Metropolitan University, has in the last two years brought sweeping changes to his
+            own craft, associates close to the matter confirm. His instrument of choice: the modern React ecosystem,
+            wielded with what colleagues describe as an unusual insistence on pixel-level exactness.
+          </p>
+          <p>
+            The developer&rsquo;s early training came through structured study of components, hooks, routing and API
+            consumption, applied without delay to live projects rather than left as exercise. He went on to complete a
+            frontend development internship at Info Tech Digital Solution in Biratnagar, where he worked across
+            React.js, Tailwind CSS and a Node.js/Express backend, shipping builds to Vercel and Render.
+          </p>
+          <p>
+            Since then he has maintained three notable dispatches under the byline <b>PRINCEZ110</b>: a personal
+            portfolio rebuilt around VS Code-inspired motion and a lime-accented dark theme; <b>JobNepal</b>, a
+            home-grown job portal raised on React 19, Vite and Tailwind v4; and <b>OneVideo</b>, a Next.js streaming
+            interface now in early scaffolding.
+          </p>
+          <p>
+            Those who have reviewed his work note a recurring thread — a refusal to ship the generic. Correspondents
+            report he has spent whole sessions auditing image weight, animation loops and backdrop-blur stacking on
+            his own site rather than declare it finished, and a standing fascination with Nepali and Newari ornament,
+            which he has folded into wine-red-and-marigold banner studies and a Himalayan-indigo colour system for
+            JobNepal&rsquo;s skyline motif.
           </p>
         </div>
 
-        <aside className="flex flex-col gap-5">
-          <figure className="relative border-2 border-ink/80 bg-paperdark/40 p-2">
-            <div className="np-halftone relative aspect-[4/5] w-full overflow-hidden border border-ink/60">
+        <aside className="flex flex-col gap-4">
+          <figure className="text-center">
+            <div className="photo-dots relative aspect-[4/4.6] w-full overflow-hidden border border-ink bg-paperdark/50">
               <img
                 src="/Aboutimage.jpg"
-                alt="Prince Shrestha — portrait"
-                className="absolute inset-0 h-full w-full object-cover opacity-90"
+                alt="Prince Shrestha — at his workstation"
+                className="absolute inset-0 h-full w-full object-cover sepia-[0.25] contrast-[1.05]"
                 loading="lazy"
               />
             </div>
-            <span className="absolute -rotate-[9deg] right-4 top-5 inline-block border-[3px] border-double border-maroon rounded-full px-3 py-2 text-center font-mono text-[8px] uppercase tracking-widest text-maroon bg-paper">
-              Authentic ·<br />Certified<br />1965
-            </span>
-            <figcaption className="mt-1.5 pt-2 border-t border-rule/60 font-mono text-[9px] uppercase tracking-[0.2em] text-inksoft text-center">
-              फोटो · प्रिन्स श्रेष्ठ — the living editor
+            <figcaption className="px-1 pt-1.5 font-mono text-[10px] leading-relaxed text-inksoft">
+              <b className="mb-0.5 block text-[11px] text-ink">Prince Shrestha</b>
+              Frontend Developer · Itahari, Nepal — pictured at his workstation, mid-refactor.
             </figcaption>
+            <span className="np-stamp mt-2.5">VERIFIED<br />SKILL SET</span>
           </figure>
 
-          <blockquote className="border-l-4 border-maroon bg-paperdark/25 p-4">
-            <p className="font-playfair italic text-[14px] text-ink/90 leading-relaxed">
-              &ldquo;Building premium digital experiences through thoughtful design, clean code, and meaningful
-              interactions.&rdquo;
+          <div className="border border-ink bg-white/20 p-3.5">
+            <h5 className="mb-2 border-b border-rule/70 pb-1.5 font-playfair text-[14px] font-extrabold text-ink">
+              From The Internship Desk
+            </h5>
+            <p className="font-pserif text-[12.6px] italic leading-[1.55] text-inksoft">
+              &ldquo;He treated a two-second layout shift as a personal offence. Whatever he ships, it ships
+              clean.&rdquo;
             </p>
-            <footer className="mt-2 font-mono text-[9px] uppercase tracking-[0.25em] text-inksoft">
-              — The Bureau of Taste
-            </footer>
-          </blockquote>
+            <span className="mt-2 block text-right font-mono text-[10px] text-ink">
+              — A Colleague, Info Tech Digital Solution
+            </span>
+          </div>
         </aside>
       </div>
     </section>
@@ -161,59 +192,65 @@ function HeadlineLede() {
 }
 
 /* ────────────────────────────────────────────────
-   5 · ThreeColumnFeature — Background / Toolkit / Approach
+   6 · ThreeColumnFeature — Background / Toolkit / Approach
    ──────────────────────────────────────────────── */
 function ThreeColumnFeature() {
   const toolkit = [
-    'React.js',
-    'JavaScript',
-    'Tailwind CSS',
-    'HTML5 / CSS3',
-    'Java',
-    'JSP · Servlet',
-    'JDBC · MySQL',
-    'Figma',
-    'Git · GitHub',
-    'UI/UX Design',
+    ['Frontend', 'React 19 · Next.js'],
+    ['Styling', 'Tailwind CSS v4'],
+    ['Motion', 'Framer Motion'],
+    ['Language', 'TypeScript'],
+    ['State', 'Redux Toolkit'],
+    ['Backend', 'Node.js · Express'],
+    ['Build', 'Vite'],
+    ['Ship', 'Vercel · Render'],
   ];
 
   return (
-    <section className="px-4 md:px-8 mt-8">
-      <div className="border-t-[3px] border-ink" />
-      <div className="border-t border-ink/60" />
-      <div className="grid grid-cols-1 860:grid-cols-3 860:divide-x divide-rule/50">
-        <div className="py-5 860:pr-6">
-          <h3 className="font-playfair font-bold text-2xl text-ink">Background</h3>
-          <p className="np-dropcap font-pserif text-[14px] leading-relaxed text-ink/90 mt-3">
-            BSc (Hons) Computing — Itahari International College × London Metropolitan University, training in
-            Kathmandu while printing pages for the web, worldwide.
+    <section className="px-4 md:px-8 mt-7 border-t-[3px] border-double border-ink pt-4">
+      <div className="grid grid-cols-1 860:grid-cols-3 gap-6 860:gap-8">
+        <div>
+          <h6 className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-maroon mb-1.5">
+            Background
+          </h6>
+          <h5 className="font-playfair text-[16.5px] font-extrabold text-ink mb-2">Education &amp; Origin</h5>
+          <p className="font-pserif text-[13px] leading-[1.6] text-ink/90 text-justify mb-2">
+            Reading Computer Science at Itahari International College, in partnership with London Metropolitan
+            University. Raised on Nepal&rsquo;s eastern plains, now building from Itahari.
           </p>
-          <p className="font-pserif text-[14px] leading-relaxed text-ink/90 mt-3">
-            Editorial columns covered: algorithms and data structures, software engineering, web development, and
-            database systems — the four columns on which every shipped product stands.
+          <p className="font-pserif text-[13px] leading-[1.6] text-ink/90 text-justify">
+            Trained on the job as much as in the classroom — an internship at Info Tech Digital Solution, Biratnagar,
+            turned classroom React into shipped, client-facing product.
           </p>
         </div>
 
-        <div className="py-5 860:px-6">
-          <h3 className="font-playfair font-bold text-2xl text-ink">Toolkit</h3>
-          <ul className="mt-3">
-            {toolkit.map((t) => (
-              <li key={t} className="flex items-center justify-between py-2 border-b border-dotted border-rule/80">
-                <span className="font-pserif text-[13px] text-ink">{t}</span>
-                <span className="text-brass font-mono text-[11px]">✦</span>
+        <div>
+          <h6 className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-maroon mb-1.5">
+            The Toolkit
+          </h6>
+          <h5 className="font-playfair text-[16.5px] font-extrabold text-ink mb-2">Working Stack</h5>
+          <ul className="font-mono text-[11px]">
+            {toolkit.map(([k, v]) => (
+              <li key={k} className="flex items-center justify-between gap-3 border-b border-dotted border-rule/80 py-1">
+                <b className="font-pserif text-[12.5px] font-normal text-ink">{k}</b>
+                <span className="text-[10.5px] text-maroon">{v}</span>
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="py-5 860:pl-6">
-          <h3 className="font-playfair font-bold text-2xl text-ink">Approach</h3>
-          <p className="np-dropcap font-pserif text-[14px] leading-relaxed text-ink/90 mt-3">
-            Like good journalism, good engineering turns raw inputs into something people can actually use. I frontend,
-            backend, and design the space in between — each feature written, styled, and shipped by hand.
+        <div>
+          <h6 className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-maroon mb-1.5">
+            The Approach
+          </h6>
+          <h5 className="font-playfair text-[16.5px] font-extrabold text-ink mb-2">What Guides The Work</h5>
+          <p className="font-pserif text-[13px] leading-[1.6] text-ink/90 text-justify mb-2">
+            Every interface is treated the way this front page is composed — with deliberate hierarchy, real hairline
+            discipline, and nothing decorative that isn&rsquo;t also doing a job.
           </p>
-          <p className="font-pserif text-[14px] leading-relaxed text-ink/90 mt-3">
-            The desk is open. Junior to mid-level full-stack or frontend positions, apply through the contact section.
+          <p className="font-pserif text-[13px] leading-[1.6] text-ink/90 text-justify">
+            A standing interest in Nepali and Newari visual language runs underneath the modern stack, surfacing in
+            colour systems, motifs and the occasional Devanagari flourish.
           </p>
         </div>
       </div>
@@ -222,93 +259,109 @@ function ThreeColumnFeature() {
 }
 
 /* ────────────────────────────────────────────────
-   6 · BottomRow — Stop Press + classified ad
+   7 · BottomRow — Stop Press + classified ad
    ──────────────────────────────────────────────── */
 function BottomRow() {
   const stops = [
-    'Wanted: full-stack developer — apply at the contact section',
-    'Fresh stock: React components · उत्तम गुणस्तर',
-    'Market report: JavaScript shares remain strong',
-    'Running the presses nightly from Kathmandu',
+    ['JobNepal', 'major GitHub issue backlog cleared; Remember Me, storage migration and form logic overhauled.'],
+    ['OneVideo', 'Next.js streamer enters early build; dark-mode scaffolding now complete.'],
+    ['Portfolio', 'performance audit closes in on a 1.3MB image and ungated canvas loops.'],
   ];
 
-  const stack = ['React', 'Tailwind', 'REST APIs', 'Java', 'MySQL'];
-
   return (
-    <section className="px-4 md:px-8 mt-5 grid grid-cols-1 860:grid-cols-2 gap-5">
-      <div className="border-2 border-ink p-4">
-        <p className="font-playfair italic font-bold text-lg text-maroon">Stop Press</p>
-        <ul className="mt-2 space-y-2">
-          {stops.map((s) => (
-            <li key={s} className="flex gap-2 font-pserif text-[13px] text-ink/90">
-              <span className="text-brass">■</span>
-              <span>{s}</span>
+    <section className="px-4 md:px-8 mt-7 grid grid-cols-1 860:grid-cols-2 gap-6">
+      <div className="border-2 border-ink p-3.5">
+        <span className="mb-2 inline-block bg-maroon px-2 py-0.5 font-mono text-[10px] font-bold tracking-[0.12em] text-paper">
+          Stop Press
+        </span>
+        <ul className="space-y-1.5 pl-4 font-pserif text-[12.8px] leading-[1.6] text-ink/90 list-disc">
+          {stops.map(([name, text]) => (
+            <li key={name}>
+              <b className="font-playfair">{name}</b> — {text}
             </li>
           ))}
         </ul>
+        <p className="mt-1.5 text-right font-mono text-[10px] text-inksoft">— PRINCEZ110</p>
       </div>
 
-      <div className="border-4 border-double border-ink/80 p-4 text-center">
-        <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-inksoft">विज्ञापन · Classified</p>
-        <h3 className="font-playfair font-bold text-xl text-ink mt-1">Fresh Stock Arrived</h3>
-        <div className="mt-2 flex flex-wrap justify-center gap-2 font-mono text-[10px] text-maroon uppercase">
-          {stack.map((s) => (
-            <span key={s} className="border border-maroon/50 px-2 py-0.5">
-              {s}
-            </span>
-          ))}
-        </div>
-        <p className="mt-3 font-mono text-[10px] uppercase text-brass">REST APIs · तीव्र वितरण — sold out daily</p>
-        <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.2em] text-inksoft">Enquire at the contact section</p>
+      <div className="border-[3px] border-double border-ink p-4 text-center">
+        <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-inksoft">
+          On The Occasion Of Every Deployment
+        </p>
+        <h3 className="mt-1.5 mb-2 font-playfair text-2xl font-extrabold italic text-ink">Skills At Your Service</h3>
+        <p className="mb-1.5 text-[11.5px] tracking-[0.05em]">OUR HEARTFELT SPECIALISATION TO</p>
+        <p className="my-2 border-y border-rule/70 py-2 font-mono text-[10.5px] leading-[1.9] tracking-[0.03em] text-ink">
+          FRONTEND ARCHITECTURE · REACT / NEXT.JS<br />
+          TAILWIND CSS · TYPESCRIPT · FRAMER MOTION<br />
+          NODE.JS · EXPRESS · REST APIS<br />
+          VITE · GIT · VERCEL · RENDER
+        </p>
+        <p className="mt-1.5 text-xs tracking-[0.06em]">KATHMANDU, NEPAL</p>
+        <p className="mt-1 font-mono text-xs font-bold">github.com/PRINCEZ110</p>
+        <p className="mt-3 font-playfair text-xs font-extrabold uppercase tracking-[0.05em]">
+          Developer In-Charge
+          <span className="mt-0.5 block font-pserif text-[14px] font-bold normal-case tracking-normal">
+            Prince Shrestha
+          </span>
+        </p>
       </div>
     </section>
   );
 }
 
 /* ────────────────────────────────────────────────
-   7 · Banner — a message to the nation, 3 columns
+   8 · Banner — a message to every project, 3 columns
    ──────────────────────────────────────────────── */
 function Banner() {
   return (
-    <section id="cv" className="scroll-mt-24 px-4 md:px-8 mt-8">
-      <div className="border-t-[3px] border-ink" />
-      <div className="border-t border-ink/60" />
-      <div className="pt-5">
-        <p className="text-center font-mono text-[10px] uppercase tracking-[0.4em] text-maroon mb-3">
-          — An Address to the Nation —
+    <section id="cv" className="scroll-mt-24 px-4 md:px-8 mt-8 pt-4 border-t-4 border-ink">
+      <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-inksoft">A Message To Every Project</p>
+      <h2
+        className="mt-1.5 mb-0.5 font-playfair font-black text-ink leading-[1.08]"
+        style={{ fontSize: 'clamp(1.5rem, 3.6vw, 2.5rem)' }}
+      >
+        Prince Appeals To Craft With Precision And Purpose
+      </h2>
+      <p className="font-playfair text-base font-bold text-maroon">
+        Call For Renewed Effort In Clean Code And Cultural Design
+      </p>
+      <p className="mb-3.5 font-pserif text-[13px] italic text-inksoft">Full Text Of The Developer&rsquo;s Working Philosophy</p>
+      <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.04em] text-inksoft">Kathmandu, Aug. 4</p>
+      <div className="np-cols-3 np-col-rule broad-text font-pserif text-[13.5px] leading-[1.62] text-ink/90">
+        <p className="np-dropcap">
+          Prince Shrestha, developer of Kathmandu, addressed the matter of his craft today, saying that good work is
+          sure to increase in proportion to the care given it, and appealed to every project under his hand to do away
+          with meanness of detail and half-finished polish.
         </p>
-        <h3 className="text-center font-playfair italic font-bold text-2xl md:text-3xl text-ink">
-          From the Editor&rsquo;s Desk
-        </h3>
-        <div className="np-cols-3 broad-text font-pserif text-[14px] leading-relaxed text-ink/90 mt-4">
-          <p className="np-dropcap">
-            Fellow readers: good software is an act of journalism. It reports the truth of a requirement, holds the
-            reader — the user — in trust, and ships in time for the morning edition. No page leaves this office until
-            it reads cleanly at every width, loads quickly, and is accessible to all.
-          </p>
-          <p>
-            The values of this paper are simple: real progress over polished promises, honest code over clever
-            one-liners, and design that serves rather than decorates. Each release is a fresh print run — reviewed,
-            proofed, and rolled into production with the same care as tomorrow's front page.
-          </p>
-          <p>
-            To the teams reading from abroad: the byline is Prince, the bureau is Kathmandu, and the deadline is always
-            now. Let us set your next headline together. नेपालबाट प्रत्यक्ष प्रसारण — broadcast live from Nepal.
-          </p>
-        </div>
+        <p>
+          He noted that he remains impatient with interfaces wholly immune to refinement, and that he would push and
+          pull until even the smallest field — a hover state, a loading skeleton, a line-height — could stand on its
+          own. &ldquo;As I note the emergence of a new build,&rdquo; he said, &ldquo;I become more hopeful about what
+          it can be, and I make sure every animation, every colour, every margin is earning its place.&rdquo;
+        </p>
+        <p>
+          He also thanked the frameworks and communities that have shaped his habit of self-help — React, Tailwind,
+          and the open-source projects he studies line by line — and concluded that his own stack will keep growing
+          whether or not the deadline allows it, because that habit, once formed, does not easily fall away.
+        </p>
       </div>
     </section>
   );
 }
 
 /* ────────────────────────────────────────────────
-   8 · FooterStrip — mono credit line + CV actions
+   9 · FooterStrip — credit line + CV actions
    ──────────────────────────────────────────────── */
 function FooterStrip({ viewing, setViewing }) {
   return (
     <footer className="px-4 md:px-8 pt-6 pb-6 mt-6">
-      <div className="border-t-[3px] border-ink" />
-      <div className="border-t border-ink/60" />
+      <div className="border-t border-ink" />
+      <div className="flex flex-wrap items-center justify-between gap-2 py-2.5 font-mono text-[9.5px] tracking-[0.04em] text-inksoft">
+        <span className="font-playfair text-xs font-bold italic text-ink">The Rising Developer</span>
+        <span className="hidden md:inline">Composed in Itahari · Set in Playfair Display &amp; JetBrains Mono</span>
+        <span>gorkhapatra-inspired, hand-laid for PRINCEZ110</span>
+      </div>
+      <div className="border-t border-ink" />
       <div className="flex flex-wrap items-center justify-center gap-4 pt-5">
         <button
           onClick={() => setViewing((v) => !v)}
@@ -330,7 +383,7 @@ function FooterStrip({ viewing, setViewing }) {
         </a>
       </div>
       <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.3em] text-inksoft">
-        Editor-in-chief: Prince Shrestha · Printed daily in the Kathmandu Valley · नेपाल · Est. 1965
+        Editor-in-chief: Prince Shrestha · Composed daily in the Kathmandu Valley · नेपाल
       </p>
     </footer>
   );
