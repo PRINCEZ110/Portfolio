@@ -6,7 +6,7 @@ import ProjectNavbar from './components/ProjectNavbar';
 import Hero from './components/Hero';
 import Marquee from './components/Marquee';
 import Work from './components/Work';
-import About from './components/About';
+import NewsPaperAbout from './components/NewsPaperAbout';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import NotFound from './components/NotFound';
@@ -34,7 +34,7 @@ export default function App() {
                 <Hero />
                 <Marquee items={techStack} />
                 <Work />
-                <About />
+                <NewsPaperAbout />
                 <Contact />
               </>
             } />

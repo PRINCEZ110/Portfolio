@@ -10,6 +10,12 @@ export default {
         josefin: ['"Josefin Sans"', 'sans-serif'],
         lato: ['"Lato"', 'sans-serif'],
         anton: ['"Anton"', 'sans-serif'],
+        playfair: ['"Playfair Display"', 'serif'],
+        pserif: ['"PT Serif"', 'serif'],
+        deva: ['"Noto Sans Devanagari"', 'sans-serif'],
+      },
+      screens: {
+        '860': '860px',
       },
       colors: {
         clay: '#F8F7E5',
@@ -34,6 +40,13 @@ export default {
         muteddark: '#B7B7B7',
         pink: '#FF60DD',
         black: '#0A0A0A',
+        paper: '#EFE6D3',
+        paperdark: '#E4D6B6',
+        ink: '#201A12',
+        inksoft: '#4D4331',
+        rule: '#9C8A67',
+        maroon: '#7C2A2F',
+        brass: '#A97F2E',
       },
       maxWidth: {
         '8xl': '90rem',

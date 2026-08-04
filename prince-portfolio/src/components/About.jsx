@@ -295,34 +295,21 @@ export default function About() {
   const [viewing, setViewing] = useState(false);
 
   return (
-    <section id="about" className="px-6 md:px-12 lg:px-20 py-24 md:py-32 relative overflow-hidden bg-clay">
-      <div className="max-w-9xl mx-auto">
-        {/* Label */}
-        <m.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center gap-3 mb-10"
-        >
-          <span className="w-8 h-px bg-gold" />
-          <span className="text-xs text-gold tracking-[0.15em] uppercase font-mono">About x Resume</span>
-          <span className="flex-1 h-px bg-gradient-to-r from-gold/20 to-transparent" />
-        </m.div>
-
-        {/* THE PAPER */}
-        <m.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="np-paper border-[3px] border-slate shadow-card-hover relative overflow-hidden"
-        >
+    <>
+    <section id="about" className="relative bg-clay flex min-h-screen">
+      {/* THE PAPER */}
+      <m.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="np-paper relative w-full flex-1 border-4 border-slate flex flex-col"
+      >
           <DecorativeElements />
-          <div className="relative z-10">
+          <div className="relative z-10 flex-1">
           {/* Dateline strip */}
           <div className="flex items-center justify-between gap-2 px-4 md:px-6 py-2 border-b-2 border-slate font-mono text-[10px] md:text-[11px] text-slate/70 uppercase tracking-wider">
-            <span>प्रिन्स पत्रिका · The Prince Patrika</span>
+            <span>Developer · The Full-stack</span>
             <span className="hidden md:inline text-slate/50">सत्यं · सुन्दरम् · कोडम्</span>
             <span className="flex items-center gap-2">
               <span className="np-barcode hidden sm:block" />
@@ -339,10 +326,10 @@ export default function About() {
               className="np-register font-bold leading-none text-slate"
               style={{ fontFamily: "'Eczar', serif", fontSize: 'clamp(2.6rem, 8vw, 5.5rem)' }}
             >
-              प्रिन्स पत्रिका
+              Developer
             </h2>
             <p className="mt-2 font-josefin font-semibold text-sm md:text-base tracking-[0.35em] uppercase text-slate/80">
-              The Prince Patrika
+              The Full-stack
             </p>
             <p className="mt-1.5 font-mono text-[10px] md:text-[11px] text-wine tracking-widest uppercase">
               ✦ आइतबार · Sunday, August 03, 2026 · नेपाली ✦
@@ -670,62 +657,58 @@ export default function About() {
               <span>Price रु ५ · Daily</span>
             </div>
           </div>
+
+          {/* Ticket actions */}
+          <div className="px-4 md:px-6 py-5 border-t-2 border-slate flex flex-wrap items-center justify-center gap-4 bg-white/40">
+            <button
+              onClick={() => setViewing((v) => !v)}
+              className="group font-mono text-[12px] uppercase tracking-widest text-slate border-2 border-dashed border-slate bg-white/60 px-6 py-3 hover:text-wine hover:border-wine transition-all duration-300"
+            >
+              <span className="mr-3 text-wine">✂</span>
+              {viewing ? 'Close the Paper' : 'View Full Paper (PDF)'}
+              <span className="ml-3 text-wine">✂</span>
+            </button>
+            <a
+              href="/Prince Shrestha_Resume.pdf"
+              download="Prince Shrestha_Resume.pdf"
+              className="flex items-center gap-3 font-mono text-[12px] uppercase tracking-widest bg-slate text-white px-6 py-3 hover:bg-wine transition-all duration-300"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              <span>Download PDF — रु ०</span>
+            </a>
+          </div>
           </div>
         </m.div>
+      </section>
 
-        {/* Ticket actions */}
-        <div className="flex flex-wrap gap-4 mt-8">
-          <button
-            onClick={() => setViewing((v) => !v)}
-            className="group font-mono text-[12px] uppercase tracking-widest text-slate border-2 border-dashed border-slate bg-white/60 px-6 py-3 hover:text-wine hover:border-wine transition-all duration-300"
+      <AnimatePresence>
+        {viewing && (
+          <m.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden bg-clay"
           >
-            <span className="mr-3 text-wine">✂</span>
-            {viewing ? 'Close the Paper' : 'View Full Paper (PDF)'}
-            <span className="ml-3 text-wine">✂</span>
-          </button>
-          <a
-            href="/Prince Shrestha_Resume.pdf"
-            download="Prince Shrestha_Resume.pdf"
-            className="flex items-center gap-3 font-mono text-[12px] uppercase tracking-widest bg-slate text-white px-6 py-3 hover:bg-wine transition-all duration-300"
-          >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            <span>Download PDF — रु ०</span>
-          </a>
-        </div>
-
-        <p className="mt-4 font-mono text-[10px] text-slate/40 uppercase tracking-widest text-center">
-          Editor-in-chief: Prince Shrestha · Printed daily · नेपाल
-        </p>
-
-        <AnimatePresence>
-          {viewing && (
             <m.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="overflow-hidden mt-8"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
+              className="mb-8 border-2 border-slate overflow-hidden bg-white shadow-card"
             >
-              <m.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.15 }}
-                className="border-2 border-slate overflow-hidden bg-white shadow-card"
-              >
-                <div className="np-paper px-5 py-4 flex items-center justify-between border-b-2 border-slate font-mono text-xs text-slate/70 tracking-wide">
-                  <span className="uppercase">Prince Shrestha_Resume.pdf</span>
-                  <a href="/Prince Shrestha_Resume.pdf" target="_blank" rel="noreferrer" className="text-wine hover:text-slate transition-colors">
-                    OPEN →
-                  </a>
-                </div>
-                <iframe src="/Prince Shrestha_Resume.pdf" title="CV" className="w-full" style={{ height: '85vh' }} />
-              </m.div>
+              <div className="np-paper px-5 py-4 flex items-center justify-between border-b-2 border-slate font-mono text-xs text-slate/70 tracking-wide">
+                <span className="uppercase">Prince Shrestha_Resume.pdf</span>
+                <a href="/Prince Shrestha_Resume.pdf" target="_blank" rel="noreferrer" className="text-wine hover:text-slate transition-colors">
+                  OPEN →
+                </a>
+              </div>
+              <iframe src="/Prince Shrestha_Resume.pdf" title="CV" className="w-full" style={{ height: '85vh' }} />
             </m.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </section>
+          </m.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
