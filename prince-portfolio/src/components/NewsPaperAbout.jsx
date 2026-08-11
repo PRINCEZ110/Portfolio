@@ -415,34 +415,34 @@ export default function NewsPaperAbout() {
         <BottomRow />
         <Banner />
         <FooterStrip viewing={viewing} setViewing={setViewing} />
-      </article>
 
-      <AnimatePresence>
-        {viewing && (
-          <m.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden bg-ink"
-          >
+        <AnimatePresence>
+          {viewing && (
             <m.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.15 }}
-              className="m-4 md:m-6 border-4 border-ink bg-paper shadow-card"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden"
             >
-              <div className="px-5 py-4 flex items-center justify-between border-b-2 border-ink bg-paper font-mono text-xs text-ink tracking-wide">
-                <span className="uppercase">Prince Shrestha_Resume.pdf</span>
-                <a href="/Prince Shrestha_Resume.pdf" target="_blank" rel="noreferrer" className="text-maroon hover:text-ink transition-colors">
-                  OPEN →
-                </a>
-              </div>
-              <iframe src="/Prince Shrestha_Resume.pdf" title="CV" className="w-full" style={{ height: '85vh' }} />
+              <m.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.15 }}
+                className="mx-4 mb-4 md:mx-8 border-4 border-ink bg-paper shadow-card"
+              >
+                <div className="px-5 py-4 flex items-center justify-between border-b-2 border-ink bg-paper font-mono text-xs text-ink tracking-wide">
+                  <span className="uppercase">Prince Shrestha_Resume.pdf</span>
+                  <a href="/Prince Shrestha_Resume.pdf" target="_blank" rel="noreferrer" className="text-maroon hover:text-ink transition-colors">
+                    OPEN →
+                  </a>
+                </div>
+                <iframe src="/Prince Shrestha_Resume.pdf" title="CV" className="w-full" style={{ height: '85vh' }} />
+              </m.div>
             </m.div>
-          </m.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
+      </article>
     </section>
   );
 }
