@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, m } from 'framer-motion';
+import NepaliDate from 'nepali-date-converter';
 
 /* ────────────────────────────────────────────────
    1 · TopMeta — tiny mono strip
@@ -40,7 +41,7 @@ const rates = [
 ];
 
 const status = [
-  ['Location', 'Ktm, Nepal'],
+  ['Location', 'Itahari, Nepal'],
   ['Currently', 'Building'],
   ['Mood', 'Focused'],
   ['Open to', 'Roles'],
@@ -86,6 +87,12 @@ function Ears() {
    4 · BylineBar — vol/date/price under heavy rules
    ──────────────────────────────────────────────── */
 function BylineBar() {
+  const today = new NepaliDate();
+  const { year, month, date } = today.getAD();
+  const adFormatted = new Date(year, month, date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const bsDay = today.format('dddd');
+  const bsDate = today.format('MMMM D, YYYY');
+
   return (
     <div className="px-4 md:px-8">
       <div className="h-[3px] bg-ink" />
@@ -95,9 +102,9 @@ function BylineBar() {
           <b className="text-ink">Vol. I</b> · No. 1
         </span>
         <span>
-          Nepali, Shrawan 20, 2083 — <b className="text-ink">Tuesday</b>
+          Nepali, {bsDate} — <b className="text-ink">{bsDay}</b>
         </span>
-        <span>August 4, 2026</span>
+        <span>{adFormatted}</span>
         <span>[ Portfolio — Price: Your Attention ]</span>
       </div>
       <div className="h-px bg-ink" />
@@ -130,9 +137,10 @@ function HeadlineLede() {
             By Our Correspondent
           </p>
           <p className="np-dropcap">
-            Nepali, Aug. 4 — A young developer out of Itahari, now reading Computer Science under a partnership
-            programme with London Metropolitan University, has in the last two years brought sweeping changes to his
-            own craft, associates close to the matter confirm. His instrument of choice: the modern React ecosystem,
+            Nepali, Aug. 4 — A young developer out of Itahari, now reading Bsc Hons computing at Itahari International College and
+            has in the last two years brought sweeping changes to his
+            own craft, associates close to the matter confirm. His instrument of choice: the modern React ecosystem, next.js, 
+            tailwind and framer motion,
             wielded with what colleagues describe as an unusual insistence on pixel-level exactness.
           </p>
           <p>
@@ -158,11 +166,11 @@ function HeadlineLede() {
 
         <aside className="flex flex-col gap-4">
           <figure className="text-center">
-            <div className="photo-dots relative aspect-[4/4.6] w-full overflow-hidden border border-ink bg-paperdark/50">
+            <div className="relative aspect-[4/4.6] w-full overflow-hidden border border-ink z-10">
               <img
                 src="/Aboutimage.jpg"
                 alt="Prince Shrestha — at his workstation"
-                className="absolute inset-0 h-full w-full object-cover sepia-[0.25] contrast-[1.05]"
+                className="absolute inset-0 h-full w-full object-cover"
                 loading="lazy"
               />
             </div>
@@ -296,7 +304,7 @@ function BottomRow() {
           NODE.JS · EXPRESS · REST APIS<br />
           VITE · GIT · VERCEL · RENDER
         </p>
-        <p className="mt-1.5 text-xs tracking-[0.06em]">KATHMANDU, NEPAL</p>
+        <p className="mt-1.5 text-xs tracking-[0.06em]">Itahari, NEPAL</p>
         <p className="mt-1 font-mono text-xs font-bold">github.com/PRINCEZ110</p>
         <p className="mt-3 font-playfair text-xs font-extrabold uppercase tracking-[0.05em]">
           Developer In-Charge
@@ -326,10 +334,10 @@ function Banner() {
         Call For Renewed Effort In Clean Code And Cultural Design
       </p>
       <p className="mb-3.5 font-pserif text-[13px] italic text-inksoft">Full Text Of The Developer&rsquo;s Working Philosophy</p>
-      <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.04em] text-inksoft">Kathmandu, Aug. 4</p>
+      <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.04em] text-inksoft">Itahari, Aug. 4</p>
       <div className="np-cols-3 np-col-rule broad-text font-pserif text-[13.5px] leading-[1.62] text-ink/90">
         <p className="np-dropcap">
-          Prince Shrestha, developer of Kathmandu, addressed the matter of his craft today, saying that good work is
+          Prince Shrestha, developer of Itahari, addressed the matter of his craft today, saying that good work is
           sure to increase in proportion to the care given it, and appealed to every project under his hand to do away
           with meanness of detail and half-finished polish.
         </p>
@@ -353,6 +361,7 @@ function Banner() {
    9 · FooterStrip — credit line + CV actions
    ──────────────────────────────────────────────── */
 function FooterStrip({ viewing, setViewing }) {
+  const bsYear = new NepaliDate().getBS().year;
   return (
     <footer className="px-4 md:px-8 pt-6 pb-6 mt-6">
       <div className="border-t border-ink" />
@@ -383,7 +392,7 @@ function FooterStrip({ viewing, setViewing }) {
         </a>
       </div>
       <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.3em] text-inksoft">
-        Editor-in-chief: Prince Shrestha · Composed daily in the Kathmandu Valley · नेपाल
+        Editor-in-chief: Prince Shrestha · Composed daily in the Itahari Valley · नेपlी, {String(bsYear).replace(/[0-9]/g, (d) => '०१२३४५६७८९'[d])} · All Rights Reserved
       </p>
     </footer>
   );
