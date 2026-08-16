@@ -9,8 +9,8 @@ export const projectFolders = [
     tech: ['React.js', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS'],
     role: 'Full-Stack Developer',
     duration: '3 months',
-    live: 'https://jobnepal.netlify.app',
-    github: 'https://github.com/prince/jobnepal',
+    live: 'https://job-nepal-gamma.vercel.app',
+    github: 'https://github.com/PRINCEZ110/JobNepal',
     category: 'Featured Projects',
     readme: `JOB NEPAL
 =========
@@ -90,32 +90,33 @@ FEATURES
 [x] Real-time financial reporting`,
   },
   {
-    id: 'nagarsewa',
-    name: 'Nagar Sewa',
-    description: 'E-Governance for citizen-government communication',
+    id: 'haprvisual',
+    name: 'HAPR Visual',
+    description: '3D visualization and motion design studio site',
     modified: '2026-07-12',
     size: '3.4 MB',
     status: 'Completed',
-    tech: ['React.js', 'Tailwind CSS', 'JavaScript', 'Chart.js', 'REST API'],
-    role: 'Full-Stack Developer',
-    duration: '4 months',
-    live: 'https://nagar-sewa.netlify.app',
-    github: 'https://github.com/prince/nagarsewa',
+    tech: ['React.js', 'Tailwind CSS', 'JavaScript', 'Vite'],
+    role: 'Designer & Developer',
+    duration: '2 months',
+    live: 'https://haprvisual.vercel.app',
+    github: '',
     category: 'Featured Projects',
-    readme: `NAGAR SEWA
-==========
-A citizen-focused digital platform for e-governance.
+    readme: `HAPR VISUAL
+===========
+A studio website for a 3D visualization and
+motion design studio based in Kathmandu.
 
 FEATURES
-- Issue reporting and tracking
-- Communication between citizens and local government
-- Real-time status updates
-- Data visualization with charts`,
-    features: `[x] Issue reporting system
-[x] Real-time tracking dashboard
-[x] Citizen feedback mechanism
-[x] Data visualization
-[x] Admin moderation tools`,
+- Portfolio of architectural renderings
+- Interior, exterior and product showcases
+- Motion design reels with autoplay
+- Service and project-inquiry flows`,
+    features: `[x] 12+ rendering portfolio grid
+[x] Autoplay motion reels
+[x] Service showcase
+[x] Project inquiry form
+[x] Responsive layout`,
   },
   {
     id: 'portfoliov3',

@@ -46,8 +46,8 @@ export default function ProjectDetail() {
   }
 
   const MockupComponent =
-    project.id === 'nagarsewa' ? NagarSewaDetailMockup :
-    project.id === 'timestar' ? TimeStarDetailMockup :
+    project.id === 'haprvisual' ? HaprVisualDetailMockup :
+    project.id === 'jobnepal' ? JobNepalDetailMockup :
     SahakariNetDetailMockup;
 
   return (
@@ -180,7 +180,7 @@ export default function ProjectDetail() {
             <MockupComponent variant={browserPref} />
           </m.div>
 
-          {(project.id === 'nagarsewa' || project.id === 'sahakarinet') && (
+          {project.live && (
             <m.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -189,7 +189,7 @@ export default function ProjectDetail() {
               className="flex justify-center mt-6 mb-20"
             >
               <a
-                href={project.id === 'sahakarinet' ? 'https://sahakari-net.onrender.com' : 'https://nagar-sewa.netlify.app/#home'}
+                href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase px-6 py-3 rounded-xl border border-gold/30 text-wine hover:bg-gold/10 transition-all duration-300"
@@ -236,120 +236,41 @@ export default function ProjectDetail() {
 
 /* ─── DETAIL PAGE MOCKUPS (larger, more detailed) ─── */
 
-function NagarSewaDetailMockup({ variant = 'mac' }) {
-  const iframeRef = useRef(null);
-  const [loaded, setLoaded] = useState(false);
-  const [key, setKey] = useState(0);
-
-  const refresh = () => {
-    setKey((k) => k + 1);
-    setLoaded(false);
-  };
-
+function HaprVisualDetailMockup({ variant = 'mac' }) {
   return (
     <BrowserFrame
-      url="nagar-sewa.netlify.app"
+      url="haprvisual.vercel.app"
       variant={variant}
       showNav
-      onRefresh={refresh}
     >
-      <div className="relative w-full" style={{ height: 'clamp(280px, 50vw, 560px)', overscrollBehavior: 'contain' }}>
-        {!loaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a] z-10">
-            <div className="text-center">
-              <div className="w-6 h-6 border-2 border-gold/30 border-t-wine rounded-full animate-spin mx-auto mb-2" />
-              <span className="text-[10px] font-mono text-white/30">Loading preview...</span>
-            </div>
-          </div>
-        )}
-        <iframe
-          key={key}
-          ref={iframeRef}
-          src="https://nagar-sewa.netlify.app/#home"
-          className="w-full h-full border-0"
-          title="NagarSewa Live"
-          loading="lazy"
-          onLoad={() => setLoaded(true)}
+      <div className="relative w-full aspect-[8/5] overflow-hidden">
+        <video
+          src="/HaprVisual.mp4"
+          className="w-full h-full object-contain"
+          autoPlay
+          muted
+          loop
+          playsInline
+          title="HAPR Visual"
         />
       </div>
     </BrowserFrame>
   );
 }
 
-function TimeStarDetailMockup({ variant = 'mac' }) {
+function JobNepalDetailMockup({ variant = 'mac' }) {
   return (
-    <BrowserFrame url="timestar.com/products/chronograph-edition-2100" variant={variant}>
-      <div className="flex flex-col md:flex-row" style={{ minHeight: '450px' }}>
-        <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8 relative overflow-hidden" style={{ background: '#111' }}>
-            <m.img
-              src="/watch.webp"
-            alt="Chronograph Edition 2100"
-            className="w-40 h-40 md:w-48 md:h-48 object-contain drop-shadow-2xl"
-            whileHover={{ scale: 1.06, rotate: 2 }}
-            transition={{ type: 'spring', stiffness: 200 }}
-          />
-          <div className="flex items-center gap-1 mt-5">
-            {[...Array(5)].map((_, i) => (
-              <svg key={i} className={`w-3.5 h-3.5 ${i < 4 ? 'text-steel/50' : 'text-white/10'}`} viewBox="0 0 24 24" fill="currentColor">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-              </svg>
-            ))}
-            <span className="text-[8px] font-mono text-white/20 ml-2">24 reviews</span>
-          </div>
-          <div className="flex items-center gap-3 mt-3 text-[7px] font-mono text-white/20">
-            <span>Stainless Steel</span>
-            <span>•</span>
-            <span>Water Resistant</span>
-            <span>•</span>
-            <span>5 Year Battery</span>
-          </div>
-        </div>
-        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center" style={{ background: '#0d0d0d' }}>
-          <div className="text-[7px] font-mono text-white/20 uppercase tracking-[0.2em] mb-1">TimeStar Collection 2024</div>
-          <div className="text-xl md:text-2xl font-semibold text-white/85 leading-tight mb-1">Chronograph Edition 2100</div>
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-lg md:text-xl font-bold text-white/80">$349</span>
-            <span className="text-xs font-mono text-white/30 line-through">$499</span>
-            <span className="text-[8px] font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(111,142,153,0.08)', color: 'rgba(111,142,153,0.5)' }}>-30%</span>
-          </div>
-          <div className="text-[9px] font-['Inter'] text-white/40 leading-relaxed mb-4 max-w-sm">
-            Precision quartz movement with sapphire crystal glass, date display, and 100m water resistance. Minimalist design meets everyday durability.
-          </div>
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            {['Black', 'Silver', 'Gold'].map((c) => (
-              <div key={c} className="px-3 py-1.5 rounded-md text-[7px] font-mono" style={{
-                background: c === 'Black' ? 'rgba(111,142,153,0.08)' : 'rgba(255,255,255,0.03)',
-                color: c === 'Black' ? 'rgba(111,142,153,0.6)' : 'rgba(255,255,255,0.3)',
-                border: c === 'Black' ? '1px solid rgba(111,142,153,0.15)' : '1px solid rgba(255,255,255,0.05)',
-              }}>
-                {c}
-              </div>
-            ))}
-          </div>
-          <div className="flex gap-2">
-            <m.div
-              className="flex-1 h-10 rounded-lg flex items-center justify-center text-[9px] font-mono font-medium tracking-wider cursor-pointer"
-              style={{ background: 'rgba(111,142,153,0.08)', color: 'rgba(111,142,153,0.6)' }}
-              whileHover={{ background: 'rgba(111,142,153,0.14)', scale: 1.015 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: 'spring', stiffness: 200, damping: 25, mass: 0.5 }}
-            >
-              Add to Cart
-            </m.div>
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.03)' }}>
-              <svg className="w-4 h-4 text-white/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-              </svg>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 mt-3 text-[7px] font-mono text-white/15">
-            <span style={{ color: 'rgba(111,142,153,0.5)' }}>In stock</span>
-            <span>•</span>
-            <span>Free shipping</span>
-            <span>•</span>
-            <span>2 year warranty</span>
-          </div>
-        </div>
+    <BrowserFrame url="job-nepal-gamma.vercel.app" variant={variant} showNav>
+      <div className="relative w-full aspect-[8/5] overflow-hidden">
+        <video
+          src="/JobNepal.mp4"
+          className="w-full h-full object-contain"
+          autoPlay
+          muted
+          loop
+          playsInline
+          title="JobNepal"
+        />
       </div>
     </BrowserFrame>
   );

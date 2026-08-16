@@ -154,7 +154,7 @@ function FeatureBlock({ project, index, browserPref }) {
   const textX = useTransform(progress, [0, 1], [-20, 0]);
   const textBlur = useTransform(progress, [0, 0.5], [4, 0]);
 
-  const MockupComponent = project.id === 'nagarsewa' ? NagarSewaMockup : SahakariNetMockup;
+  const MockupComponent = project.id === 'haprvisual' ? HaprVisualMockup : SahakariNetMockup;
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
@@ -359,7 +359,7 @@ function SplitBlock({ project, index, browserPref }) {
                 filter: 'blur(20px)',
               }}
             />
-            <TimeStarMockup variant={browserPref} />
+            <JobNepalMockup variant={browserPref} />
             <motion.div
               className="absolute bottom-4 right-4 opacity-0 group-hover/card:opacity-100 transition-all duration-400 translate-y-2 group-hover/card:translate-y-0"
             >
@@ -457,29 +457,7 @@ function SplitBlock({ project, index, browserPref }) {
 
 
 
-function NagarSewaMockup({ variant = 'mac' }) {
-  const containerRef = useRef(null);
-  const [scale, setScale] = useState(0);
-  const IFRAME_W = 1440;
-  const IFRAME_H = 2800;
-  const VISIBLE_H = 480;
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const update = () => {
-      const w = el.offsetWidth;
-      setScale(w > 0 ? w / IFRAME_W : 0);
-    };
-    update();
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-
-  const visibleScale = scale || 0.001;
-  const scrollY = -(IFRAME_H - VISIBLE_H / visibleScale);
-
+function HaprVisualMockup({ variant = 'mac' }) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -30, rotateY: -4 }}
@@ -489,38 +467,24 @@ function NagarSewaMockup({ variant = 'mac' }) {
       whileHover={{ scale: 1.008 }}
       className="origin-center cursor-pointer"
     >
-        <BrowserFrame url="nagar-sewa.netlify.app" variant={variant}>
-          <div
-            ref={containerRef}
-            className="overflow-hidden relative w-full"
-            style={{ height: `${VISIBLE_H}px` }}
-          >
-            <div style={{ transformOrigin: 'top left', transform: `scale(${scale})`, width: IFRAME_W }}>
-              <motion.div
-                animate={{ y: [0, scrollY, 0] }}
-                transition={{
-                  duration: 16,
-                  ease: 'linear',
-                  repeat: Infinity,
-                }}
-              >
-                <iframe
-                  src="https://nagar-sewa.netlify.app/#home"
-                  width={IFRAME_W}
-                  height={IFRAME_H}
-                  className="border-0"
-                  title="NagarSewa Live"
-                  loading="lazy"
-                />
-              </motion.div>
-            </div>
-          </div>
-        </BrowserFrame>
+      <BrowserFrame url="haprvisual.vercel.app" variant={variant}>
+        <div className="relative w-full aspect-[8/5] overflow-hidden">
+          <video
+            src="/HaprVisual.mp4"
+            className="w-full h-full object-contain"
+            autoPlay
+            muted
+            loop
+            playsInline
+            title="HAPR Visual"
+          />
+        </div>
+      </BrowserFrame>
     </motion.div>
   );
 }
 
-function TimeStarMockup({ variant = 'mac' }) {
+function JobNepalMockup({ variant = 'mac' }) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -30, rotateY: -4 }}
@@ -530,65 +494,17 @@ function TimeStarMockup({ variant = 'mac' }) {
       whileHover={{ scale: 1.008 }}
       className="origin-center cursor-pointer"
     >
-      <BrowserFrame url="timestar.com/products/chronograph-edition" variant={variant}>
-        <div className="mockup-root">
-        <div className="flex" style={{ minHeight: '320px' }}>
-          <div className="w-1/2 flex flex-col items-center justify-center p-5 relative overflow-hidden" style={{ background: '#111' }}>
-            <motion.img
-              src="/watch.webp"
-              alt="Chronograph Edition 2100"
-              className="w-28 h-28 md:w-32 md:h-32 object-contain drop-shadow-2xl"
-              whileHover={{ scale: 1.06, rotate: 2 }}
-              transition={{ type: 'spring', stiffness: 200 }}
-            />
-            <div className="flex items-center gap-1 mt-4">
-              {[...Array(5)].map((_, i) => (
-                <svg key={i} className={`w-3 h-3 ${i < 4 ? 'text-steel/50' : 'text-white/10'}`} viewBox="0 0 24 24" fill="currentColor">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                </svg>
-              ))}
-              <span className="text-[7px] font-mono text-white/20 ml-1.5">(24 reviews)</span>
-            </div>
-          </div>
-          <div className="w-1/2 p-4 md:p-5 flex flex-col justify-center space-y-2.5">
-            <div className="text-[7px] font-mono text-white/20 uppercase tracking-[0.2em]">
-              TimeStar Collection
-            </div>
-            <div className="text-sm md:text-base font-semibold text-white/85 leading-tight">Chronograph<br/>Edition 2100</div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold text-white/80">$349</span>
-              <span className="text-[8px] font-mono text-white/30 line-through">$499</span>
-              <span className="text-[7px] font-mono text-white/40 ml-auto">Free shipping</span>
-            </div>
-            <div className="flex gap-2 pt-1">
-              <motion.div
-                className="flex-1 h-8 rounded-lg text-[8px] font-mono flex items-center justify-center font-medium tracking-wider cursor-pointer"
-                style={{ background: 'rgba(111,142,153,0.08)', color: 'rgba(111,142,153,0.6)' }}
-                whileHover={{ background: 'rgba(111,142,153,0.18)', scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                Add to Cart
-              </motion.div>
-              <motion.div
-                className="w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer"
-                style={{ background: 'rgba(255,255,255,0.03)' }}
-                whileHover={{ background: 'rgba(255,255,255,0.08)', scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <svg className="w-3.5 h-3.5 text-white/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                </svg>
-              </motion.div>
-            </div>
-            <div className="flex items-center gap-2 pt-1 text-[7px] font-mono text-white/15">
-              <span style={{ color: 'rgba(111,142,153,0.5)' }}>In stock</span>
-              <span>•</span>
-              <span>Free returns</span>
-              <span>•</span>
-              <span>2 year warranty</span>
-            </div>
-          </div>
-        </div>
+      <BrowserFrame url="job-nepal-gamma.vercel.app" variant={variant}>
+        <div className="relative w-full aspect-[8/5] overflow-hidden">
+          <video
+            src="/JobNepal.mp4"
+            className="w-full h-full object-contain"
+            autoPlay
+            muted
+            loop
+            playsInline
+            title="JobNepal"
+          />
         </div>
       </BrowserFrame>
     </motion.div>
