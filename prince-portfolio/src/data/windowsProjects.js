@@ -119,237 +119,146 @@ FEATURES
 [x] Responsive layout`,
   },
   {
-    id: 'portfoliov3',
-    name: 'Portfolio v3',
-    description: 'Personal portfolio with retro Windows OS theme',
-    modified: '2026-07-20',
-    size: '1.2 MB',
-    status: 'In Progress',
-    tech: ['React.js', 'Framer Motion', 'Tailwind CSS', 'Vite'],
-    role: 'Designer & Developer',
+    id: 'nepthread',
+    name: 'NepThread',
+    description: 'Nepali clothing e-commerce with shop automation and product tooling',
+    modified: '2026-08-10',
+    size: '3.6 MB',
+    status: 'Completed',
+    tech: ['React.js', 'Vite', 'TypeScript', 'Tailwind CSS'],
+    role: 'Full-Stack Developer',
     duration: '2 months',
-    live: 'https://prince.netlify.app',
-    github: 'https://github.com/prince/portfolio',
-    category: 'Portfolio',
-    readme: `PORTFOLIO V3
-============
-My personal portfolio website - version 3.
-
-CONCEPT
-A retro Windows operating system themed portfolio
-that showcases my projects through a nostalgic
-File Explorer interface.
+    live: '',
+    github: 'https://github.com/PRINCEZ110/NepThread',
+    category: 'Featured Projects',
+    readme: `NEPTHREAD
+=========
+A Nepali clothing e-commerce experience built with
+React + Vite + TypeScript.
 
 FEATURES
-- Windows 95/98 inspired UI
-- Interactive file explorer
-- Notepad for project details
-- Picture viewer for screenshots`,
-    features: `[x] Retro Windows desktop
-[x] Interactive File Explorer
-[x] Notepad file viewer
-[x] Picture viewer
-[x] Right-click context menu`,
+- Product catalog with collections
+- Shop data extraction tooling
+- Instagram product pipelines
+- Responsive storefront UI`,
+    features: `[x] Product catalog with collections
+[x] Shop extraction scripts
+[x] Instagram product tooling
+[x] Responsive storefront
+[x] Vite fast builds`,
   },
   {
-    id: 'aiprojects',
-    name: 'AI Projects',
-    description: 'Collection of AI and ML experiments',
-    modified: '2026-07-10',
-    size: '4.5 MB',
-    status: 'Ongoing',
-    tech: ['Python', 'TensorFlow', 'OpenAI API', 'LangChain'],
-    role: 'AI Developer',
-    duration: 'Ongoing',
-    live: '',
-    github: 'https://github.com/prince/ai-projects',
-    category: 'Experiments',
-    readme: `AI PROJECTS
-===========
-A collection of AI and machine learning projects.
-
-PROJECTS INCLUDED
-- Chatbot using OpenAI API
-- Image classification model
-- Sentiment analysis tool
-- Recommendation system`,
-    features: `[x] OpenAI chatbot integration
-[x] Image classifier (TensorFlow)
-[x] Sentiment analysis
-[x] Recommendation engine
-[x] Streamlit web demos`,
-  },
-  {
-    id: 'dashboard',
-    name: 'Dashboard',
-    description: 'Admin dashboard with analytics and management',
-    modified: '2026-07-08',
-    size: '2.2 MB',
+    id: 'dgreestudio',
+    name: 'DgreeStudio',
+    description: 'Creative studio landing site with modern responsive layout',
+    modified: '2026-08-05',
+    size: '1.4 MB',
     status: 'Completed',
-    tech: ['React.js', 'Chart.js', 'Node.js', 'PostgreSQL'],
+    tech: ['HTML5', 'CSS3', 'JavaScript'],
+    role: 'Frontend Developer',
+    duration: '1 month',
+    live: '',
+    github: 'https://github.com/PRINCEZ110/DgreeStudio',
+    category: 'Featured Projects',
+    readme: `DGREESTUDIO
+===========
+A creative studio landing site.
+
+FEATURES
+- Modern responsive layout
+- Studio showcase sections
+- Vanilla JS interactions`,
+    features: `[x] Responsive landing layout
+[x] Studio showcase
+[x] Vanilla JS interactions
+[x] Mobile-first styling`,
+  },
+  {
+    id: 'restaurantordercr',
+    name: 'ResturentOrderCR',
+    description: 'Restaurant order calculator with menu selection and live billing',
+    modified: '2026-07-28',
+    size: '1.1 MB',
+    status: 'Completed',
+    tech: ['HTML5', 'CSS3', 'JavaScript'],
+    role: 'Frontend Developer',
+    duration: '1 month',
+    live: '',
+    github: 'https://github.com/PRINCEZ110/ResturentOrderCR',
+    category: 'Featured Projects',
+    readme: `RESTAURANT ORDER CALCULATOR
+===========================
+A web-based restaurant order calculator.
+Customers select menu items, choose order type,
+and place their order.
+
+MENU
+- Chicken Burger Rs. 300
+- Veg Burger Rs. 250
+- Chicken Pizza Rs. 480
+- Chicken Biryani Rs. 450
+- French Fries Rs. 200`,
+    features: `[x] Menu selection with quantity controls
+[x] Dine In / Takeaway / Delivery order types
+[x] Customer info collection
+[x] Live order summary and totals
+[x] Order confirmation view`,
+  },
+  {
+    id: 'timestar',
+    name: 'TimeStar',
+    description: 'E-commerce platform for watches with catalog and brand storytelling',
+    modified: '2026-07-25',
+    size: '4.2 MB',
+    status: 'Completed',
+    tech: ['HTML5', 'CSS3', 'JavaScript'],
     role: 'Frontend Developer',
     duration: '2 months',
     live: '',
-    github: 'https://github.com/prince/dashboard',
+    github: 'https://github.com/PRINCEZ110/Time-Star',
     category: 'Featured Projects',
-    readme: `DASHBOARD
+    readme: `TIME STAR
 =========
-A comprehensive admin dashboard for business analytics.
+A fully functional e-commerce platform for watches,
+showcasing stylish timepieces with an easy-to-use
+interface and efficient product management.
 
 FEATURES
-- Interactive charts and graphs
-- User management panel
-- Sales and revenue tracking
-- Inventory management`,
-    features: `[x] Revenue and sales charts
-[x] User management
-[x] Inventory tracking
-[x] Order management
-[x] Analytics dashboard`,
+- Product catalog with collections
+- Product detail pages
+- Brand story and watchmaking pages`,
+    features: `[x] Watch catalog with categories
+[x] Product detail pages
+[x] About / watchmaking / research pages
+[x] Responsive multi-page layout`,
   },
   {
-    id: 'ecommerce',
-    name: 'Ecommerce',
-    description: 'Full-featured online store with cart and checkout',
-    modified: '2026-07-05',
-    size: '3.8 MB',
-    status: 'Completed',
-    tech: ['React.js', 'Node.js', 'MongoDB', 'Stripe', 'Redux'],
-    role: 'Full-Stack Developer',
-    duration: '5 months',
-    live: '',
-    github: 'https://github.com/prince/ecommerce',
-    category: 'Featured Projects',
-    readme: `ECOMMERCE
-=========
-A full-featured e-commerce platform.
-
-FEATURES
-- Product catalog with categories
-- Shopping cart and wishlist
-- Secure checkout with Stripe
-- Order tracking`,
-    features: `[x] Product catalog with search
-[x] Shopping cart
-[x] Secure checkout
-[x] Order tracking
-[x] Wishlist
-[x] Product reviews`,
-  },
-  {
-    id: 'lms',
-    name: 'LMS',
-    description: 'Learning Management System for online education',
-    modified: '2026-07-02',
-    size: '4.1 MB',
+    id: 'nuve',
+    name: 'Nuve',
+    description: 'AI skin-intelligence platform with analysis, routines and 3D experience',
+    modified: '2026-08-15',
+    size: '5.8 MB',
     status: 'In Progress',
-    tech: ['React.js', 'Node.js', 'MongoDB', 'WebRTC', 'Socket.io'],
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Prisma', 'PostgreSQL', 'NextAuth'],
     role: 'Full-Stack Developer',
-    duration: '6 months',
-    live: '',
-    github: 'https://github.com/prince/lms',
-    category: 'Featured Projects',
-    readme: `LMS
-===
-An online education platform for courses and virtual classrooms.
-
-FEATURES
-- Course creation and management
-- Video lectures with streaming
-- Quiz and assignment system
-- Live virtual classroom`,
-    features: `[x] Course management
-[x] Video streaming
-[x] Quiz system
-[x] Assignment submission
-[x] Live virtual classroom
-[x] Progress tracking`,
-  },
-  {
-    id: 'hostelsystem',
-    name: 'Hostel System',
-    description: 'Hostel management for student accommodations',
-    modified: '2026-06-28',
-    size: '1.8 MB',
-    status: 'Completed',
-    tech: ['Java', 'JSP', 'Servlets', 'MySQL', 'JDBC'],
-    role: 'Backend Developer',
     duration: '3 months',
     live: '',
-    github: 'https://github.com/prince/hostel-system',
-    category: 'Archived',
-    readme: `HOSTEL SYSTEM
-=============
-A hostel management system for student accommodations.
+    github: 'https://github.com/PRINCEZ110/nuve',
+    category: 'Featured Projects',
+    readme: `NUVE - AI SKIN INTELLIGENCE
+===========================
+Premium AI-powered skin-analysis and personalized
+skincare platform. Clinical, minimal, cinematic.
 
-FEATURES
-- Room allocation and management
-- Student registration and records
-- Fee tracking and receipts
-- Visitor log`,
-    features: `[x] Room allocation
-[x] Student records
-[x] Fee management
-[x] Visitor tracking
-[x] Complaint system`,
-  },
-  {
-    id: 'restaurantapp',
-    name: 'Restaurant App',
-    description: 'Digital menu and ordering system',
-    modified: '2026-06-25',
-    size: '2.5 MB',
-    status: 'Completed',
-    tech: ['React.js', 'Node.js', 'MongoDB', 'Socket.io'],
-    role: 'Full-Stack Developer',
-    duration: '2 months',
-    live: '',
-    github: 'https://github.com/prince/restaurant-app',
-    category: 'Experiments',
-    readme: `RESTAURANT APP
-==============
-A digital menu and ordering system for restaurants.
-
-FEATURES
-- Digital menu with categories
-- Table-side ordering
-- Kitchen display system
-- Payment integration`,
-    features: `[x] Digital menu display
-[x] Table-side ordering
-[x] Kitchen dashboard
-[x] Payment processing
-[x] Table reservation`,
-  },
-  {
-    id: 'chatapplication',
-    name: 'Chat Application',
-    description: 'Real-time messaging with group chat',
-    modified: '2026-06-22',
-    size: '1.6 MB',
-    status: 'Completed',
-    tech: ['React.js', 'Socket.io', 'Node.js', 'MongoDB'],
-    role: 'Full-Stack Developer',
-    duration: '2 months',
-    live: '',
-    github: 'https://github.com/prince/chat-app',
-    category: 'Experiments',
-    readme: `CHAT APPLICATION
-================
-A real-time messaging application.
-
-FEATURES
-- Real-time messaging with Socket.io
-- Group chat rooms
-- File and image sharing
-- Online/offline status
-- Message search`,
-    features: `[x] Real-time messaging
-[x] Group chat rooms
-[x] File sharing
-[x] Online status
-[x] Message search
-[x] Emoji picker`,
+STACK
+- Next.js 14 App Router, React 18, TypeScript
+- Tailwind, Framer Motion, Three.js / R3F
+- Prisma + PostgreSQL, NextAuth, Zod, Zustand`,
+    features: `[x] Skin scan upload and analyzing overlay
+[x] Metrics with face-region boxes
+[x] AM/PM personalized routines
+[x] Dashboard with history
+[x] Demo mode without database`,
   },
 ];
 
