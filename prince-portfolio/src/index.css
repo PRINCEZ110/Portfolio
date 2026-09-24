@@ -9,8 +9,11 @@
 
 * { box-sizing: border-box; }
 
+/* Native smooth-scroll intentionally OFF — Lenis owns wheel
+   scrolling globally (see motion/LenisProvider). Leaving this on
+   fights the smoothing and causes double-eased anchor jumps. */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {

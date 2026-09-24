@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { LazyMotion, domAnimation } from 'framer-motion';
+import LenisProvider from './motion/LenisProvider';
 import Navbar from './components/Navbar';
 import ProjectNavbar from './components/ProjectNavbar';
 import Hero from './components/Hero';
@@ -25,6 +26,7 @@ export default function App() {
 
   return (
     <LazyMotion features={domAnimation}>
+      <LenisProvider>
       {isProjectPage ? <ProjectNavbar /> : <Navbar />}
       <main>
         <Suspense fallback={<div className="min-h-screen bg-sand" />}>
@@ -45,6 +47,7 @@ export default function App() {
         </Suspense>
       </main>
       {!isProjectPage && <Footer />}
+      </LenisProvider>
     </LazyMotion>
   );
 }

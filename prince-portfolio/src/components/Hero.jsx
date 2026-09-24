@@ -15,6 +15,7 @@ export default function Hero() {
   const imgY = useTransform(scrollYProgress, [0.25, 0.6], [500, 0]);
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const t = setInterval(() => setRoleIdx(i => (i + 1) % roles.length), 2200);
     return () => clearInterval(t);
   }, []);
