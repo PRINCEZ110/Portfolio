@@ -1,7 +1,7 @@
 import { useState, useMemo, useCallback, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { m, useInView } from 'framer-motion';
 import { projectFolders } from '../data/windowsProjects';
+import BrowserFrame from './BrowserFrame';
 import FloatTags from './FloatTags';
 
 const categories = [
@@ -45,10 +45,117 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
 };
 
-function ProjectCard({ project, index }) {
-  const navigate = useNavigate();
-  const [hovered, setHovered] = useState(false);
+const previewVideos = {
+  jobnepal: '/JobNepal.mp4',
+  haprvisual: '/HaprVisual.mp4',
+};
+
+function WindowPreview({ project, index }) {
+  const video = previewVideos[project.id];
+  const initials = project.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
   const gradient = cardBg[index % cardBg.length];
+
+  if (video) {
+    return (
+      <div className="relative w-full aspect-[16/10] overflow-hidden bg-black">
+        <video
+          src={video}
+          className="w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          title={project.name}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className={`relative w-full aspect-[16/10] overflow-hidden bg-gradient-to-br ${gradient}`}>
+      {/* faint grid */}
+      <div
+        className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage: 'linear-gradient(#201A12 0.5px, transparent 0.5px), linear-gradient(90deg, #201A12 0.5px, transparent 0.5px)',
+          backgroundSize: '22px 22px',
+        }}
+      />
+      {/* giant initials watermark */}
+      <span
+        aria-hidden
+        className="absolute inset-0 flex items-center justify-center font-bold text-slate/[0.08] select-none leading-none"
+        style={{ fontSize: 'clamp(4rem, 10vw, 7rem)', fontFamily: "'Josefin Sans', sans-serif" }}
+      >
+        {initials}
+      </span>
+      {/* fake site chrome */}
+      <div className="absolute inset-0 flex flex-col p-4 md:p-5">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="w-6 h-6 rounded-lg bg-ink text-paper flex items-center justify-center text-[10px] font-bold" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
+              {initials[0]}
+            </span>
+            <span className="text-[11px] font-semibold text-slate tracking-tight" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
+              {project.name}
+            </span>
+          </div>
+          <div className="hidden sm:flex items-center gap-3">
+            {['Home', 'Work', 'About'].map(f => (
+              <span key={f} className="h-1.5 w-8 rounded-full bg-slate/15" />
+            ))}
+            <span className="h-6 w-16 rounded-full bg-ink" />
+          </div>
+        </div>
+
+        <div className="flex-1 flex flex-col items-start justify-center max-w-[85%]">
+          <span
+            className="inline-flex items-center gap-1.5 text-[8px] font-mono uppercase tracking-[0.18em] px-2 py-1 rounded-full border mb-2.5 bg-white/70"
+            style={{ borderColor: `${statusColors[project.status] || '#999'}55`, color: '#2D2D2D' }}
+          >
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: statusColors[project.status] || '#999' }} />
+            {project.status}
+          </span>
+          <p className="font-bold text-slate leading-tight" style={{ fontFamily: "'Josefin Sans', sans-serif", fontSize: 'clamp(1rem, 2.2vw, 1.5rem)' }}>
+            {project.name}
+          </p>
+          <p className="text-[11px] md:text-xs text-gray leading-relaxed mt-1 line-clamp-2" style={{ fontFamily: "'Lato', sans-serif" }}>
+            {project.description}
+          </p>
+          <div className="flex flex-wrap gap-1.5 mt-2.5">
+            {project.tech?.slice(0, 3).map(t => (
+              <span key={t} className="text-[8px] font-mono tracking-wider uppercase bg-white/80 border border-ink/10 text-slate/70 px-2 py-0.5 rounded-full">
+                {t}
+              </span>
+            ))}
+            {(project.tech?.length || 0) > 3 && (
+              <span className="text-[8px] font-mono text-muted/70">+{project.tech.length - 3}</span>
+            )}
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between mt-2">
+          <div className="flex items-center gap-2">
+            <span className="h-6 w-20 rounded-full bg-wine" />
+            <span className="h-6 w-20 rounded-full border border-slate/20" />
+          </div>
+          <span className="font-mono text-[8px] text-muted/50 uppercase tracking-widest hidden sm:block">
+            {project.role || 'Project'} · {project.duration || ''}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProjectCard({ project, index, browserPref }) {
+  const [hovered, setHovered] = useState(false);
+
+  const displayUrl = project.live
+    ? project.live.replace(/^https?:\/\//, '')
+    : project.github
+      ? project.github.replace(/^https?:\/\//, '')
+      : `${project.id}.princez.dev`;
 
   const handleClick = useCallback(() => {
     if (project.live) {
@@ -58,110 +165,87 @@ function ProjectCard({ project, index }) {
     }
   }, [project]);
 
+  const clickable = Boolean(project.live || project.github);
+
   return (
     <m.div
       variants={item}
-      className="group relative rounded-xl overflow-hidden cursor-pointer"
-      style={{ aspectRatio: '4/3' }}
+      className="group"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={handleClick}
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -5 }}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
-      {/* Background */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
-
-      {/* Subtle grid pattern */}
+      {/* ── Same window as Work section ── */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: `linear-gradient(#E3DEC8 1px, transparent 1px), linear-gradient(90deg, #E3DEC8 1px, transparent 1px)`,
-          backgroundSize: '24px 24px',
-        }}
-      />
-
-      {/* Corner accent */}
-      <div className="absolute top-0 right-0 w-16 h-16">
-        <div className="absolute top-0 right-0 w-8 h-8 bg-gold/5 rounded-bl-full" />
-      </div>
-
-      {/* Status indicator dot */}
-      <div className="absolute top-3 left-3 flex items-center gap-1.5">
-        <span
-          className="w-1.5 h-1.5 rounded-full"
-          style={{ background: statusColors[project.status] || '#999' }}
+        onClick={clickable ? handleClick : undefined}
+        className={`relative ${clickable ? 'cursor-pointer' : ''}`}
+      >
+        {/* glow on hover */}
+        <div className="absolute -inset-3 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at center, rgba(111,142,153,0.10), transparent 70%)', filter: 'blur(18px)' }}
         />
-        <span className="text-[8px] font-mono text-muted/60 uppercase tracking-wider">
-          {project.status}
-        </span>
+        <div className="relative">
+          <BrowserFrame url={displayUrl} variant={browserPref}>
+            <WindowPreview project={project} index={index} />
+          </BrowserFrame>
+          {/* click badge */}
+          {clickable && (
+            <div className={`absolute bottom-3 right-3 transition-all duration-300 ${hovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+              <span className="text-[9px] tracking-wider text-wine bg-white/95 px-3 py-1.5 rounded-lg border border-border shadow-soft" style={{ fontFamily: "'Josefin Sans', sans-serif" }}>
+                Click to explore →
+              </span>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Project initials */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span
-          className="font-bold text-slate/10 select-none"
-          style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontFamily: "'Josefin Sans', sans-serif" }}
-        >
-          {project.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()}
-        </span>
-      </div>
-
-      {/* Title always visible */}
-      <div className="absolute bottom-0 left-0 right-0 p-4">
+      {/* ── Project meta stays in place ── */}
+      <div className="pt-4 px-1">
+        <div className="flex items-center gap-2 mb-1.5">
+          <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: statusColors[project.status] || '#999' }} />
+          <span className="text-[9px] font-mono text-muted/70 uppercase tracking-[0.18em]">
+            {project.status} · {project.category}
+          </span>
+        </div>
         <h3
-          className="font-bold text-slate leading-tight"
-          style={{ fontFamily: "'Josefin Sans', sans-serif", fontSize: 'clamp(0.9rem, 1.8vw, 1.3rem)' }}
+          className="font-bold text-slate leading-tight mb-1 group-hover:text-wine transition-colors"
+          style={{ fontFamily: "'Josefin Sans', sans-serif", fontSize: 'clamp(1rem, 1.6vw, 1.25rem)' }}
         >
           {project.name}
         </h3>
-      </div>
-
-      {/* Hover overlay */}
-      <m.div
-        className="absolute inset-0 flex flex-col justify-end p-4"
-        initial={false}
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.25 }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-clay/95 via-clay/80 to-clay/40" />
-
-        <div className="relative z-10">
-          {/* Tech tags */}
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {project.tech?.slice(0, 4).map((t) => (
-              <span
-                key={t}
-                className="text-[8px] font-mono tracking-wider text-gold uppercase bg-gold/8 px-2 py-0.5 rounded-full border border-gold/15"
-              >
+        <p className="text-[13px] text-gray leading-relaxed line-clamp-2 mb-3" style={{ fontFamily: "'Lato', sans-serif" }}>
+          {project.description}
+        </p>
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex flex-wrap gap-1.5">
+            {project.tech?.slice(0, 3).map((t) => (
+              <span key={t} className="text-[9px] font-mono tracking-wider text-slate/60 uppercase bg-white border border-ink/10 px-2 py-0.5 rounded-full">
                 {t}
               </span>
             ))}
-            {(project.tech?.length || 0) > 4 && (
-              <span className="text-[8px] font-mono text-muted/50">+{project.tech.length - 4}</span>
+            {(project.tech?.length || 0) > 3 && (
+              <span className="text-[9px] font-mono text-muted/50">+{project.tech.length - 3}</span>
             )}
           </div>
-
-          <p className="text-xs text-gray leading-relaxed mb-3 line-clamp-2">
-            {project.description}
-          </p>
-
-          {/* CTA */}
-          <div className="flex items-center gap-2 text-[10px] font-mono tracking-wider text-gold uppercase">
-            <span>View Project</span>
-            <m.span
-              animate={{ x: hovered ? 4 : 0 }}
-              transition={{ duration: 0.2 }}
-            >→</m.span>
-          </div>
+          {clickable && (
+            <button
+              onClick={handleClick}
+              className="flex-shrink-0 inline-flex items-center gap-1.5 text-[10px] font-mono tracking-[0.14em] uppercase text-wine hover:gap-2.5 transition-all"
+            >
+              Open
+              <m.span animate={{ x: hovered ? 3 : 0 }} transition={{ duration: 0.2 }}>→</m.span>
+            </button>
+          )}
         </div>
-      </m.div>
+      </div>
     </m.div>
   );
 }
 
 export default function AllProjects() {
   const [activeCategory, setActiveCategory] = useState('all');
+  const [browserPref, setBrowserPref] = useState('mac');
 
   const filtered = useMemo(() => {
     if (activeCategory === 'all') return projectFolders;
@@ -215,6 +299,27 @@ export default function AllProjects() {
           >
             A complete collection of work, experiments, and projects built over time.
           </p>
+
+          {/* Browser toggle — same as Work section */}
+          <div className="flex items-center gap-3 mt-8">
+            <span className="text-[9px] tracking-[0.15em] text-muted/50 uppercase" style={{ fontFamily: "'Lato', sans-serif" }}>View as</span>
+            <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid #E3DEC8' }}>
+              <button
+                onClick={() => setBrowserPref('mac')}
+                className="px-3 py-1.5 text-[9px] tracking-wider uppercase transition-all duration-300 text-white"
+                style={{ background: browserPref === 'mac' ? '#8B1A2B' : 'Black', fontFamily: "'Lato', sans-serif" }}
+              >
+                Mac
+              </button>
+              <button
+                onClick={() => setBrowserPref('windows')}
+                className="px-3 py-1.5 text-[9px] tracking-wider uppercase transition-all duration-300 text-white"
+                style={{ background: browserPref === 'windows' ? '#8B1A2B' : 'Black', fontFamily: "'Lato', sans-serif" }}
+              >
+                Windows
+              </button>
+            </div>
+          </div>
         </m.div>
 
         {/* Divider */}
@@ -274,15 +379,15 @@ export default function AllProjects() {
             </div>
           </m.div>
 
-          {/* Grid */}
+          {/* Grid — windows need room, so 2-col max */}
           <m.div
             variants={container}
             initial="hidden"
             animate="show"
-            className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5"
+            className="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-8 md:gap-10"
           >
             {filtered.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} />
+              <ProjectCard key={project.id} project={project} index={i} browserPref={browserPref} />
             ))}
           </m.div>
         </div>
