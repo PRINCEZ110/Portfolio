@@ -1,16 +1,8 @@
-import { useState, useMemo, useCallback, useRef } from 'react';
-import { m, useInView } from 'framer-motion';
+import { useState, useCallback, useRef } from 'react';
+import { m, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { projectFolders } from '../data/windowsProjects';
 import BrowserFrame from './BrowserFrame';
 import FloatTags from './FloatTags';
-
-const categories = [
-  { id: 'all', label: 'All', countKey: 'total' },
-  { id: 'featured', label: 'Featured Projects' },
-  { id: 'portfolio', label: 'Portfolio' },
-  { id: 'experiments', label: 'Experiments' },
-  { id: 'archived', label: 'Archived' },
-];
 
 const cardBg = [
   'from-[#F8F7E5]/80 to-[#F0EDD8]/80',
@@ -36,13 +28,18 @@ const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.15 },
+    transition: { staggerChildren: 0.08, delayChildren: 0.15 },
   },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+  hidden: { opacity: 0, y: 44, scale: 0.96 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: 'spring', stiffness: 120, damping: 18 },
+  },
 };
 
 const previewVideos = {
@@ -150,6 +147,13 @@ function WindowPreview({ project, index }) {
 
 function ProjectCard({ project, index, browserPref }) {
   const [hovered, setHovered] = useState(false);
+  const frameRef = useRef(null);
+
+  /* cursor-driven 3D tilt (transform only — neighbours never shift) */
+  const px = useMotionValue(0.5);
+  const py = useMotionValue(0.5);
+  const rotateX = useSpring(useTransform(py, [0, 1], [5, -5]), { stiffness: 220, damping: 20 });
+  const rotateY = useSpring(useTransform(px, [0, 1], [-6, 6]), { stiffness: 220, damping: 20 });
 
   const displayUrl = project.live
     ? project.live.replace(/^https?:\/\//, '')
@@ -165,29 +169,53 @@ function ProjectCard({ project, index, browserPref }) {
     }
   }, [project]);
 
+  const handleMove = useCallback((e) => {
+    const el = frameRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    px.set(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)));
+    py.set(Math.min(1, Math.max(0, (e.clientY - r.top) / r.height)));
+  }, [px, py]);
+
+  const handleLeave = useCallback(() => {
+    setHovered(false);
+    px.set(0.5);
+    py.set(0.5);
+  }, [px, py]);
+
   const clickable = Boolean(project.live || project.github);
 
   return (
     <m.div
       variants={item}
-      className="group"
+      className="group relative hover:z-10"
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      whileHover={{ y: -5 }}
-      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      onMouseLeave={handleLeave}
+      whileHover={{ scale: 1.1, y: -6 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
     >
       {/* ── Same window as Work section ── */}
       <div
+        ref={frameRef}
+        onMouseMove={handleMove}
         onClick={clickable ? handleClick : undefined}
         className={`relative ${clickable ? 'cursor-pointer' : ''}`}
+        style={{ perspective: 900 }}
       >
         {/* glow on hover */}
         <div className="absolute -inset-3 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(111,142,153,0.10), transparent 70%)', filter: 'blur(18px)' }}
+          style={{ background: 'radial-gradient(ellipse at center, rgba(139,26,43,0.14), transparent 70%)', filter: 'blur(18px)' }}
         />
-        <div className="relative">
+        <m.div className="relative" style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}>
           <BrowserFrame url={displayUrl} variant={browserPref}>
-            <WindowPreview project={project} index={index} />
+            {/* inner preview slowly zooms while hovered */}
+            <m.div
+              animate={{ scale: hovered ? 1.07 : 1 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full h-full"
+            >
+              <WindowPreview project={project} index={index} />
+            </m.div>
           </BrowserFrame>
           {/* click badge */}
           {clickable && (
@@ -197,13 +225,16 @@ function ProjectCard({ project, index, browserPref }) {
               </span>
             </div>
           )}
-        </div>
+        </m.div>
       </div>
 
       {/* ── Project meta stays in place ── */}
       <div className="pt-4 px-1">
         <div className="flex items-center gap-2 mb-1.5">
-          <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: statusColors[project.status] || '#999' }} />
+          <span className="relative flex w-1.5 h-1.5 flex-shrink-0">
+            <span className="absolute inline-flex h-full w-full rounded-full opacity-60 animate-ping" style={{ background: statusColors[project.status] || '#999' }} />
+            <span className="relative inline-flex rounded-full h-1.5 w-1.5" style={{ background: statusColors[project.status] || '#999' }} />
+          </span>
           <span className="text-[9px] font-mono text-muted/70 uppercase tracking-[0.18em]">
             {project.status} · {project.category}
           </span>
@@ -234,7 +265,7 @@ function ProjectCard({ project, index, browserPref }) {
               className="flex-shrink-0 inline-flex items-center gap-1.5 text-[10px] font-mono tracking-[0.14em] uppercase text-wine hover:gap-2.5 transition-all"
             >
               Open
-              <m.span animate={{ x: hovered ? 3 : 0 }} transition={{ duration: 0.2 }}>→</m.span>
+              <m.span animate={{ x: hovered ? 5 : 0 }} transition={{ type: 'spring', stiffness: 400, damping: 18 }}>→</m.span>
             </button>
           )}
         </div>
@@ -244,28 +275,7 @@ function ProjectCard({ project, index, browserPref }) {
 }
 
 export default function AllProjects() {
-  const [activeCategory, setActiveCategory] = useState('all');
   const [browserPref, setBrowserPref] = useState('mac');
-
-  const filtered = useMemo(() => {
-    if (activeCategory === 'all') return projectFolders;
-    const cat = categories.find((c) => c.id === activeCategory);
-    if (!cat) return projectFolders;
-    return projectFolders.filter((p) => {
-      const label = cat.label;
-      return p.category === label;
-    });
-  }, [activeCategory]);
-
-  const counts = useMemo(() => {
-    const total = projectFolders.length;
-    const cats = {};
-    categories.forEach((c) => {
-      if (c.id === 'all') return;
-      cats[c.label] = projectFolders.filter((p) => p.category === c.label).length;
-    });
-    return { total, ...cats };
-  }, []);
 
   return (
     <div className="min-h-screen bg-sand relative">
@@ -285,20 +295,35 @@ export default function AllProjects() {
             className="text-[11px] tracking-[0.25em] text-wine uppercase block mb-4"
             style={{ fontFamily: "'Lato', sans-serif" }}
           >
+            <m.span
+              className="inline-block w-8 h-px bg-wine mr-3 align-middle"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              style={{ transformOrigin: 'left center' }}
+            />
             Portfolio Archive
           </m.span>
-          <h1
-            className="font-bold text-slate leading-[0.95] mb-4"
-            style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontFamily: "'Josefin Sans', sans-serif" }}
-          >
-            All Projects
-          </h1>
-          <p
+          <span className="block overflow-hidden">
+            <m.h1
+              initial={{ yPercent: 110 }}
+              animate={{ yPercent: 0 }}
+              transition={{ duration: 0.85, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="font-bold text-slate leading-[0.95] mb-4"
+              style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontFamily: "'Josefin Sans', sans-serif" }}
+            >
+              All Projects
+            </m.h1>
+          </span>
+          <m.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="text-gray text-sm md:text-base max-w-md leading-relaxed"
             style={{ fontFamily: "'Lato', sans-serif" }}
           >
             A complete collection of work, experiments, and projects built over time.
-          </p>
+          </m.p>
 
           {/* Browser toggle — same as Work section */}
           <div className="flex items-center gap-3 mt-8">
@@ -330,84 +355,17 @@ export default function AllProjects() {
           className="h-px bg-gradient-to-r from-gold/20 via-brown/10 to-transparent origin-left mb-10"
         />
 
-        <div className="flex flex-col md:flex-row gap-8 md:gap-12">
-          {/* Filter sidebar */}
-          <m.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.35 }}
-            className="md:w-48 flex-shrink-0"
-          >
-            <div className="md:sticky md:top-24">
-              <span
-                className="text-[10px] tracking-[0.2em] text-muted uppercase block mb-4"
-                style={{ fontFamily: "'Lato', sans-serif" }}
-              >
-                Filter
-              </span>
-              <div className="flex md:flex-col flex-wrap gap-1.5">
-                {categories.map((cat) => {
-                  const count = cat.id === 'all' ? counts.total : (counts[cat.label] || 0);
-                  const isActive = activeCategory === cat.id;
-                  return (
-                    <m.button
-                      key={cat.id}
-                      onClick={() => setActiveCategory(cat.id)}
-                      className={`text-left text-sm px-3 md:px-4 py-2 rounded-xl transition-all duration-300 ${
-                        isActive
-                          ? 'bg-white text-slate shadow-soft font-medium'
-                          : 'text-muted hover:text-slate hover:bg-white/50'
-                      }`}
-                      style={{ fontFamily: "'Lato', sans-serif" }}
-                      whileHover={{ x: isActive ? 0 : 3 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <span className="flex items-center justify-between gap-4">
-                        <span>{cat.label}</span>
-                        <span
-                          className={`text-[10px] font-mono ${
-                            isActive ? 'text-gold' : 'text-muted/40'
-                          }`}
-                        >
-                          {count}
-                        </span>
-                      </span>
-                    </m.button>
-                  );
-                })}
-              </div>
-            </div>
-          </m.div>
-
-          {/* Grid — windows need room, so 2-col max */}
-          <m.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-8 md:gap-10"
-          >
-            {filtered.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} browserPref={browserPref} />
-            ))}
-          </m.div>
-        </div>
-
-        {/* Empty state */}
-        {filtered.length === 0 && (
-          <m.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-20"
-          >
-            <span className="text-4xl block mb-4">🔍</span>
-            <p
-              className="text-muted text-sm"
-              style={{ fontFamily: "'Lato', sans-serif" }}
-            >
-              No projects found in this category.
-            </p>
-          </m.div>
-        )}
+        {/* Grid — 3 windows per row; hover scales in place via transform */}
+        <m.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-10"
+        >
+          {projectFolders.map((project, i) => (
+            <ProjectCard key={project.id} project={project} index={i} browserPref={browserPref} />
+          ))}
+        </m.div>
       </div>
 
       <NewariFooter />

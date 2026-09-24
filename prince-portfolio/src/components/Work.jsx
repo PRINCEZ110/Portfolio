@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { projects } from '../data/projects';
 
 /* ── Story data: real portfolio content, reference-shaped ── */
@@ -40,96 +40,35 @@ function EditorialIntro({ count }) {
         Work that <em className="font-normal">matters</em>.
       </h2>
       <p className="ed-sans mt-5 max-w-md text-sm md:text-[15px] leading-relaxed text-[#111111]/70">
-        Hover to preview — click a row to open its story. Titles, images and
+        Click a row to open its story — titles, images and
         descriptions rearrange themselves around your movement.
       </p>
     </header>
   );
 }
 
-/* ─── REFERENCE PATTERN: hover list + cursor preview + expanding editorial ───
-   Matches the recording:
+/* ─── REFERENCE PATTERN: expanding editorial list ───
    - collapsed rows: big title left, meta + duration right, thin rules
-   - hover: floating framed preview follows the cursor between rows
+   - hovering a row opens its story; click toggles (touch / keyboard)
    - open row: large visual left + overlapping small visual + dense text right,
      quoted title below, meta footer, "view case study →" link            */
 function ReferenceList() {
   const [openId, setOpenId] = useState(stories[0]?.id ?? null);
-  const [hovered, setHovered] = useState(null); // index | null
-  const wrapRef = useRef(null);
-
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const sx = useSpring(mx, { stiffness: 250, damping: 28, mass: 0.6 });
-  const sy = useSpring(my, { stiffness: 250, damping: 28, mass: 0.6 });
-
-  const onMove = (e) => {
-    const el = wrapRef.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    mx.set(e.clientX - r.left);
-    my.set(e.clientY - r.top);
-  };
-
-  const hoveredStory = hovered != null ? stories[hovered] : null;
-  // Hide the floating card over the currently open row's expanded area —
-  // it only previews collapsed rows, like the reference.
-  const showPreview = hoveredStory && hoveredStory.id !== openId;
 
   return (
     <div className="px-6 md:px-10 pb-10 md:pb-14 max-w-[1800px] mx-auto">
-      <div
-        ref={wrapRef}
-        onMouseMove={onMove}
-        onMouseLeave={() => setHovered(null)}
-        className="relative"
-      >
-        {/* Floating cursor preview (desktop, fine pointer only) */}
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute left-0 top-0 z-20 hidden lg:block"
-          style={{ x: sx, y: sy }}
-        >
-          <AnimatePresence>
-            {showPreview && (
-              <motion.div
-                key={hoveredStory.id}
-                initial={{ opacity: 0, scale: 0.85, rotate: -2 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="h-44 w-44 -translate-x-1/2 -translate-y-1/2 overflow-hidden border-2 border-[#F1EFE7] bg-[#111] shadow-2xl"
-              >
-                {hoveredStory.video ? (
-                  <video
-                    src={hoveredStory.video}
-                    className="h-full w-full object-cover"
-                    muted
-                    loop
-                    playsInline
-                    autoPlay
-                    preload="metadata"
-                    title=""
-                  />
-                ) : (
-                  <SahakariPanel story={hoveredStory} compact />
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
+      <div className="relative">
         {/* Rows */}
         <div className="border-b border-[#111111]/15">
-          {stories.map((s, i) => {
+          {stories.map((s) => {
             const open = s.id === openId;
             return (
               <div key={s.id} className="border-t border-[#111111]/15">
                 <button
                   type="button"
                   onClick={() => setOpenId(open ? null : s.id)}
-                  onMouseEnter={() => setHovered(i)}
-                  onFocus={() => setHovered(i)}
+                  onMouseEnter={() => setOpenId(s.id)}
+                  onFocus={() => setOpenId(s.id)}
                   aria-expanded={open}
                   className="group grid w-full grid-cols-12 items-baseline gap-2 py-5 md:py-6 text-left"
                 >
@@ -343,5 +282,3 @@ function WorkMore() {
     </div>
   );
 }
-
-
