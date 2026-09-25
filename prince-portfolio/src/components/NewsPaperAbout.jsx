@@ -620,7 +620,7 @@ export default function NewsPaperAbout() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.4, ease: EASE }}
-              className="overflow-hidden"
+               className="overflow-hidden"
             >
               <m.div
                 initial={{ opacity: 0, y: 10 }}
