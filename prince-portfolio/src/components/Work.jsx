@@ -7,11 +7,34 @@ import {
   useReducedMotion,
   useMotionValue,
   useSpring,
+  useScroll,
+  useTransform,
 } from 'framer-motion';
 import { projects } from '../data/projects';
 import { gsap, ScrollTrigger } from '../motion/gsap';
 
 const EASE = [0.16, 1, 0.3, 1];
+
+/* Shared entrance vocabulary — one stagger family for the section. */
+const RISE = {
+  hidden: { opacity: 0, y: 26 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+};
+
+const STAGGER = { hidden: {}, show: { transition: { staggerChildren: 0.075 } } };
+
+const STAGE_ROW = {
+  hidden: { opacity: 0, x: -18 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.7, ease: EASE } },
+};
+
+/* Editorial crop marks framing the preview stage. */
+const CORNERS = [
+  'left-3 top-3 border-l border-t',
+  'right-3 top-3 border-r border-t',
+  'left-3 bottom-3 border-l border-b',
+  'right-3 bottom-3 border-r border-b',
+];
 
 /* ── Structured project data (existing content, nothing invented) ── */
 const works = projects.map((p, i) => ({
@@ -88,17 +111,30 @@ function WorkIntro({ count }) {
         transition={{ duration: 0.9, ease: EASE }}
         className="ed-rule mt-4 origin-left"
       />
-      <span className="block overflow-hidden">
-        <motion.h2
-          initial={{ y: 36, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.85, ease: EASE }}
-          className="ed-serif ed-title mt-6 md:mt-8 max-w-5xl"
-        >
-          Work that <em className="font-normal">matters</em>.
-        </motion.h2>
-      </span>
+      <h2 className="ed-serif ed-title mt-6 md:mt-8 max-w-5xl flex flex-wrap gap-x-[0.24em]">
+        {['Work', 'that'].map((word, i) => (
+          <span key={word} className="ed-mask pb-[0.06em]">
+            <motion.span
+              initial={{ y: '112%' }}
+              whileInView={{ y: '0%' }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.9, delay: i * 0.08, ease: EASE }}
+            >
+              {word}
+            </motion.span>
+          </span>
+        ))}
+        <span className="ed-mask pb-[0.06em]">
+          <motion.span
+            initial={{ y: '112%' }}
+            whileInView={{ y: '0%' }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.9, delay: 0.16, ease: EASE }}
+          >
+            <em className="font-normal">matters</em>.
+          </motion.span>
+        </span>
+      </h2>
       <motion.p
         initial={{ y: 18, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -252,13 +288,21 @@ function WorkStage() {
             </div>
 
             {/* Project navigation */}
-            <nav aria-label="Projects" className="mt-7 border-b border-[#111111]/15">
+            <motion.nav
+              aria-label="Projects"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.1 }}
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: 0.12 } } }}
+              className="mt-7 border-b border-[#111111]/15"
+            >
               {works.map((w, i) => {
                 const on = i === idx;
                 return (
-                  <button
+                  <motion.button
                     key={w.id}
                     type="button"
+                    variants={STAGE_ROW}
                     onClick={() => goTo(i)}
                     aria-current={on ? 'true' : undefined}
                     className="group relative flex w-full items-baseline gap-4 border-t border-[#111111]/15 py-3.5 pl-3 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#8B1A2B]"
@@ -275,18 +319,28 @@ function WorkStage() {
                       {w.number}
                     </span>
                     <span
-                      className={`ed-serif leading-tight transition-all duration-300 ${
+                      className={`ed-serif leading-tight inline-block transition-all duration-300 ${
                         on
-                          ? 'text-xl md:text-2xl text-[#111111]'
-                          : 'text-base md:text-lg text-[#111111]/45 group-hover:text-[#111111]/80'
+                          ? 'translate-x-1 text-xl md:text-2xl text-[#111111]'
+                          : 'text-base md:text-lg text-[#111111]/45 group-hover:translate-x-1.5 group-hover:text-[#111111]/85'
                       }`}
                     >
                       {w.title}
                     </span>
-                  </button>
+                    <span
+                      aria-hidden
+                      className={`ed-sans ml-auto text-[11px] transition-all duration-300 ${
+                        on
+                          ? 'translate-x-0 text-[#8B1A2B] opacity-100'
+                          : '-translate-x-2 text-[#111111]/30 opacity-0 group-hover:translate-x-0 group-hover:opacity-100'
+                      }`}
+                    >
+                      →
+                    </span>
+                  </motion.button>
                 );
               })}
-            </nav>
+            </motion.nav>
 
             {/* Scroll progress — belongs to the section */}
             <div className="mt-7 flex items-center gap-3">
@@ -352,18 +406,30 @@ function WorkStage() {
                     <div className="mt-4 flex items-center gap-6">
                       <Link
                         to={`/work/${active.id}`}
-                        className="ed-link ed-sans text-xs font-medium uppercase tracking-[0.14em]"
+                        className="ed-link ed-sans group inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.14em]"
                       >
-                        View project <span aria-hidden>→</span>
+                        View project
+                        <span
+                          aria-hidden
+                          className="transition-transform duration-300 group-hover:translate-x-1.5"
+                        >
+                          →
+                        </span>
                       </Link>
                       {active.live && (
                         <a
                           href={active.live}
                           target="_blank"
                           rel="noreferrer"
-                          className="ed-link ed-sans text-xs uppercase tracking-[0.14em] text-[#111111]/55"
+                          className="ed-link ed-sans group inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.14em] text-[#111111]/55"
                         >
-                          Live site <span aria-hidden>↗</span>
+                          Live site
+                          <span
+                            aria-hidden
+                            className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                          >
+                            ↗
+                          </span>
                         </a>
                       )}
                     </div>
@@ -438,6 +504,35 @@ function WorkPreview({ idx }) {
 
       {/* CTA breathes a little stronger on preview hover */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/35 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+      {/* Editorial crop marks — frame settles in on mount */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-20">
+        {CORNERS.map((pos, i) => (
+          <motion.span
+            key={pos}
+            className={`absolute h-5 w-5 border-[#F1EFE7]/75 ${pos}`}
+            initial={{ opacity: 0, scale: 0.35 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.55, delay: 0.15 + i * 0.06, ease: EASE }}
+          />
+        ))}
+      </div>
+
+      {/* Light sweep — one pass per slide hand-off */}
+      <motion.span
+        key={idx}
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 z-10 w-1/4 -skew-x-12 bg-gradient-to-r from-transparent via-white/35 to-transparent"
+        initial={{ x: '-70%', opacity: 0 }}
+        animate={{ x: '470%', opacity: [0, 0.75, 0] }}
+        transition={{ duration: 1.15, ease: EASE }}
+      />
+
+      {/* Vignette so crop marks and captions stay legible on bright media */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-10 shadow-[inset_0_0_120px_rgba(0,0,0,0.35)]"
+      />
     </div>
   );
 }
@@ -450,26 +545,62 @@ function WorkCards() {
   return (
     <div className="px-6 md:px-10 pb-10 max-w-[1800px] mx-auto border-b border-[#111111]/15">
       {works.map((w) => (
-        <article key={w.id} className="border-t border-[#111111]/15 py-10 md:py-14">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.7, ease: EASE }}
-          >
-            <div className="ed-sans flex items-baseline justify-between text-[11px] uppercase tracking-[0.14em] text-[#111111]/50">
-              <span className="tabular-nums text-[#8B1A2B]">{w.number}</span>
-              <span>{w.category} · {w.year}</span>
-            </div>
-            <h3 className="ed-serif mt-2 text-2xl md:text-3xl font-medium leading-tight">
-              {w.title}
-              <span className="block text-base italic font-normal text-[#111111]/60">
-                {w.subtitle}
-              </span>
-            </h3>
+        <WorkCard key={w.id} w={w} />
+      ))}
+    </div>
+  );
+}
 
-            <div className="relative mt-4 aspect-[4/3] w-full overflow-hidden border border-[#111111]/10 bg-[#111111]/[0.03]">
-              {w.video ? (
+/* One card: staggered text, clip-reveal media, scroll-linked parallax. */
+function WorkCard({ w }) {
+  const ref = useRef(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], ['-7%', '7%']);
+
+  return (
+    <article ref={ref} className="border-t border-[#111111]/15 py-10 md:py-14">
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: '-60px' }}
+        variants={STAGGER}
+      >
+        <motion.div
+          variants={RISE}
+          className="ed-sans flex items-baseline justify-between text-[11px] uppercase tracking-[0.14em] text-[#111111]/50"
+        >
+          <span className="tabular-nums text-[#8B1A2B]">{w.number}</span>
+          <span>{w.category} · {w.year}</span>
+        </motion.div>
+
+        <motion.h3
+          variants={RISE}
+          className="ed-serif mt-2 text-2xl md:text-3xl font-medium leading-tight"
+        >
+          {w.title}
+          <span className="block text-base italic font-normal text-[#111111]/60">
+            {w.subtitle}
+          </span>
+        </motion.h3>
+
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, clipPath: 'inset(100% 0% 0% 0%)' },
+            show: {
+              opacity: 1,
+              clipPath: 'inset(0% 0% 0% 0%)',
+              transition: { duration: 1.05, ease: EASE },
+            },
+          }}
+          className="relative mt-4 aspect-[4/3] w-full overflow-hidden border border-[#111111]/10 bg-[#111111]/[0.03]"
+        >
+          {w.video ? (
+            <>
+              <motion.div
+                style={reduce ? undefined : { y }}
+                className="absolute -inset-y-16 inset-x-0"
+              >
                 <video
                   src={w.video}
                   className="h-full w-full object-cover"
@@ -480,44 +611,74 @@ function WorkCards() {
                   preload="metadata"
                   title={w.title}
                 />
-              ) : (
-                <SahakariPanel story={w} />
-              )}
-            </div>
-
-            <p className="ed-sans mt-4 text-sm leading-relaxed text-[#111111]/75">
-              {w.description}
-            </p>
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {w.tech.slice(0, 5).map((t) => (
-                <span key={t} className="ed-sans text-[9px] uppercase tracking-[0.12em] border border-[#111111]/20 px-2 py-1 text-[#111111]/60">
-                  {t}
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-5 flex items-center gap-6">
-              <Link
-                to={`/work/${w.id}`}
-                className="ed-link ed-sans text-xs font-medium uppercase tracking-[0.14em]"
+              </motion.div>
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/20"
+              />
+              <span
+                aria-hidden
+                className="ed-serif pointer-events-none absolute bottom-2 right-4 z-10 leading-none text-[#F1EFE7]/85"
+                style={{ fontSize: 'clamp(44px, 8vw, 84px)' }}
               >
-                View project <span aria-hidden>→</span>
-              </Link>
-              {w.live && (
-                <a
-                  href={w.live}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="ed-link ed-sans text-xs uppercase tracking-[0.14em] text-[#111111]/55"
-                >
-                  Live site <span aria-hidden>↗</span>
-                </a>
-              )}
-            </div>
-          </motion.div>
-        </article>
-      ))}
-    </div>
+                {w.number}
+              </span>
+            </>
+          ) : (
+            <SahakariPanel story={w} />
+          )}
+        </motion.div>
+
+        <motion.p
+          variants={RISE}
+          className="ed-sans mt-4 text-sm leading-relaxed text-[#111111]/75"
+        >
+          {w.description}
+        </motion.p>
+
+        <motion.div variants={RISE} className="mt-3 flex flex-wrap gap-1.5">
+          {w.tech.slice(0, 5).map((t) => (
+            <span
+              key={t}
+              className="ed-sans text-[9px] uppercase tracking-[0.12em] border border-[#111111]/20 px-2 py-1 text-[#111111]/60 transition-colors duration-300 hover:border-[#8B1A2B]/50 hover:text-[#8B1A2B]"
+            >
+              {t}
+            </span>
+          ))}
+        </motion.div>
+
+        <motion.div variants={RISE} className="mt-5 flex items-center gap-6">
+          <Link
+            to={`/work/${w.id}`}
+            className="ed-link ed-sans group inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.14em]"
+          >
+            View project
+            <span
+              aria-hidden
+              className="transition-transform duration-300 group-hover:translate-x-1.5"
+            >
+              →
+            </span>
+          </Link>
+          {w.live && (
+            <a
+              href={w.live}
+              target="_blank"
+              rel="noreferrer"
+              className="ed-link ed-sans group inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.14em] text-[#111111]/55"
+            >
+              Live site
+              <span
+                aria-hidden
+                className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+              >
+                ↗
+              </span>
+            </a>
+          )}
+        </motion.div>
+      </motion.div>
+    </article>
   );
 }
 
@@ -553,28 +714,53 @@ function SahakariPanel({ story }) {
 function WorkCTA() {
   return (
     <div className="px-6 md:px-10 pb-24 md:pb-32 max-w-[1800px] mx-auto">
-      <div className="ed-rule" />
+      <motion.div
+        className="ed-rule origin-left"
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 1, ease: EASE }}
+      />
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 py-8">
-        <p className="ed-sans text-sm text-[#111111]/60 max-w-md leading-relaxed">
+        <motion.p
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7, ease: EASE }}
+          className="ed-sans text-sm text-[#111111]/60 max-w-md leading-relaxed"
+        >
           Three stories above — the full archive holds every experiment,
           client build and work-in-progress.
-        </p>
+        </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, ease: EASE }}
         >
-          <Link
-            to="/projects"
-            className="ed-sans group inline-flex items-center gap-3 bg-[#111111] px-7 py-3.5 text-xs uppercase tracking-[0.16em] text-[#F1EFE7] transition-colors duration-300 hover:bg-[#8B1A2B]"
+          <motion.div
+            whileHover={{ y: -3 }}
+            whileTap={{ y: 0, scale: 0.98 }}
+            transition={{ type: 'spring', stiffness: 420, damping: 26 }}
+            className="inline-block"
           >
-            View more projects
-            <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
-          </Link>
+            <Link
+              to="/projects"
+              className="ed-sans group inline-flex items-center gap-3 bg-[#111111] px-7 py-3.5 text-xs uppercase tracking-[0.16em] text-[#F1EFE7] transition-colors duration-300 hover:bg-[#8B1A2B]"
+            >
+              View more projects
+              <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
-      <div className="ed-rule" />
+      <motion.div
+        className="ed-rule origin-left"
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 1, ease: EASE }}
+      />
     </div>
   );
 }
